@@ -7,38 +7,50 @@ public class LogicalEngine {
     Database database;
     Player player;
     GraphicalEngine Gengine;
+    int x, y;
 
-
-    public LogicalEngine () {
+    public LogicalEngine (int x, int y) {
         database = Database.database;
         player = database.player.GetComponent<Player>();
         Gengine = new GraphicalEngine();
+        database.units = new List<Unit>[x, y];
+        this.x = x;
+        this.y = y;
         init();
 	}
 
     void init()
     {
+        for(int i=0; i< x; i++)
+        {
+            for(int j=0; j< y; j++)
+            {
+                database.units[i, j] = new List<Unit>();
+            }
+        }
+
         List<GameObject> Gobjects = new List<GameObject>();
-        List<Unit> units = new List<Unit>();
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Block"));
+
         foreach(GameObject g in Gobjects)
-            units.Add(new Unit(UnitType.Block, g, g.GetComponent<Block>()));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Block>()));
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Pipe"));
         foreach (GameObject g in Gobjects)
-            units.Add(new Unit(UnitType.Block, g, null));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, null));
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Container"));
         foreach (GameObject g in Gobjects)
-            units.Add(new Unit(UnitType.Block, g, g.GetComponent<Container>()));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Container>()));
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Switch"));
         foreach (GameObject g in Gobjects)
-            units.Add(new Unit(UnitType.Block, g, g.GetComponent<Switch>()));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Switch>()));
         Gobjects.Clear();
+
 
 
     }
@@ -97,6 +109,9 @@ public class LogicalEngine {
     {
         player.ability.numberofuse += num;
     }
+
+
+
                             /// private methods ///
 
     private bool CheckMove(Direction dir)
@@ -105,7 +120,10 @@ public class LogicalEngine {
         {
             if (dir == d)
             {
-
+                switch (dir)
+                {
+                    
+                }
                 return true;
             }
         }

@@ -12,7 +12,7 @@ public class Database : MonoBehaviour{
     public GameObject player;
     public readonly int numberOfSnapshot = 5;
     public Direction gravity_direction;
-    public List<Unit> units;
+    public List<Unit>[,] units;
 
     private int Xsize, Ysize;
     private Direction GravityDirection;

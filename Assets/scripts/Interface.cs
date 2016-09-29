@@ -4,10 +4,11 @@ using System.Collections;
 public class Interface : MonoBehaviour {
     public GameObject player;
     private LogicalEngine engine;
+    public int x, y;
     State state;
 	// Use this for initialization
 	void Start () {
-        engine = new LogicalEngine();
+        engine = new LogicalEngine(x,y);
         Database.database.player = player;
         state = State.Idle;
     }
