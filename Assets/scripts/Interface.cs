@@ -40,29 +40,29 @@ public class Interface : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-
+                    engine.Action(Direction.Right);
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-
+                    engine.Action(Direction.Left);
                 }
                 else if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-
+                    engine.Action(Direction.Down);
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-
+                    engine.Action(Direction.Up);
                 }
                 else
                 {
-
+                    engine.Action();
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                
+                engine.Absorb();
             }
             else if (Input.GetKeyDown(KeyCode.R))
             {
