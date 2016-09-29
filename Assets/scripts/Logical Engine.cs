@@ -57,18 +57,40 @@ public class LogicalEngine {
 
     public void Action()
     {
-
+        switch (player.ability.abilitytype)
+        {
+            case AbilityType.Direction: ChangeDirection(); break;
+            case AbilityType.Jump: jump();  break;
+            case AbilityType.Rope: break;
+        }
     }
 
     public void Action(Direction dir)
     {
+        switch (player.ability.abilitytype)
+        {
+            case AbilityType.Blink: Blink(dir); break;
+            case AbilityType.Gravity: ChangeGravity(dir); break;
+        }
+    }
 
+    public void Absorb(Direction dir)
+    {
+        
     }
 
     public void Absorb()
     {
-
+        switch (database.gravity_direction)
+        {
+            case Direction.Down: break;
+            case Direction.Up: break;
+            case Direction.Right: break;
+            case Direction.Left: break;
+        }
     }
+
+
 
     public void Swap(GameObject g)
     {
@@ -172,6 +194,13 @@ public class LogicalEngine {
         return false;
     }
 
-    
+    private Unit GetBlock(Vector2 position)
+    {
+        foreach(Unit u in database.units[(int)position.x, (int)position.y])
+            if (u.type == UnitType.Block)
+                return u;
+
+        return null;
+    }
 
 }
