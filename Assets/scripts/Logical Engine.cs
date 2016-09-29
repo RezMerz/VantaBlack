@@ -55,6 +55,15 @@ public class LogicalEngine {
 
     }
 
+    public void action()
+    {
+
+    }
+
+    public void action(Direction dir)
+    {
+
+    }
 
     public void Swap(GameObject g)
     {
