@@ -57,12 +57,21 @@ public class LogicalEngine {
 
     public void Action()
     {
-
+        switch (player.ability.abilitytype)
+        {
+            case AbilityType.Direction: ChangeDirection(); break;
+            case AbilityType.Jump: jump();  break;
+            case AbilityType.Rope: break;
+        }
     }
 
     public void Action(Direction dir)
     {
-
+        switch (player.ability.abilitytype)
+        {
+            case AbilityType.Blink: Blink(dir); break;
+            case AbilityType.Gravity: ChangeGravity(dir); break;
+        }
     }
 
     public void Absorb()
