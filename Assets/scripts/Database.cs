@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Database : MonoBehaviour{
+public class Database{
     public static Database database = new Database();
     private Database()
     {

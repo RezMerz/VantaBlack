@@ -8,8 +8,8 @@ public class Interface : MonoBehaviour {
     State state;
 	// Use this for initialization
 	void Start () {
-        engine = new LogicalEngine(x,y);
         Database.database.player = player;
+        engine = new LogicalEngine(x, y);
         state = State.Idle;
     }
 	
