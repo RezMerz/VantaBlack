@@ -55,12 +55,17 @@ public class LogicalEngine {
 
     }
 
-    public void action()
+    public void Action()
     {
 
     }
 
-    public void action(Direction dir)
+    public void Action(Direction dir)
+    {
+
+    }
+
+    public void Absorb()
     {
 
     }
