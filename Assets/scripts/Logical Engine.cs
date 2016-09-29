@@ -30,8 +30,27 @@ public class LogicalEngine {
         }
 
         List<GameObject> Gobjects = new List<GameObject>();
-        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Block"));
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Wall"));
+        foreach (GameObject g in Gobjects)
+        {
+            Wall[] wall = g.GetComponents<Wall>();
+            if(wall[0].direction == Direction.Right)
+            {
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Wall, g, wall[0]));
+                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(new Unit(UnitType.Wall, g, wall[1]));
+            }
+            else
+            {
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Wall, g, wall[0]));
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(new Unit(UnitType.Wall, g, wall[1]));
 
+            }
+            
+        }
+        Gobjects.Clear();
+
+
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Block"));
         foreach(GameObject g in Gobjects)
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Block>()));
         Gobjects.Clear();
@@ -83,7 +102,7 @@ public class LogicalEngine {
     {
         switch (database.gravity_direction)
         {
-            case Direction.Down: break;
+            case Direction.Down:GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1))); break;
             case Direction.Up: break;
             case Direction.Right: break;
             case Direction.Left: break;
@@ -102,8 +121,7 @@ public class LogicalEngine {
 
     public void move(Direction dir)
     {
-        if (CheckMove(dir))
-            Gengine._move(dir);
+        Gengine._move(dir);
     }
 
     public void jump()
@@ -150,7 +168,7 @@ public class LogicalEngine {
 
                             /// private methods ///
 
-    private bool CheckMove(Direction dir)
+    /*private bool CheckMove(Direction dir)
     {
         foreach (Direction d in player.move_direction)
         {
@@ -164,7 +182,7 @@ public class LogicalEngine {
             }
         }
         return false;
-    }
+    }*/
 
     
 
