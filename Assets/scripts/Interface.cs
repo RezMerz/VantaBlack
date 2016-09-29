@@ -21,7 +21,8 @@ public class Interface : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    engine.move(Direction.Right);
+                    print("right");
+                    
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
@@ -66,8 +67,12 @@ public class Interface : MonoBehaviour {
             }
             else if (Input.GetKeyDown(KeyCode.R))
             {
-
+                
             }
         }
+    }
+    private bool isEmpty()
+    {
+        return false;
     }
 }
