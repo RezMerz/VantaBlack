@@ -74,6 +74,11 @@ public class LogicalEngine {
         }
     }
 
+    public void Absorb(Direction dir)
+    {
+        
+    }
+
     public void Absorb()
     {
 
