@@ -8,7 +8,10 @@ public class LogicalEngine {
     Player player;
     GraphicalEngine Gengine;
     int x, y;
-
+    Action action;
+    AandR AR;
+    Map map;
+    Move moveObject;
     public LogicalEngine (int x, int y) {
         database = Database.database;
         player = database.player.GetComponent<Player>();
@@ -17,6 +20,10 @@ public class LogicalEngine {
         this.x = x;
         this.y = y;
         init();
+        moveObject = new Move(Gengine, player, database);
+        action = new Action(player, database, Gengine, moveObject);
+        map = new Map(player);
+        AR = new AandR(Gengine, player, database);
 	}
 
     void init()
@@ -73,202 +80,76 @@ public class LogicalEngine {
 
 
     }
-
-    public void Action()
+    /// <summary>
+    /// action for dir, jump, rope
+    /// </summary>
+    /// /// <summary>
+    public void Act()
     {
-        switch (player.ability.abilitytype)
-        {
-            case AbilityType.Direction: ChangeDirection(); break;
-            case AbilityType.Jump: jump();  break;
-            case AbilityType.Rope: break;
-        }
-    }
-
-    public void Action(Direction dir)
+        action.Act();
+    }  
+    /// action for blink, gravity
+    /// </summary>
+    /// <param name="direction"></param>
+    public void Act(Direction dir)
     {
-        switch (player.ability.abilitytype)
-        {
-            case AbilityType.Blink: Blink(dir); break;
-            case AbilityType.Gravity: ChangeGravity(dir); break;
-        }
+        action.Act(dir);
     }
-
+    /// <summary>
+    /// absorb from other sides (including gravity side):
+    /// 1. logic
+    /// </summary>
+    /// <param name="direction"></param>
     public void Absorb(Direction dir)
     {
-        
+        AR.Absorb(dir);
     }
-
+    /// <summary>
+    /// simple absorb
+    /// </summary>
     public void Absorb()
     {
-        switch (database.gravity_direction)
-        {
-            case Direction.Down:GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1))); break;
-            case Direction.Up: break;
-            case Direction.Right: break;
-            case Direction.Left: break;
-        }
+        AR.Absorb();
     }
-
-
-
-    public void Swap(GameObject g)
-    {
-        Ability block_ability = g.GetComponent<Block>().ability;
-        g.GetComponent<Block>().ability = player.ability;
-        player.ability = block_ability;
-
-    }
-
+    /// <summary>
+    /// V Move
+    /// </summary>
+    /// <param name="direction"></param>
     public void move(Direction dir)
     {
-        Gengine._move(dir);
+        moveObject.move(dir);
     }
-
+    /// <summary>
+    /// jump
+    /// </summary>
     public void jump()
     {
-        for (int i = 1; i < player.ability.function; i++)
-        {
-            switch (database.gravity_direction)
-            {
-                case Direction.Down: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(0, i)))) Gengine._jump(i - 1); break;
-                case Direction.Up: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(0, -i)))) Gengine._jump(i - 1); break;
-                case Direction.Right: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(-i, 0)))) Gengine._jump(i - 1); break;
-                case Direction.Left: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(i, 0)))) Gengine._jump(i - 1); break;
-            }
-        }
-        
-    }
+        moveObject.jump();
 
-    public void ChangeGravity(Direction direction)
-    {
-        for(int i=0; i<player.ability.direction.Count; i++)
-        {
-            if (direction == player.ability.direction[i])
-            {
-                Direction temp = database.gravity_direction;
-                database.gravity_direction = direction;
-                player.ability.direction[i] = temp;
-            }
-        }
     }
 
     public void Blink(Direction dir)
     {
-        if (CheckBlink(dir))
-            Gengine._blink(dir);
+        action.Blink(dir);
     }
 
     public void Teleport(Vector2 position)
     {
-        Database.database.player.transform.position = position;
+        action.Teleport(position);
     }
-
+    /// <summary>
+    /// Drains the player:
+    /// 1. logical
+    /// </summary>
     public void Drain()
     {
-        player.ability = null;
+        AR.Drain();
     }
 
     public void Fountain(int num)
     {
-        player.ability.numberofuse += num;
+        map.Fountain(num);
     }
-
-
-
-                            /// private methods ///
-
-    /*private bool CheckMove(Direction dir)
-    {
-        foreach (Direction d in player.move_direction)
-        {
-            if (dir == d)
-            {
-                switch (dir)
-                {
-                    
-                }
-                return true;
-            }
-        }
-        return false;
-    }*/
-
-    
-
-    private void ChangeDirection()
-    {
-        switch (player.move_direction[0])
-        {
-            case Direction.Down: player.move_direction[0] = Direction.Up; break;
-            case Direction.Up: player.move_direction[0] = Direction.Down; break;
-            case Direction.Right: player.move_direction[0] = Direction.Left; break;
-            case Direction.Left: player. move_direction[0] = Direction.Right; break;
-        }
-    }
-
-    private bool CheckJump(Vector2 position)
-    {
-        foreach (Unit u in database.units[(int)position.x, (int)position.y])
-        {
-            if (u.type == UnitType.Block || u.type == UnitType.Container || u.type == UnitType.Container)
-                return false;
-            if(u.type == UnitType.Wall)
-            {
-                switch (database.gravity_direction)
-                {
-                    case Direction.Down: if (((Wall)u.component).direction == Direction.Up) return false; break;
-                    case Direction.Up: if (((Wall)u.component).direction == Direction.Down) return false; break;
-                    case Direction.Right: if (((Wall)u.component).direction == Direction.Left) return false; break;
-                    case Direction.Left: if (((Wall)u.component).direction == Direction.Right) return false; break;
-                }
-            }
-        }
-        return true;
-    }
-
-    
-
-    private bool CheckBlink(Direction direction)
-    {
-        bool value = false;
-        foreach(Direction d in player.move_direction)
-            if (direction == d)
-                value = true;
-        if(!value)
-            return false;
-
-        switch (direction)
-        {
-            case Direction.Up: return isvoid1(0,2);
-            case Direction.Down: return isvoid1(0, -2);
-            case Direction.Right: return isvoid1(2, 0);
-            case Direction.Left: return isvoid1(-2, 0);
-            default: return false;
-        }
-
-    }
-
-
-    private Unit GetBlock(Vector2 position)
-    {
-        foreach(Unit u in database.units[(int)position.x, (int)position.y])
-            if (u.type == UnitType.Block)
-                return u;
-
-        return null;
-    }
-
-
-    public bool isvoid1(int x, int y)
-    {
-        foreach (Unit u in database.units[(int)player.position.x + x, (int)player.position.y + y])
-        {
-            if (u.type == UnitType.Block || u.type == UnitType.Container)
-                return false;
-        }
-        return true;
-    }
-
 }
 
 

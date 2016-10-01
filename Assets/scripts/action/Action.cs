@@ -1,0 +1,94 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class Action{
+    Player player;
+    Database database;
+    GraphicalEngine Gengine;
+    Move move;
+    public Action(Player player, Database database, GraphicalEngine Geninge, Move move)
+    {
+        this.player = player;
+        this.database = database;
+        this.Gengine = Geninge;
+        this.move = move;
+    }
+
+    public void Act()
+    {
+        switch (player.ability.abilitytype)
+        {
+            case AbilityType.Direction: ChangeDirection(); break;
+            case AbilityType.Jump: move.jump(); break;
+            case AbilityType.Rope: break;
+        }
+    }
+    public void Act(Direction dir)
+    {
+        switch (player.ability.abilitytype)
+        {
+            case AbilityType.Blink: Blink(dir); break;
+            case AbilityType.Gravity: ChangeGravity(dir); break;
+        }
+    }
+    //private methods
+    private void ChangeGravity(Direction direction)
+    {
+        for (int i = 0; i < player.ability.direction.Count; i++)
+        {
+            if (direction == player.ability.direction[i])
+            {
+                Direction temp = database.gravity_direction;
+                database.gravity_direction = direction;
+                player.ability.direction[i] = temp;
+            }
+        }
+    }
+    public void Blink(Direction dir)
+    {
+        if (CheckBlink(dir))
+            Gengine._blink(dir);
+    }
+    public void Teleport(Vector2 position)
+    {
+        Database.database.player.transform.position = position;
+    }
+    private void ChangeDirection()
+    {
+        switch (player.move_direction[0])
+        {
+            case Direction.Down: player.move_direction[0] = Direction.Up; break;
+            case Direction.Up: player.move_direction[0] = Direction.Down; break;
+            case Direction.Right: player.move_direction[0] = Direction.Left; break;
+            case Direction.Left: player.move_direction[0] = Direction.Right; break;
+        }
+    }
+    private bool CheckBlink(Direction direction)
+    {
+        bool value = false;
+        foreach (Direction d in player.move_direction)
+            if (direction == d)
+                value = true;
+        if (!value)
+            return false;
+
+        switch (direction)
+        {
+            case Direction.Up: return isvoid1(0, 2);
+            case Direction.Down: return isvoid1(0, -2);
+            case Direction.Right: return isvoid1(2, 0);
+            case Direction.Left: return isvoid1(-2, 0);
+            default: return false;
+        }
+
+    }
+    private bool isvoid1(int x, int y)
+    {
+        foreach (Unit u in database.units[(int)player.position.x + x, (int)player.position.y + y])
+        {
+            if (u.type == UnitType.Block || u.type == UnitType.Container)
+                return false;
+        }
+        return true;
+    }
+}
