@@ -12,4 +12,9 @@ public class Container : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void Run()
+    {
+
+    }
 }

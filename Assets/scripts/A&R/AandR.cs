@@ -18,25 +18,44 @@ public class AandR {
 
     public void Absorb(Direction dir)
     {
-        Unit unit;
+        Unit unit = null;
         switch (dir)
         {
-            case Direction.Down: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1)))) != null) _absorb((Block)unit.component); break;
-            case Direction.Up: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, 1)))) != null) _absorb((Block)unit.component); break;
-            case Direction.Right: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(1, 0)))) != null) _absorb((Block)unit.component); break;
-            case Direction.Left: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(-1, 0)))) != null) _absorb((Block)unit.component); break;
+            case Direction.Down: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1))); break;
+            case Direction.Up: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
+            case Direction.Right: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
+            case Direction.Left: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
+        }
+        if (unit != null)
+        {
+            if (unit.type == UnitType.Block)
+                _absorb((Block)unit.component);
+            else if (unit.type == UnitType.Container)
+            {
+                ((Container)unit.component).Run();
+            }
         }
     }
     
     public void Absorb()
     {
-        Unit unit;
+        Unit unit = null;
         switch (database.gravity_direction)
         {
-            case Direction.Down: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1)))) != null) _absorb((Block)unit.component); break;
-            case Direction.Up: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, 1)))) != null) _absorb((Block)unit.component); break;
-            case Direction.Right: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(1, 0)))) != null) _absorb((Block)unit.component); break;
-            case Direction.Left: if ((unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(-1, 0)))) != null) _absorb((Block)unit.component); break;
+            case Direction.Down: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1)));  break;
+            case Direction.Up: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
+            case Direction.Right: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
+            case Direction.Left: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
+        }
+
+        if (unit != null)
+        {
+            if (unit.type == UnitType.Block)
+                _absorb((Block)unit.component);
+            else if (unit.type == UnitType.Container)
+            {
+                ((Container)unit.component).Run();
+            }
         }
     }
 
