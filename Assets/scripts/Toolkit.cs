@@ -40,5 +40,19 @@ public sealed class Toolkit{
     }
     
     public static Ability GravityLvlUp(Ability playerAbility, Ability blockAbility)
+    {
+        foreach (Direction dir2 in playerAbility.direction)
+        {
+            bool b = true;
+            foreach (Direction dir in blockAbility.direction)
+                if (dir == dir2)
+                    b = false;
+            if (b)
+                playerAbility.direction.Add(dir2);
+        }
+        playerAbility.numberofuse += blockAbility.numberofuse;
+
+        return playerAbility;
+    }
 }
 

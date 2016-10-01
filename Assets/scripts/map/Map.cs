@@ -4,9 +4,11 @@ using System.Collections;
 public class Map
 {
     Player player;
-    public Map(Player player)
+    LogicalEngine engine;
+    public Map(LogicalEngine engine)
     {
-        this.player = player;
+        this.player = engine.player;
+        this.engine = engine;
     }
 
 

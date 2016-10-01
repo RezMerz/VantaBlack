@@ -21,6 +21,11 @@ public class GraphicalEngine : MonoBehaviour {
 	}
 
 
+    public void Refresh()
+    {
+
+    }
+
     public void _blink(Direction dir)
     {
         switch (dir)

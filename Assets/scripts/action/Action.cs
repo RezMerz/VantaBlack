@@ -6,12 +6,14 @@ public class Action{
     Database database;
     GraphicalEngine Gengine;
     Move move;
-    public Action(Player player, Database database, GraphicalEngine Geninge, Move move)
+    LogicalEngine engine;
+    public Action(LogicalEngine engine)
     {
-        this.player = player;
-        this.database = database;
-        this.Gengine = Geninge;
-        this.move = move;
+        this.player = engine.player;
+        this.database = engine.database;
+        this.Gengine = engine.Gengine;
+        this.move = engine.moveObject;
+        this.engine = engine;
     }
 
     public void Act()
@@ -20,7 +22,7 @@ public class Action{
         {
             case AbilityType.Direction: ChangeDirection(); break;
             case AbilityType.Jump: move.jump(); break;
-            case AbilityType.Rope: break;
+            case AbilityType.Rope:Rope(); break;
         }
     }
     public void Act(Direction dir)
@@ -47,11 +49,19 @@ public class Action{
     public void Blink(Direction dir)
     {
         if (CheckBlink(dir))
+        {
             Gengine._blink(dir);
+            engine.NextTurn();
+        }
     }
     public void Teleport(Vector2 position)
     {
         Database.database.player.transform.position = position;
+        engine.NextTurn();
+    }
+    public void Rope()
+    {
+        database.timeLaps.Add(new TimeLaps(player.ability.function, database.player));
     }
     private void ChangeDirection()
     {

@@ -5,13 +5,14 @@ public class AandR {
     GraphicalEngine Gengine;
     Player player;
     Database database;
+    LogicalEngine engine;
 
-
-	public AandR(GraphicalEngine Gengine, Player player, Database database)
+	public AandR(LogicalEngine engine)
     {
-        this.Gengine = Gengine;
-        this.player = player;
-        this.database = database;
+        this.Gengine = engine.Gengine;
+        this.player = engine.player;
+        this.database = engine.database;
+        this.engine = engine;
     }
     
 

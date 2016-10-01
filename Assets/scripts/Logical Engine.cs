@@ -4,28 +4,31 @@ using System.Collections.Generic;
 
 
 public class LogicalEngine {
-    Database database;
-    Player player;
-    GraphicalEngine Gengine;
+    public Database database;
+    public Player player;
+    public GraphicalEngine Gengine;
+    public Move moveObject;
     int x, y;
     Action action;
     AandR AR;
     Map map;
-    Move moveObject;
+    
+    SnapshotManager spManager;
     public LogicalEngine (int x, int y) {
         database = Database.database;
         player = database.player.GetComponent<Player>();
         Gengine = new GraphicalEngine();
+        spManager = new SnapshotManager();
         database.units = new List<Unit>[x, y];
+        database.timeLaps = new List<TimeLaps>();
         this.x = x;
         this.y = y;
         init();
-        moveObject = new Move(Gengine, player, database);
-        action = new Action(player, database, Gengine, moveObject);
-        map = new Map(player);
-        AR = new AandR(Gengine, player, database);
+        moveObject = new Move(this);
+        action = new Action(this);
+        map = new Map(this);
+        AR = new AandR(this);
 	}
-
     void init()
     {
         for(int i=0; i< x; i++)
@@ -77,9 +80,19 @@ public class LogicalEngine {
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Switch>()));
         Gobjects.Clear();
 
-
-
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+        foreach (GameObject g in Gobjects)
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Player, g, g.GetComponent<Player>()));
+        Gobjects.Clear();
     }
+
+
+    public void run()
+    {
+        CheckTimeLaps();
+        database.state = State.Idle;
+    }
+
     /// <summary>
     /// action for dir, jump, rope
     /// </summary>
@@ -95,60 +108,54 @@ public class LogicalEngine {
     {
         action.Act(dir);
     }
-    /// <summary>
-    /// absorb from other sides (including gravity side):
-    /// 1. logic
-    /// </summary>
-    /// <param name="direction"></param>
-    public void Absorb(Direction dir)
+
+    public void move(Direction direction)
     {
-        AR.Absorb(dir);
+        moveObject.move(direction);
     }
-    /// <summary>
-    /// simple absorb
-    /// </summary>
     public void Absorb()
     {
         AR.Absorb();
     }
-    /// <summary>
-    /// V Move
-    /// </summary>
-    /// <param name="direction"></param>
-    public void move(Direction dir)
-    {
-        moveObject.move(dir);
-    }
-    /// <summary>
-    /// jump
-    /// </summary>
-    public void jump()
-    {
-        moveObject.jump();
 
+    public void Absorb(Direction direcion)
+    {
+        AR.Absorb(direcion);
     }
 
-    public void Blink(Direction dir)
+    public void NextTurn()
     {
-        action.Blink(dir);
+        spManager.takesnapshot();
+        
+        database.turn++;
     }
 
-    public void Teleport(Vector2 position)
+    public void Undo()
     {
-        action.Teleport(position);
-    }
-    /// <summary>
-    /// Drains the player:
-    /// 1. logical
-    /// </summary>
-    public void Drain()
-    {
-        AR.Drain();
+        database.state = State.Busy;
+        Snapshot snapshot = spManager.Revese();
+        database.units = snapshot.units;
+        database.turn = snapshot.turn;
+        Refresh();
+        
     }
 
-    public void Fountain(int num)
+    public void Refresh()
     {
-        map.Fountain(num);
+        Gengine.Refresh();
+        database.state = State.Idle;
+    }
+    private void CheckTimeLaps()
+    {
+        foreach(TimeLaps t in database.timeLaps)
+        {
+            t.time++;
+            if (t.time == t.lifetime)
+            {
+                database.timeLaps.Remove(t);
+                action.Teleport(t.position);
+            }
+        }
     }
 }
 

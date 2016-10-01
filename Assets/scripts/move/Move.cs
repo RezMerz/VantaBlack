@@ -9,7 +9,7 @@ public class Move{
     public GraphicalEngine Gengine;
     public Player player;
     public Database database;
-
+    LogicalEngine engine;
 
     /// <summary>
     /// init
@@ -17,17 +17,19 @@ public class Move{
     /// <param name="Graphicalengine"></param>
     /// <param name="player"></param>
     /// <param name="database"></param>
-    public Move(GraphicalEngine Gengine, Player player, Database database)
+    public Move(LogicalEngine engine)
     {
-        this.Gengine = Gengine;
-        this.player = player;
-        this.database = database;
+        this.Gengine = engine.Gengine;
+        this.player = engine.player;
+        this.database = engine.database;
+        this.engine = engine;
     }
 
     
     public void move(Direction dir)
     {
         Gengine._move(dir);
+        engine.NextTurn();
     }
 
     
@@ -43,7 +45,7 @@ public class Move{
                 case Direction.Left: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(i, 0)))) Gengine._jump(i - 1); break;
             }
         }
-
+        engine.NextTurn();
     }
 
     /// <summary>
@@ -51,7 +53,7 @@ public class Move{
     /// </summary>
     /// <param name="position"></param>
     /// <returns></returns>
-    public bool CheckJump(Vector2 position)
+    private bool CheckJump(Vector2 position)
     {
         foreach (Unit u in database.units[(int)position.x, (int)position.y])
         {
