@@ -126,8 +126,17 @@ public class LogicalEngine {
 
     public void jump()
     {
-        if (CheckJump())
-            Gengine._jump(player.ability.function);
+        for (int i = 1; i < player.ability.function; i++)
+        {
+            switch (database.gravity_direction)
+            {
+                case Direction.Down: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(0, i)))) Gengine._jump(i - 1); break;
+                case Direction.Up: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(0, -i)))) Gengine._jump(i - 1); break;
+                case Direction.Right: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(-i, 0)))) Gengine._jump(i - 1); break;
+                case Direction.Left: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(i, 0)))) Gengine._jump(i - 1); break;
+            }
+        }
+        
     }
 
     public void ChangeGravity(Direction direction)
@@ -197,8 +206,23 @@ public class LogicalEngine {
         }
     }
 
-    private bool CheckJump()
+    private bool CheckJump(Vector2 position)
     {
+        foreach (Unit u in database.units[(int)position.x, (int)position.y])
+        {
+            if (u.type == UnitType.Block || u.type == UnitType.Container || u.type == UnitType.Container)
+                return false;
+            if(u.type == UnitType.Wall)
+            {
+                switch (database.gravity_direction)
+                {
+                    case Direction.Down: if (((Wall)u.component).direction == Direction.Up) return false; break;
+                    case Direction.Up: if (((Wall)u.component).direction == Direction.Down) return false; break;
+                    case Direction.Right: if (((Wall)u.component).direction == Direction.Left) return false; break;
+                    case Direction.Left: if (((Wall)u.component).direction == Direction.Right) return false; break;
+                }
+            }
+        }
         return true;
     }
 
@@ -206,11 +230,24 @@ public class LogicalEngine {
 
     private bool CheckBlink(Direction direction)
     {
+        bool value = false;
         foreach(Direction d in player.move_direction)
             if (direction == d)
-                return true;
-        return false;
+                value = true;
+        if(!value)
+            return false;
+
+        switch (direction)
+        {
+            case Direction.Up: return isvoid1(0,2);
+            case Direction.Down: return isvoid1(0, -2);
+            case Direction.Right: return isvoid1(2, 0);
+            case Direction.Left: return isvoid1(-2, 0);
+            default: return false;
+        }
+
     }
+
 
     private Unit GetBlock(Vector2 position)
     {
@@ -221,4 +258,17 @@ public class LogicalEngine {
         return null;
     }
 
+
+    public bool isvoid1(int x, int y)
+    {
+        foreach (Unit u in database.units[(int)player.position.x + x, (int)player.position.y + y])
+        {
+            if (u.type == UnitType.Block || u.type == UnitType.Container)
+                return false;
+        }
+        return true;
+    }
+
 }
+
+

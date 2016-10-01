@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public sealed class Toolkit{
 
@@ -7,5 +8,7 @@ public sealed class Toolkit{
     {
         return new Vector2(a.x + b.x, a.y + b.y);
     }
+
+    
 }
 

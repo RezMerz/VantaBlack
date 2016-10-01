@@ -53,7 +53,7 @@ public class Unit
 
 public enum UnitType
 {
-    Block, Pipe, Box, Magnet, Switch, Wall
+    Block, Pipe, Box, Magnet, Switch, Wall, Container
 }
 
 public enum State
