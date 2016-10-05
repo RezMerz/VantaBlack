@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wall : MonoBehaviour {
+public class Wall : Unit {
 
     public Direction direction;
     public bool magnetic;

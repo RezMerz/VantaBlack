@@ -20,6 +20,7 @@ public class Database{
 
     private int Xsize, Ysize;
     private Direction GravityDirection;
+    
     public List<Snapshot> snapshots;
 
 
@@ -33,21 +34,7 @@ public class Database{
     
 }
 
-public class Unit
-{
-    public Vector2 position;
-    public UnitType type;
-    public GameObject obj;
-    public Component component;
 
-    public Unit(UnitType type, GameObject obj, Component component)
-    {
-        this.type = type;
-        this.obj = obj;
-        this.position = obj.transform.position;
-        this.component = component;
-    }
-}
 
 
 
@@ -65,9 +52,21 @@ public class TimeLaps
         time = Database.database.turn;
     }
 }
+
+public class Pipe : Unit
+{
+    public GameObject source, sink;
+    bool isOpen;
+
+    void Start()
+    {
+        isOpen = true;
+    }
+}
+
 public enum UnitType
 {
-    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player
+    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock
 }
 
 public enum State
@@ -82,7 +81,7 @@ public enum Direction
 
 public enum AbilityType
 {
-    Direction, Jump, Gravity, Blink, Rope
+    Direction, Jump, Gravity, Blink, Rope, Fuel
 }
 
 

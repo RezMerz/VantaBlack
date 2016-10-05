@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Map
 {
@@ -18,6 +19,4 @@ public class Map
     {
         player.ability.numberofuse += num;
     }
-
-    
 }

@@ -46,52 +46,77 @@ public class LogicalEngine {
             Wall[] wall = g.GetComponents<Wall>();
             if(wall[0].direction == Direction.Right)
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Wall, g, wall[0]));
-                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(new Unit(UnitType.Wall, g, wall[1]));
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
+                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
             }
             else
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Wall, g, wall[0]));
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(new Unit(UnitType.Wall, g, wall[1]));
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(g.GetComponents<Wall>()[1]);
 
             }
-            
+
         }
         Gobjects.Clear();
 
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Block"));
-        foreach(GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Block>()));
+        foreach (GameObject g in Gobjects)
+        {
+            Block temp = g.GetComponent<Block>();
+            temp.unitType = UnitType.Block;
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
+        }
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Pipe"));
         foreach (GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, null));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Pipe>());
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Container"));
         foreach (GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Container>()));
+        {
+            //Wall.print(g.transform.position);
+            //Wall.print(g.GetComponent<MovingContainer>());
+            Container temp = g.GetComponent<MovingContainer>();
+            temp.unitType = UnitType.Container;
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
+        }
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Switch"));
         foreach (GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Block, g, g.GetComponent<Switch>()));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Switch>());
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Player"));
         foreach (GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(new Unit(UnitType.Player, g, g.GetComponent<Player>()));
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Player>());
         Gobjects.Clear();
-    }
 
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Rock"));
+        foreach (GameObject g in Gobjects)
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Rock>());
+        Gobjects.Clear();
+        
+        /*for(int i=0; i< x; i++)
+        {
+            for(int j=0; j< y; j++)
+            {
+                Wall.print(database.units[i,j].Count);
+            }
+            Wall.print(" ");
+        }*/
+    }
 
     public void run()
     {
         CheckTimeLaps();
         database.state = State.Idle;
     }
+
+    
 
     /// <summary>
     /// action for dir, jump, rope
@@ -111,7 +136,17 @@ public class LogicalEngine {
 
     public void move(Direction direction)
     {
-        moveObject.move(direction);
+        bool flag = false;
+        foreach(Direction d in player.move_direction)
+        {
+            if(d == direction)
+            {
+                flag = true;
+                break;  
+            }
+        }
+        if(flag)
+            moveObject.move(direction);
     }
     public void Absorb()
     {

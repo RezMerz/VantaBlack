@@ -21,41 +21,62 @@ public class AandR {
         Unit unit = null;
         switch (dir)
         {
-            case Direction.Down: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1))); break;
-            case Direction.Up: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
-            case Direction.Right: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
-            case Direction.Left: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
+            case Direction.Down: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, -1))); break;
+            case Direction.Up: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
+            case Direction.Right: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
+            case Direction.Left: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
         }
         if (unit != null)
         {
-            if (unit.type == UnitType.Block)
-                _absorb((Block)unit.component);
-            else if (unit.type == UnitType.Container)
+            if (unit.unitType == UnitType.Block)
+                _absorb(((Block)unit).GetComponent<Block>());
+            else if (unit.unitType == UnitType.Container)
             {
-                ((Container)unit.component).Run();
+                
             }
         }
     }
     
     public void Absorb()
     {
+        Wall.print("start");
         Unit unit = null;
+        Wall.print(Toolkit.VectorSum(player.position, new Vector2(0, -1)));
         switch (database.gravity_direction)
         {
-            case Direction.Down: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, -1)));  break;
-            case Direction.Up: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
-            case Direction.Right: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
-            case Direction.Left: unit = GetBlock(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
+            case Direction.Down: Wall.print("1"); unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, -1)));  break;
+            case Direction.Up: Wall.print("2"); unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
+            case Direction.Right: Wall.print("3"); unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
+            case Direction.Left: Wall.print("4"); unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
         }
-
+        Wall.print("mid");
+        Wall.print(unit);
         if (unit != null)
         {
-            if (unit.type == UnitType.Block)
-                _absorb((Block)unit.component);
-            else if (unit.type == UnitType.Container)
+            if (unit.unitType == UnitType.Block)
+                _absorb(((Block)unit).GetComponent<Block>());
+            else if (unit.unitType == UnitType.Container)
             {
-                ((Container)unit.component).Run();
+                Wall.print("fuck");
+                if (((Container)unit).GetComponent<Container>().IsEmpty()){
+                    Release(((Container)unit).GetComponent<Container>());
+                }
+                else if (((Container)unit).GetComponent<Container>().IsAvailable())
+                {
+                    if(((Container)unit).GetComponent<Container>().state == 1)
+                    {
+                        Swap(((Container)unit).GetComponent<Container>());
+                    }
+                }
+                else
+                {
+                    if(((Container)unit).GetComponent<Container>().ability.abilitytype == AbilityType.Fuel)
+                    {
+                        Swap(((Container)unit).GetComponent<Container>());
+                    }
+                }
             }
+            ((Container)unit).GetComponent<Container>().Run();
         }
     }
 
@@ -83,23 +104,46 @@ public class AandR {
 
     }
 
+    private void Release(Container container)
+    {
+        container.ability = player.ability;
+        player.ability = null;
+        container.state++;
+    }
+
+    private void Swap(Container container)
+    {
+        if(container.ability.abilitytype == AbilityType.Fuel)
+        {
+            container.state++;
+        }
+        Ability container_ability = container.ability;
+        container.ability = player.ability;
+        player.ability = container_ability;
+    }
     private void _absorb(Block block)
     {
         if (block.ability == null)
         {
             ReleaseAbility(block);
         }
+        else if(player.ability == null)
+        {
+            Swap(block);
+            block.CheckPipe();
+        }
         else if (block.ability.abilitytype == player.ability.abilitytype)
         {
-            AbsorbAbility(block);
+            LevelUpAbility(block);
+            block.CheckPipe();
         }
         else
         {
+            
             Swap(block);
         }
     }
-
-    private void AbsorbAbility(Block block)
+    private void LevelUpAbility(Block block)
     {
         switch (player.ability.abilitytype)
         {
@@ -118,11 +162,14 @@ public class AandR {
         Drain();
     }
 
-    private Unit GetBlock(Vector2 position)
+    private Unit GetBlockandContainer(Vector2 position)
     {
+        Wall.print(position);
         foreach (Unit u in database.units[(int)position.x, (int)position.y])
-            if (u.type == UnitType.Block)
+        {
+            if (u.unitType == UnitType.Block || u.unitType == UnitType.Container)
                 return u;
+        }
 
         return null;
     }

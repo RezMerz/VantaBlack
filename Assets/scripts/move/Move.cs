@@ -11,12 +11,7 @@ public class Move{
     public Database database;
     LogicalEngine engine;
 
-    /// <summary>
-    /// init
-    /// </summary>
-    /// <param name="Graphicalengine"></param>
-    /// <param name="player"></param>
-    /// <param name="database"></param>
+    
     public Move(LogicalEngine engine)
     {
         this.Gengine = engine.Gengine;
@@ -29,7 +24,8 @@ public class Move{
     public void move(Direction dir)
     {
         Gengine._move(dir);
-        engine.NextTurn();
+        player.position = database.player.transform.position;
+        //engine.NextTurn();
     }
 
     
@@ -57,16 +53,16 @@ public class Move{
     {
         foreach (Unit u in database.units[(int)position.x, (int)position.y])
         {
-            if (u.type == UnitType.Block || u.type == UnitType.Container || u.type == UnitType.Container)
+            if (u.unitType == UnitType.Block || u.unitType == UnitType.Container || u.unitType == UnitType.Container)
                 return false;
-            if (u.type == UnitType.Wall)
+            if (u.unitType == UnitType.Wall)
             {
                 switch (database.gravity_direction)
                 {
-                    case Direction.Down: if (((Wall)u.component).direction == Direction.Up) return false; break;
-                    case Direction.Up: if (((Wall)u.component).direction == Direction.Down) return false; break;
-                    case Direction.Right: if (((Wall)u.component).direction == Direction.Left) return false; break;
-                    case Direction.Left: if (((Wall)u.component).direction == Direction.Right) return false; break;
+                    case Direction.Down: if (u.GetComponent<Wall>().direction == Direction.Up) return false; break;
+                    case Direction.Up: if (u.GetComponent<Wall>().direction == Direction.Down) return false; break;
+                    case Direction.Right: if (u.GetComponent<Wall>().direction == Direction.Left) return false; break;
+                    case Direction.Left: if (u.GetComponent<Wall>().direction == Direction.Right) return false; break;
                 }
             }
         }

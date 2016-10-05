@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Switch : MonoBehaviour {
+public class Switch : Unit {
 
 	// Use this for initialization
 	void Start () {

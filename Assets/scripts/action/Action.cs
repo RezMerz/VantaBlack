@@ -96,7 +96,7 @@ public class Action{
     {
         foreach (Unit u in database.units[(int)player.position.x + x, (int)player.position.y + y])
         {
-            if (u.type == UnitType.Block || u.type == UnitType.Container)
+            if (u.unitType == UnitType.Block || u.unitType == UnitType.Container)
                 return false;
         }
         return true;

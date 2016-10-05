@@ -6,11 +6,13 @@ public class Interface : MonoBehaviour {
     private LogicalEngine engine;
     public int x, y;
     Database database;
+    public Direction Gravity_Directin;
 	// Use this for initialization
 	void Start () {
-        database.state = State.Busy;
         Database.database.player = player;
         database = Database.database;
+        database.gravity_direction = Gravity_Directin;
+        database.state = State.Busy;
         engine = new LogicalEngine(x, y);
         engine.run();
     }
@@ -87,11 +89,11 @@ public class Interface : MonoBehaviour {
     }
     private bool isEmpty(Vector2 dir)
     {
-        int x = (int)Mathf.Ceil(player.transform.position.x)+(int)dir.x;
-        int y = (int)Mathf.Ceil(player.transform.position.y)+(int)dir.y;
-        foreach(Unit unit  in Database.database.units[x, y])
+        int x1 = (int)Mathf.Ceil(player.transform.position.x)+(int)dir.x;
+        int y1 = (int)Mathf.Ceil(player.transform.position.y)+(int)dir.y;
+        foreach(Unit unit  in Database.database.units[x1, y1])
         {
-            if (unit.obj.tag == "Container" || unit.obj.tag == "Block" || unit.obj.tag == "wall")
+            if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Wall)
                 return false;
         }
        
