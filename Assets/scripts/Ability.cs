@@ -5,5 +5,5 @@ public class Ability : MonoBehaviour{
     public AbilityType abilitytype;
     public List<Direction> direction; //for gravity and blink abilities
     public int numberofuse;
-    public int function; //for jump height
+    public int function; //for jump height, rope
 }

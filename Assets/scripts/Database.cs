@@ -3,20 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Database{
-    public static Database database = new Database();
-    private Database()
+    public static Database database = new Database(0);
+    private Database(long i)
     {
         snapshots = new List<Snapshot>(numberOfSnapshot);
+        turn = i;
     }
     /// ///////////////////////
     public GameObject player;
     public readonly int numberOfSnapshot = 5;
     public Direction gravity_direction;
     public List<Unit>[,] units;
+    public long turn;
+    public List<TimeLaps> timeLaps;
+    public State state;
 
     private int Xsize, Ysize;
     private Direction GravityDirection;
-    private List<Snapshot> snapshots;
+    public List<Snapshot> snapshots;
 
 
 
@@ -26,11 +30,7 @@ public class Database{
         Ysize = y;
     }
 
-    public void takesnapshot()
-    {
-        //snapshots.Add(new Snapshot(units.Clone(), player.));
-        
-    }
+    
 }
 
 public class Unit
@@ -51,9 +51,23 @@ public class Unit
 
 
 
+public class TimeLaps
+{
+    public long lifetime;
+    public Vector2 position;
+    public long time;
+    public GameObject gameobject;
+    public TimeLaps(int lifetime, GameObject gameobject)
+    {
+        this.lifetime = lifetime + Database.database.turn;
+        this.gameobject = gameobject;
+        position = gameobject.transform.position;
+        time = Database.database.turn;
+    }
+}
 public enum UnitType
 {
-    Block, Pipe, Box, Magnet, Switch, Wall, Container
+    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player
 }
 
 public enum State
@@ -71,14 +85,4 @@ public enum AbilityType
     Direction, Jump, Gravity, Blink, Rope
 }
 
-public class Snapshot
-{
-    List<Unit> units;
 
-    public Snapshot(List<Unit> units, Player player)
-    {
-
-        this.units = units;
-        //this.player = player;
-    }
-}   

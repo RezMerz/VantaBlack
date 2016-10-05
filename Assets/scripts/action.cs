@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Container : MonoBehaviour {
+public class action : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -12,9 +12,4 @@ public class Container : MonoBehaviour {
 	void Update () {
 	
 	}
-
-    public void Run()
-    {
-
-    }
 }
