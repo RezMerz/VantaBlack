@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Database{
+public class Database {
     public static Database database = new Database(0);
     private Database(long i)
     {
@@ -17,8 +17,9 @@ public class Database{
     public long turn;
     public List<TimeLaps> timeLaps;
     public State state;
+    public int Ysize { get; private set; }
+    public int Xsize { get; private set; }
 
-    private int Xsize, Ysize;
     private Direction GravityDirection;
     
     public List<Snapshot> snapshots;
@@ -66,7 +67,7 @@ public class Pipe : Unit
 
 public enum UnitType
 {
-    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock
+    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock, Door
 }
 
 public enum State

@@ -4,6 +4,7 @@ using System.Collections;
 public class Interface : MonoBehaviour {
     public GameObject player;
     private LogicalEngine engine;
+    private static LogicalEngine staticengine;
     public int x, y;
     Database database;
     public Direction Gravity_Directin;
@@ -14,6 +15,7 @@ public class Interface : MonoBehaviour {
         database.gravity_direction = Gravity_Directin;
         database.state = State.Busy;
         engine = new LogicalEngine(x, y);
+        staticengine = engine;
         engine.run();
     }
 	
@@ -93,10 +95,24 @@ public class Interface : MonoBehaviour {
         int y1 = (int)Mathf.Ceil(player.transform.position.y)+(int)dir.y;
         foreach(Unit unit  in Database.database.units[x1, y1])
         {
-            if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Wall)
+            if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Wall || unit.unitType== UnitType.Rock)
                 return false;
+            if (unit.unitType == UnitType.Door)
+            {
+                if (((Door)unit).open)
+                {
+                    ((Door)unit).NextScene();
+                }
+                else
+                    return false;
+            }
         }
        
         return true;
+    }
+
+    public static LogicalEngine GetEngine()
+    {
+        return staticengine;
     }
 }

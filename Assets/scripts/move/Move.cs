@@ -25,9 +25,29 @@ public class Move{
     {
         Gengine._move(dir);
         player.position = database.player.transform.position;
+        
         //engine.NextTurn();
     }
 
+    public void MoveObjects(Unit unit, Direction d, int distance) {
+        Vector2 temp;
+        switch (d)
+        {
+            case Direction.Down: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, -distance)); break;
+            case Direction.Up: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, distance)); break;
+            case Direction.Left: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(-distance, 0)); break;
+            case Direction.Right: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(distance, 0)); break;
+            default: temp = new Vector2(0,0);  break;
+        }
+         
+        if (CheckBlockandContainer(temp))
+        {
+            database.units[(int)temp.x, (int)temp.y].Remove(unit);  
+            GraphicalEngine.MoveObject(unit.obj , temp);
+            database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Add(unit);
+
+        }
+    }
     
     public void jump()
     {
@@ -69,4 +89,14 @@ public class Move{
         return true;
     }
 
+    private bool CheckBlockandContainer(Vector2 position)
+    {
+        foreach (Unit u in database.units[(int)position.x, (int)position.y])
+        {
+            if (u.unitType == UnitType.Block || u   .unitType == UnitType.Container)
+                return false;
+        }
+
+        return true;
+    }
 }

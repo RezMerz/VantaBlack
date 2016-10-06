@@ -8,4 +8,5 @@ public class Unit : MonoBehaviour {
     public long codeNumber { get; set; }
 
     public static int Code = 0;
+
 }

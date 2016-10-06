@@ -8,6 +8,14 @@ public class MovingContainer : Container{
     public GameObject Unit;
     public int distance;
 
+    void Start()
+    {
+        unitType = UnitType.Container;
+        obj = this.gameObject;
+        position = gameObject.transform.position;
+        codeNumber = Code;
+        Code++;
+    }
     public MovingContainer(int numberofStates)
     {
         this.numberofStates = numberofStates;
@@ -16,8 +24,7 @@ public class MovingContainer : Container{
 
     public override void Run()
     {
-        print("fuck");
-        GraphicalEngine.MoveObject(Unit, MoveDirections[state], distance);
+        Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], distance);
     }
 
     public override void Check()

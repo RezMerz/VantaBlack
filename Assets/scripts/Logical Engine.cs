@@ -80,8 +80,7 @@ public class LogicalEngine {
             //Wall.print(g.transform.position);
             //Wall.print(g.GetComponent<MovingContainer>());
             Container temp = g.GetComponent<MovingContainer>();
-            temp.unitType = UnitType.Container;
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<MovingContainer>());
         }
         Gobjects.Clear();
 
@@ -99,7 +98,12 @@ public class LogicalEngine {
         foreach (GameObject g in Gobjects)
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Rock>());
         Gobjects.Clear();
-        
+
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Door"));
+        foreach (GameObject g in Gobjects)
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Rock>());
+        Gobjects.Clear();
+
         /*for(int i=0; i< x; i++)
         {
             for(int j=0; j< y; j++)
@@ -180,6 +184,12 @@ public class LogicalEngine {
         Gengine.Refresh();
         database.state = State.Idle;
     }
+
+    public void MoveObjects(Unit unit, Direction d, int distance)
+    {
+        moveObject.MoveObjects(unit, d, distance);
+    }
+
     private void CheckTimeLaps()
     {
         foreach(TimeLaps t in database.timeLaps)
@@ -191,6 +201,23 @@ public class LogicalEngine {
                 action.Teleport(t.position);
             }
         }
+    }
+
+    public Unit GetUnit(GameObject gameobject)
+    {   
+        for (int i=0; i<x; i++)
+        {
+            for(int j=0; j<y; j++)
+            {
+                foreach(Unit u in database.units[i, j])
+                {
+                    if (u.gameObject == gameobject)
+                        return u;
+                }
+            }
+        }
+
+        return null;
     }
 }
 

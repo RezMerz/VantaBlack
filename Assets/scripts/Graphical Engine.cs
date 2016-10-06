@@ -51,14 +51,9 @@ public class GraphicalEngine{
         }
     }
 
-    public static void MoveObject(GameObject obj, Direction d, int distance)
+    public static void MoveObject(GameObject obj, Vector2 position)
     {
-        switch (d)
-        {
-            case Direction.Down: obj.transform.position = Toolkit.VectorSum(obj.transform.position, new Vector2(0, -distance)); break;
-            case Direction.Up: obj.transform.position = Toolkit.VectorSum(obj.transform.position, new Vector2(0, distance)); break;
-            case Direction.Left: obj.transform.position = Toolkit.VectorSum(obj.transform.position, new Vector2(-distance, 0)); break;
-            case Direction.Right: obj.transform.position = Toolkit.VectorSum(obj.transform.position, new Vector2(distance, 0)); break;
-        }
+        obj.transform.position = position;
+
     }
 }

@@ -9,7 +9,11 @@ public class Player : Unit {
 
 	// Use this for initialization
 	void Start () {
+        unitType = UnitType.Player;
+        obj = this.gameObject;
         position = gameObject.transform.position;
+        codeNumber = Code;
+        Code++;
 	}
 	
 	// Update is called once per frame

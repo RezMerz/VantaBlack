@@ -4,8 +4,9 @@ using System.Collections;
 public class Container : Unit{
     public int numberofStates, state;
     public Ability ability;
-	// Use this for initialization
-	
+    LogicalEngine engine;
+    // Use this for initialization
+
     void Start()
     {
         unitType = UnitType.Container;
