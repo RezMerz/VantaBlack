@@ -37,4 +37,12 @@ public class Door : Unit {
         open = false;
         obj.GetComponent<SpriteRenderer>().sprite = sprite;
     }
+
+    public void OpenClose()
+    {
+        if (open)
+            CloseDoor();
+        else
+            OpenDoor();
+    }
 }

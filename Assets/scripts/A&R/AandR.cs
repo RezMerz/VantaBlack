@@ -53,25 +53,60 @@ public class AandR {
                 _absorb(((Block)unit).GetComponent<Block>());
             else if (unit.unitType == UnitType.Container)
             {
-                if (((Container)unit).GetComponent<Container>().IsEmpty()){
-                    Release(((Container)unit).GetComponent<Container>());
-                }
-                else if (((Container)unit).GetComponent<Container>().IsAvailable())
-                {
-                    if (((Container)unit).GetComponent<Container>().state == 1)
-                    {
-                        Swap(((Container)unit).GetComponent<Container>());
-                    }
-                }
-                else
-                {
-                    if (((Container)unit).GetComponent<Container>().ability.abilitytype == AbilityType.Fuel)
-                    {
-                        Swap(((Container)unit).GetComponent<MovingContainer>());
-                    }
-                }
+
+                DoContainer(unit);
             }
             ((Container)unit).Run();
+        }
+    }
+
+    private void DoContainer(Unit unit)
+    {
+        MovingContainer c1 = ((Container)unit).GetComponent<MovingContainer>();
+        DoorOpener c2 = ((Container)unit).GetComponent<DoorOpener>();
+        if(c1 != null)
+        {
+            if (c1.IsEmpty())
+            {
+                Release(c1);
+            }
+            else if (c1.IsAvailable())
+            {
+                if (c1.state == 1)
+                {
+                    Wall.print("hello agian");
+                    Swap(c1);
+                }
+            }
+            else
+            {
+                if (c1.ability.abilitytype == AbilityType.Fuel)
+                {
+                    Swap(c1);
+                }
+            }
+        }
+        else if (c2 != null)
+        {
+            if (c2.IsEmpty())
+            {
+                Release(c2);
+            }
+            else if (c2.IsAvailable())
+            {
+                if (c2.state == 1)
+                {
+                    Wall.print("hello agian");
+                    Swap(c2);
+                }
+            }
+            else
+            {
+                if (c2.ability.abilitytype == AbilityType.Fuel)
+                {
+                    Swap(c2);
+                }
+            }
         }
     }
 
@@ -108,8 +143,18 @@ public class AandR {
 
     private void Swap(Container container)
     {
+        Wall.print(container);
         Ability container_ability = container.ability;
-        container.ability = player.ability;
+        try
+        {
+            container.ability = player.ability;
+        }
+        catch
+        {
+
+            container.ability = null;
+        }
+        
         player.ability = container_ability;
         try {
             if (container.ability.abilitytype == AbilityType.Fuel)
@@ -120,7 +165,6 @@ public class AandR {
             {
                 container.state--;
             }
-            
         }
         catch
         { 

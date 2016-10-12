@@ -54,5 +54,22 @@ public sealed class Toolkit{
 
         return playerAbility;
     }
+
+    public static Direction VectorToDirection(Vector2 vector)
+    {
+        if (vector.x == 1 && vector.y == 0)
+            return Direction.Right;
+
+        else if (vector.x == 1 && vector.y == 1)
+            return Direction.Up;
+
+        else if (vector.x == -1 && vector.y == 0)
+            return Direction.Left;
+
+        else if (vector.x == -1 && vector.y == -1)
+            return Direction.Down;
+
+        return Direction.Down;
+    }
 }
 

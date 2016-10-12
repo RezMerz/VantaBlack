@@ -95,9 +95,13 @@ public class Interface : MonoBehaviour {
         int y1 = (int)Mathf.Ceil(player.transform.position.y)+(int)dir.y;
         foreach(Unit unit  in Database.database.units[x1, y1])
         {
-            if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Wall || unit.unitType== UnitType.Rock)
+            if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType== UnitType.Rock)
                 return false;
-            if (unit.unitType == UnitType.Door)
+            else if ( unit.unitType == UnitType.Wall)
+            {
+                return WallDetector(unit, Toolkit.VectorToDirection(dir));
+            }
+            else if (unit.unitType == UnitType.Door)
             {
                 if (((Door)unit).open)
                 {
@@ -107,10 +111,21 @@ public class Interface : MonoBehaviour {
                     return false;
             }
         }
-       
         return true;
     }
 
+    public bool WallDetector(Unit unit, Direction dir)
+    {
+        switch (dir)
+        {
+            case Direction.Right: return !(((Wall)unit).direction == Direction.Left);
+            case Direction.Left: return !(((Wall)unit).direction == Direction.Right);
+            case Direction.Up: return !(((Wall)unit).direction == Direction.Down);
+            case Direction.Down: return !(((Wall)unit).direction == Direction.Up);
+            default: return true;
+        }
+
+    }
     public static LogicalEngine GetEngine()
     {
         return staticengine;

@@ -18,6 +18,12 @@ public class Action{
 
     public void Act()
     {
+        if (player.ability == null)
+            return;
+
+        if (player.ability.abilitytype == AbilityType.Fuel)
+            return;
+
         switch (player.ability.abilitytype)
         {
             case AbilityType.Direction: ChangeDirection(); break;

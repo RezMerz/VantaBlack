@@ -41,30 +41,33 @@ public class LogicalEngine {
 
         List<GameObject> Gobjects = new List<GameObject>();
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Wall"));
+        
         foreach (GameObject g in Gobjects)
         {
             Wall[] wall = g.GetComponents<Wall>();
-            if(wall[0].direction == Direction.Right)
+            if (wall[0].direction == Direction.Right)
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
-                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
+                database.units[(int)g.transform.position.x - 1, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
+                
             }
             else
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(g.GetComponents<Wall>()[1]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y - 1].Add(g.GetComponents<Wall>()[0]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
 
             }
 
         }
         Gobjects.Clear();
 
-
+        
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Block"));
         foreach (GameObject g in Gobjects)
         {
             Block temp = g.GetComponent<Block>();
             temp.unitType = UnitType.Block;
+            Wall.print(g.transform.position);
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
         }
         Gobjects.Clear();
@@ -80,7 +83,15 @@ public class LogicalEngine {
             //Wall.print(g.transform.position);
             //Wall.print(g.GetComponent<MovingContainer>());
             Container temp = g.GetComponent<MovingContainer>();
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<MovingContainer>());
+            if (temp == null)
+            {
+                temp = g.GetComponent<DoorOpener>();
+                if(temp != null)
+                    database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<DoorOpener>());
+            }
+            else
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<MovingContainer>());
+
         }
         Gobjects.Clear();
 
@@ -95,13 +106,14 @@ public class LogicalEngine {
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Rock"));
+        
         foreach (GameObject g in Gobjects)
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Rock>());
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Door"));
         foreach (GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Rock>());
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Door>());
         Gobjects.Clear();
 
         /*for(int i=0; i< x; i++)

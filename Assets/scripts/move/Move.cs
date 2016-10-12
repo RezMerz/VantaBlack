@@ -42,7 +42,7 @@ public class Move{
          
         if (CheckBlockandContainer(temp))
         {
-            database.units[(int)temp.x, (int)temp.y].Remove(unit);  
+            database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);  
             GraphicalEngine.MoveObject(unit.obj , temp);
             database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Add(unit);
 
@@ -93,7 +93,7 @@ public class Move{
     {
         foreach (Unit u in database.units[(int)position.x, (int)position.y])
         {
-            if (u.unitType == UnitType.Block || u   .unitType == UnitType.Container)
+            if (u.unitType == UnitType.Block || u.unitType == UnitType.Container)
                 return false;
         }
 

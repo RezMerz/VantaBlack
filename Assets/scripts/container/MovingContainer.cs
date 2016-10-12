@@ -16,11 +16,6 @@ public class MovingContainer : Container{
         codeNumber = Code;
         Code++;
     }
-    public MovingContainer(int numberofStates)
-    {
-        this.numberofStates = numberofStates;
-        MoveDirections = new List<Direction>();
-    }
 
     public override void Run()
     {
