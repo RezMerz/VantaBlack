@@ -5,6 +5,7 @@ public class Door : Unit {
 
     public string sceneName;
     public bool open;
+    public Direction direction;
     Sprite sprite;
 	// Use this for initialization
 	void Start () {

@@ -91,29 +91,46 @@ public class Interface : MonoBehaviour {
     }
     private bool isEmpty(Vector2 dir)
     {
-        int x1 = (int)Mathf.Ceil(player.transform.position.x)+(int)dir.x;
-        int y1 = (int)Mathf.Ceil(player.transform.position.y)+(int)dir.y;
-        foreach(Unit unit  in Database.database.units[x1, y1])
-        {
-            if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType== UnitType.Rock)
-                return false;
-            else if ( unit.unitType == UnitType.Wall)
+        try {
+            CheckDoor(dir);
+            int x1 = (int)Mathf.Ceil(player.transform.position.x) + (int)dir.x;
+            int y1 = (int)Mathf.Ceil(player.transform.position.y) + (int)dir.y;
+            foreach (Unit unit in Database.database.units[x1, y1])
             {
-                return WallDetector(unit, Toolkit.VectorToDirection(dir));
+                if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock)
+                    return false;
+                else if (unit.unitType == UnitType.Wall)
+                {
+                    return WallDetector(unit, Toolkit.VectorToDirection(dir));
+                }
+
             }
-            else if (unit.unitType == UnitType.Door)
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private void CheckDoor(Vector2 dir)
+    {
+        int x1 = (int)player.transform.position.x;
+        int y1 = (int)player.transform.position.y;
+        foreach(Unit unit in database.units[x1, y1])
+        {
+            if(unit.unitType == UnitType.Door)
             {
                 if (((Door)unit).open)
                 {
-                    ((Door)unit).NextScene();
+                    if (unit.obj.GetComponent<Door>().direction == Toolkit.VectorToDirection(dir))
+                    {
+                        unit.obj.GetComponent<Door>().NextScene();
+                    }
                 }
-                else
-                    return false;
             }
         }
-        return true;
     }
-
     public bool WallDetector(Unit unit, Direction dir)
     {
         switch (dir)

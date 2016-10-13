@@ -143,7 +143,6 @@ public class AandR {
 
     private void Swap(Container container)
     {
-        Wall.print(container);
         Ability container_ability = container.ability;
         try
         {
