@@ -80,7 +80,6 @@ public class LogicalEngine {
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Container"));
         foreach (GameObject g in Gobjects)
         {
-            //Wall.print(g.transform.position);
             //Wall.print(g.GetComponent<MovingContainer>());
             Container temp = g.GetComponent<MovingContainer>();
             if (temp == null)

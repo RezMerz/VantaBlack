@@ -87,6 +87,22 @@ public class Interface : MonoBehaviour {
             {
                 engine.Undo();
             }
+            else if (Input.GetKeyUp(KeyCode.I))
+            {
+                engine.Absorb(Direction.Up);
+            }
+            else if (Input.GetKeyUp(KeyCode.J))
+            {
+                engine.Absorb(Direction.Left);
+            }
+            else if (Input.GetKeyUp(KeyCode.K))
+            {
+                engine.Absorb(Direction.Down);
+            }
+            else if (Input.GetKeyUp(KeyCode.L))
+            {
+                engine.Absorb(Direction.Right);
+            }
         }
     }
     private bool isEmpty(Vector2 dir)

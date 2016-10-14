@@ -14,7 +14,13 @@ public class Door : Unit {
         position = gameObject.transform.position;
         codeNumber = Code;
         Code++;
-        sprite = obj.GetComponent<SpriteRenderer>().sprite;
+        try {
+            sprite = obj.GetComponent<SpriteRenderer>().sprite;
+        }
+        catch
+        {
+            sprite = null;
+        }
     }
 	
 	// Update is called once per frame

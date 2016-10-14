@@ -32,7 +32,7 @@ public class AandR {
                 _absorb(((Block)unit).GetComponent<Block>());
             else if (unit.unitType == UnitType.Container)
             {
-                
+                DoContainer(unit);
             }
         }
     }
@@ -56,7 +56,7 @@ public class AandR {
 
                 DoContainer(unit);
             }
-            ((Container)unit).Run();
+            
         }
     }
 
@@ -74,7 +74,6 @@ public class AandR {
             {
                 if (c1.state == 1)
                 {
-                    Wall.print("hello agian");
                     Swap(c1);
                 }
             }
@@ -96,7 +95,7 @@ public class AandR {
             {
                 if (c2.state == 1)
                 {
-                    Wall.print("hello agian");
+
                     Swap(c2);
                 }
             }
@@ -108,6 +107,7 @@ public class AandR {
                 }
             }
         }
+
     }
 
     public void Drain()
@@ -136,9 +136,12 @@ public class AandR {
 
     private void Release(Container container)
     {
+        if (player.ability == null)
+            return;
         container.ability = player.ability;
         player.ability = null;
         container.state++;
+        container.Run();
     }
 
     private void Swap(Container container)
@@ -169,7 +172,8 @@ public class AandR {
         { 
             container.state--;
         }
-        
+        container.Run();
+
     }
     private void _absorb(Block block)
     {
