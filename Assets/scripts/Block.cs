@@ -23,6 +23,8 @@ public class Block : Unit {
 
     public void CheckPipe()
     {
+        if (Pipedfrom == null)
+            return;
         if(ability == null && Pipedfrom.ability != null)
         {
             Pomp();
