@@ -60,13 +60,13 @@ public sealed class Toolkit{
         if (vector.x == 1 && vector.y == 0)
             return Direction.Right;
 
-        else if (vector.x == 1 && vector.y == 1)
+        else if (vector.x == 0 && vector.y == 1)
             return Direction.Up;
 
         else if (vector.x == -1 && vector.y == 0)
             return Direction.Left;
 
-        else if (vector.x == -1 && vector.y == -1)
+        else if (vector.x == 0 && vector.y == -1)
             return Direction.Down;
 
         return Direction.Down;
@@ -82,6 +82,61 @@ public sealed class Toolkit{
             case Direction.Right: if (movingdirection == Direction.Left) return true; return false;
             default: return true;
         }
+    }
+    public static bool IsWallOnTheWay(Vector2 position, Direction dir)
+    {
+        if(dir == Direction.Right)
+        {
+            foreach(Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if(u.unitType == UnitType.Wall)
+                {
+                    Wall.print(((Wall)u).direction);
+                    if (((Wall)u).direction == Direction.Right)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        else if (dir == Direction.Left)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Left)
+                        return false;
+                }
+            }
+            return true;
+        }
+        else if (dir == Direction.Up)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Up)
+                        return false;
+                }
+            }
+            return true;
+        }
+        else if (dir == Direction.Down)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Down)
+                        return false;
+                }
+            }
+            return true;
+        }
+        return true;
     }
 }
 

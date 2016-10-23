@@ -111,14 +111,15 @@ public class Interface : MonoBehaviour {
             CheckDoor(dir);
             int x1 = (int)Mathf.Ceil(player.transform.position.x) + (int)dir.x;
             int y1 = (int)Mathf.Ceil(player.transform.position.y) + (int)dir.y;
+            if(!Toolkit.IsWallOnTheWay(player.transform.position, Toolkit.VectorToDirection(dir)))
+            {
+                return false;
+            }
             foreach (Unit unit in Database.database.units[x1, y1])
             {
                 if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock)
                     return false;
-                else if (unit.unitType == UnitType.Wall)
-                {
-                    return WallDetector(unit, Toolkit.VectorToDirection(dir));
-                }
+                
 
             }
             return true;

@@ -47,8 +47,8 @@ public class LogicalEngine {
             Wall[] wall = g.GetComponents<Wall>();
             if (wall[0].direction == Direction.Right)
             {
-                database.units[(int)g.transform.position.x - 1, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
+                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
                 
             }
             else

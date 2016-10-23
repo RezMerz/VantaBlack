@@ -32,6 +32,8 @@ public class Move{
     private bool MoveObjects(Unit unit, Direction d)
     {
         Vector2 temp;
+        if (! Toolkit.IsWallOnTheWay(unit.transform.position, d))
+            return false;
         switch (d)
         {
             case Direction.Down: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, -1)); break;
@@ -44,11 +46,7 @@ public class Move{
         {
             Unit u = database.units[(int)temp.x, (int)temp.y][i];
             if (u.unitType == UnitType.Wall)
-            {
-                if (! Toolkit.IsWallOnTheWay((Wall)u, d))
-                    continue;
-                return false;
-            }
+                continue;
             if (u.movable)
             {
                 if (unit.CanMove(u.unitType))
