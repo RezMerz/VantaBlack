@@ -56,4 +56,24 @@ public class GraphicalEngine{
         obj.transform.position = position;
 
     }
+
+    public void _lean_right()
+    {
+        database.player.transform.Rotate(new Vector3(0,0,-10));
+    }
+
+    public void _lean_right_undo()
+    {
+        database.player.transform.Rotate(new Vector3(0, 0, 10));
+    }
+
+    public void _lean_left()
+    {
+        database.player.transform.Rotate(new Vector3(0, 0, 10));
+    }
+
+    public void _lean_left_undo()
+    {
+        database.player.transform.Rotate(new Vector3(0, 0, -10));
+    }
 }

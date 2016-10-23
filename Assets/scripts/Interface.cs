@@ -8,6 +8,7 @@ public class Interface : MonoBehaviour {
     public int x, y;
     Database database;
     public Direction Gravity_Directin;
+    private float rotate;
 	// Use this for initialization
 	void Start () {
         Database.database.player = player;
@@ -27,34 +28,62 @@ public class Interface : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    if(isEmpty(new Vector2(1, 0)))
+                    if (isEmpty(new Vector2(1, 0)))
                     {
                         engine.move(Direction.Right);
                     }
-                    
+                    else
+                    {
+                        engine.Gengine._lean_right();
+                        rotate = -10;
+                    }
+
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    if(isEmpty(new Vector2(-1, 0)))
+                    if (isEmpty(new Vector2(-1, 0)))
                     {
                         engine.move(Direction.Left);
+                    }
+                    else
+                    {
+                        engine.Gengine._lean_left();
+                        rotate = 10;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
-                    if(isEmpty(new Vector2(0, -1)))
+                    if (isEmpty(new Vector2(0, -1)))
                     {
                         engine.move(Direction.Down);
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    if(isEmpty(new Vector2(0, 1)))
+                    if (isEmpty(new Vector2(0, 1)))
                     {
                         engine.move(Direction.Up);
                     }
                 }
+
+                /// if released it should undo the lean
+                else if (Input.GetKeyUp(KeyCode.RightArrow))
+                {
+                    if (rotate != 0)
+                    {
+                        engine.Gengine._lean_right_undo();
+                        rotate = 0;
+                    }
+                }
+
+                else if (Input.GetKeyUp(KeyCode.LeftArrow))
+                    if (rotate != 0)
+                    {
+                        engine.Gengine._lean_left_undo();
+                        rotate = 0;
+                    }
             }
+         
             else if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
