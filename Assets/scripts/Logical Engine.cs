@@ -53,8 +53,8 @@ public class LogicalEngine {
             }
             else
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y - 1].Add(g.GetComponents<Wall>()[0]);
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(g.GetComponents<Wall>()[1]);
 
             }
 
@@ -67,7 +67,6 @@ public class LogicalEngine {
         {
             Block temp = g.GetComponent<Block>();
             temp.unitType = UnitType.Block;
-            Wall.print(g.transform.position);
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
         }
         Gobjects.Clear();

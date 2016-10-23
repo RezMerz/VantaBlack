@@ -62,6 +62,12 @@ public class Pipe : Unit
     void Start()
     {
         isOpen = true;
+        movable = false;
+    }
+    public override bool CanMove(UnitType unittype)
+    {
+        
+        return false;
     }
 }
 

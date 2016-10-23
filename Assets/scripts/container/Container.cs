@@ -14,6 +14,7 @@ public class Container : Unit{
         position = gameObject.transform.position;
         codeNumber = Code;
         Code++;
+        movable = true;
     }
 
     public virtual void Run() { }
@@ -31,6 +32,13 @@ public class Container : Unit{
     public bool IsEmpty()
     {
         if (ability == null)
+            return true;
+        return false;
+    }
+
+    public override bool CanMove(UnitType unittype)
+    {
+        if (unittype == UnitType.Box || unittype == UnitType.Player)
             return true;
         return false;
     }

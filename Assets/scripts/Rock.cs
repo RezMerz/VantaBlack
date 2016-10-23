@@ -10,5 +10,12 @@ public class Rock : Unit {
         position = gameObject.transform.position;
         codeNumber = Code;
         Code++;
+        movable = true;
+    }
+    public override bool CanMove(UnitType unittype)
+    {
+        if (unittype == UnitType.Box || unittype == UnitType.Player)
+            return true;
+        return false;
     }
 }

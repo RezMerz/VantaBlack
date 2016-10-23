@@ -71,5 +71,17 @@ public sealed class Toolkit{
 
         return Direction.Down;
     }
+
+    public static bool IsWallOnTheWay(Wall wall, Direction movingdirection)
+    {
+        switch (wall.direction)
+        {
+            case Direction.Up: if (movingdirection == Direction.Down) return true; return false;
+            case Direction.Down: if (movingdirection == Direction.Up) return true; return false;
+            case Direction.Left: if (movingdirection == Direction.Right) return true; return false;
+            case Direction.Right: if (movingdirection == Direction.Left) return true; return false;
+            default: return true;
+        }
+    }
 }
 

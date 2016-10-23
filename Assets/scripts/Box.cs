@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class Player : Unit {
-
-    public Ability ability;
-    public List<Direction> move_direction;
+public class Box : Unit {
 
 	// Use this for initialization
 	void Start () {
-        unitType = UnitType.Player;
+        unitType = UnitType.Box;
         obj = this.gameObject;
         position = gameObject.transform.position;
         codeNumber = Code;
@@ -19,11 +15,11 @@ public class Player : Unit {
 	
 	// Update is called once per frame
 	void Update () {
-        
+	
 	}
     public override bool CanMove(UnitType unittype)
     {
-        if (unittype == UnitType.Box || unittype == UnitType.Player)
+        if (unittype == UnitType.Box)
             return true;
         return false;
     }

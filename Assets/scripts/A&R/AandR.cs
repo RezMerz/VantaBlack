@@ -21,10 +21,10 @@ public class AandR {
         Unit unit = null;
         switch (dir)
         {
-            case Direction.Down: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, -1))); break;
-            case Direction.Up: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
-            case Direction.Right: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
-            case Direction.Left: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
+            case Direction.Down: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(0, -1))); break;
+            case Direction.Up: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(0, 1))); break;
+            case Direction.Right: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(1, 0))); break;
+            case Direction.Left: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(-1, 0))); break;
         }
         if (unit != null)
         {
@@ -42,11 +42,12 @@ public class AandR {
         Unit unit = null;
         switch (database.gravity_direction)
         {
-            case Direction.Down: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, -1)));  break;
-            case Direction.Up: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(0, 1))); break;
-            case Direction.Right: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(1, 0))); break;
-            case Direction.Left: unit = GetBlockandContainer(Toolkit.VectorSum(player.position, new Vector2(-1, 0))); break;
+            case Direction.Down: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(0, -1)));  break;
+            case Direction.Up: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(0, 1))); break;
+            case Direction.Right: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(1, 0))); break;
+            case Direction.Left: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(-1, 0))); break;
         }
+        Wall.print(unit);
         if (unit != null)
         {
             if (unit.unitType == UnitType.Block)
@@ -62,6 +63,7 @@ public class AandR {
 
     private void DoContainer(Unit unit)
     {
+        Wall.print("hello");
         MovingContainer c1 = ((Container)unit).GetComponent<MovingContainer>();
         DoorOpener c2 = ((Container)unit).GetComponent<DoorOpener>();
         if(c1 != null)
@@ -73,6 +75,10 @@ public class AandR {
             else if (c1.IsAvailable())
             {
                 if (c1.state == 1)
+                {
+                    Swap(c1);
+                }
+                else
                 {
                     Swap(c1);
                 }
@@ -95,7 +101,10 @@ public class AandR {
             {
                 if (c2.state == 1)
                 {
-
+                    Swap(c2);
+                }
+                else
+                {
                     Swap(c2);
                 }
             }
@@ -193,7 +202,6 @@ public class AandR {
         }
         else
         {
-            
             Swap(block);
         }
     }

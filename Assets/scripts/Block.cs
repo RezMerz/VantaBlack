@@ -14,6 +14,7 @@ public class Block : Unit {
         position = gameObject.transform.position;
         codeNumber = Code;
         Code++;
+        movable = true;
     }
 
 	// Update is called once per frame
@@ -46,6 +47,13 @@ public class Block : Unit {
     public void ClearBlock()
     {
         ability = null;
+    }
+
+    public override bool CanMove(UnitType unittype)
+    {
+        if (unittype == UnitType.Box || unittype == UnitType.Player)
+            return true;
+        return false;
     }
 }
 

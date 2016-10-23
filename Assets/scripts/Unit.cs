@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Unit : MonoBehaviour {
+public abstract class Unit : MonoBehaviour {
     public Vector2 position { get; set; }
     public UnitType unitType { get; set; }
     public GameObject obj { get; set; }
     public long codeNumber { get; set; }
+    public bool movable { get; set; }
 
     public static int Code = 0;
 
+
+    public  abstract bool CanMove(UnitType unittype);
+   
 }

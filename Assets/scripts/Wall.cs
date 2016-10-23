@@ -13,10 +13,16 @@ public class Wall : Unit {
         position = gameObject.transform.position;
         codeNumber = Code;
         Code++;
+        movable = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+    public override bool CanMove(UnitType unittype)
+    {
+        
+        return false;
+    }
 }

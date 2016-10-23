@@ -21,6 +21,7 @@ public class Door : Unit {
         {
             sprite = null;
         }
+        movable = false;
     }
 	
 	// Update is called once per frame
@@ -51,5 +52,10 @@ public class Door : Unit {
             CloseDoor();
         else
             OpenDoor();
+    }
+    public override bool CanMove(UnitType unittype)
+    {
+        
+        return false;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Move{
     /// <summary>
@@ -29,26 +29,75 @@ public class Move{
         //engine.NextTurn();
     }
 
-    public void MoveObjects(Unit unit, Direction d, int distance) {
+    private bool MoveObjects(Unit unit, Direction d)
+    {
         Vector2 temp;
         switch (d)
         {
-            case Direction.Down: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, -distance)); break;
-            case Direction.Up: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, distance)); break;
-            case Direction.Left: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(-distance, 0)); break;
-            case Direction.Right: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(distance, 0)); break;
-            default: temp = new Vector2(0,0);  break;
+            case Direction.Down: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, -1)); break;
+            case Direction.Up: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, 1)); break;
+            case Direction.Left: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(-1, 0)); break;
+            case Direction.Right: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(1, 0)); break;
+            default: temp = new Vector2(0, 0); break;
         }
-         
-        if (CheckBlockandContainer(temp))
+        for(int i =0; i< database.units[(int)temp.x, (int)temp.y].Count; i++)
         {
-            database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);  
-            GraphicalEngine.MoveObject(unit.obj , temp);
-            database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Add(unit);
-
+            Unit u = database.units[(int)temp.x, (int)temp.y][i];
+            if (u.unitType == UnitType.Wall)
+            {
+                if (! Toolkit.IsWallOnTheWay((Wall)u, d))
+                    continue;
+                return false;
+            }
+            if (u.movable)
+            {
+                if (unit.CanMove(u.unitType))
+                {
+                    if (!MoveObjects(u, d))
+                        return false;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
+        database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
+        GraphicalEngine.MoveObject(unit.obj, temp);
+        database.units[(int)temp.x, (int)temp.y].Add(unit);
+        return true;
+
     }
-    
+        
+
+    public bool MoveObjects(Unit unit, Direction d, int distance)
+    {
+        bool flag = false;
+        for (int i = 0; i < distance; i++){
+            if (MoveObjects(unit, d))
+                flag = true;
+        }
+        return flag;
+        
+    }
+    public Unit CheckMovableItem(Vector2 position)
+    {
+        foreach (Unit u in database.units[(int)position.x, (int)position.y])
+        {
+            if (u.unitType == UnitType.Box || u.unitType == UnitType.Player)
+            {
+
+                return u;
+            }
+        }
+        return null;
+    }
+
+
     public void jump()
     {
         for (int i = 1; i < player.ability.function; i++)
