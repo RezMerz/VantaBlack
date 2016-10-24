@@ -72,14 +72,14 @@ public class Move{
     }
         
 
-    public bool MoveObjects(Unit unit, Direction d, int distance)
+    public int MoveObjects(Unit unit, Direction d, int distance)
     {
-        bool flag = false;
+        int counter = 0;
         for (int i = 0; i < distance; i++){
             if (MoveObjects(unit, d))
-                flag = true;
+                counter++;
         }
-        return flag;
+        return counter;
         
     }
     public Unit CheckMovableItem(Vector2 position)
