@@ -22,6 +22,7 @@ public class Interface : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        engine.Gengine._gravity();
         if (database.state == State.Idle)
         {
             if (!Input.GetKeyDown(KeyCode.Space))
@@ -30,6 +31,7 @@ public class Interface : MonoBehaviour {
                 {
                     if (isEmpty(new Vector2(1, 0)))
                     {
+                        engine.Gengine._right_light();
                         engine.move(Direction.Right);
                     }
                     else
@@ -41,6 +43,7 @@ public class Interface : MonoBehaviour {
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
+                  
                     if (isEmpty(new Vector2(-1, 0)))
                     {
                         engine.move(Direction.Left);
