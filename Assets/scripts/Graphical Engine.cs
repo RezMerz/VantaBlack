@@ -10,6 +10,7 @@ public class GraphicalEngine {
     private float gravity = 9.8f;
     private float velocity = 5;
     private float fall_distance;
+    private Vector2 player_pos;
     public GraphicalEngine()
     {
         database = Database.database;
@@ -101,6 +102,7 @@ public class GraphicalEngine {
             if (fall_distance > fall_pos)
             {
                 fall = false;
+                database.player.transform.position = Toolkit.VectorSum(player_pos, _direction_to_vector(database.gravity_direction) * fall_pos);
             }
         }
     }
@@ -123,5 +125,6 @@ public class GraphicalEngine {
         fall_distance = 0;
         fall = true;
         fall_pos = pos;
+        player_pos = database.player.transform.position;
     }
 }
