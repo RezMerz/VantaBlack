@@ -7,6 +7,8 @@ public class MovingContainer : Container{
     public List<Direction> MoveDirections;
     public GameObject Unit;
     public int distance;
+    int moved;
+    public bool forward { get; set; }
 
     void Start()
     {
@@ -15,11 +17,22 @@ public class MovingContainer : Container{
         position = gameObject.transform.position;
         codeNumber = Code;
         Code++;
+        forward = true;
     }
 
     public override void Run()
     {
-        Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], distance);
+        if(forward)
+            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], distance);
+        else
+            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[state]), distance);
+    }
+    public void Run(int i)
+    {
+        if (forward)
+            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], i);
+        else
+            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[state]), i);
     }
 
     public override void Check()

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Switch : Unit {
 
+    public Direction direction;
 	// Use this for initialization
 	void Start () {
         unitType = UnitType.Switch;

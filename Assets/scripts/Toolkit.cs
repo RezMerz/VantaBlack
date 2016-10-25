@@ -83,6 +83,7 @@ public sealed class Toolkit{
             default: return true;
         }
     }
+
     public static bool IsWallOnTheWay(Vector2 position, Direction dir)
     {
         if(dir == Direction.Right)
@@ -91,7 +92,6 @@ public sealed class Toolkit{
             {
                 if(u.unitType == UnitType.Wall)
                 {
-                    Wall.print(((Wall)u).direction);
                     if (((Wall)u).direction == Direction.Right)
                     {
                         return false;
@@ -137,6 +137,18 @@ public sealed class Toolkit{
             return true;
         }
         return true;
+    }
+
+    public static Direction ReverseDirection(Direction d)
+    {
+        switch (d)
+        {
+            case Direction.Up: return Direction.Down;
+            case Direction.Down: return Direction.Up;
+            case Direction.Left: return Direction.Right;
+            case Direction.Right: return Direction.Left;
+            default: return Direction.Up;
+        }
     }
 }
 

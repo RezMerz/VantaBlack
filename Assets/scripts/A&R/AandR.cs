@@ -150,6 +150,8 @@ public class AandR {
         container.ability = player.ability;
         player.ability = null;
         container.state++;
+        if (((MovingContainer)container) != null)
+            ((MovingContainer)container).forward = true;
         container.Run();
     }
 
@@ -171,15 +173,21 @@ public class AandR {
             if (container.ability.abilitytype == AbilityType.Fuel)
             {
                 container.state++;
+                if (((MovingContainer)container) != null)
+                    ((MovingContainer)container).forward = true;
             }
             else
             {
                 container.state--;
+                if (((MovingContainer)container) != null)
+                    ((MovingContainer)container).forward = false;
             }
         }
         catch
         { 
             container.state--;
+            if (((MovingContainer)container) != null)
+                ((MovingContainer)container).forward = false;
         }
         container.Run();
 

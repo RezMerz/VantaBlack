@@ -4,10 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
     public static GameManager manager = null;
-    public static GameManager manager
-    {
-        get { return manager; }
-    }
+
 	
     void Awake()
     {

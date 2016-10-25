@@ -45,16 +45,17 @@ public class LogicalEngine {
         foreach (GameObject g in Gobjects)
         {
             Wall[] wall = g.GetComponents<Wall>();
+            
             if (wall[0].direction == Direction.Right)
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
-                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[1]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(wall[0]);
+                database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(wall[1]);
                 
             }
             else
             {
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponents<Wall>()[0]);
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(g.GetComponents<Wall>()[1]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(wall[0]);
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(wall[1]);
 
             }
 
@@ -195,9 +196,9 @@ public class LogicalEngine {
         database.state = State.Idle;
     }
 
-    public void MoveObjects(Unit unit, Direction d, int distance)
+    public int MoveObjects(Unit unit, Direction d, int distance)
     {
-        moveObject.MoveObjects(unit, d, distance);
+        return moveObject.MoveObjects(unit, d, distance);
     }
 
     private void CheckTimeLaps()
