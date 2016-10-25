@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Door : Unit {
 
-    public string sceneName;
+    
     public bool open;
     public Direction direction;
-    Sprite sprite;
+    protected Sprite sprite;
 	// Use this for initialization
 	void Start () {
         unitType = UnitType.Door;
@@ -29,29 +29,24 @@ public class Door : Unit {
 	
 	}
 
-    public void NextScene()
+    public virtual void Next()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        
     }
 
-    public void OpenDoor()
+    public virtual void OpenDoor()
     {
-        open = true;
-        obj.GetComponent<SpriteRenderer>().sprite = null;
+        
     }
 
-    public void CloseDoor()
+    public virtual void CloseDoor()
     {
-        open = false;
-        obj.GetComponent<SpriteRenderer>().sprite = sprite;
+        
     }
 
-    public void OpenClose()
+    public virtual void OpenClose()
     {
-        if (open)
-            CloseDoor();
-        else
-            OpenDoor();
+        
     }
     public override bool CanMove(UnitType unittype)
     {

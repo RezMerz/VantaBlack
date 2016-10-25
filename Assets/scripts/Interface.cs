@@ -22,7 +22,7 @@ public class Interface : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        engine.Gengine._gravity();
+        //engine.Gengine._gravity();
         if (database.state == State.Idle)
         {
             if (!Input.GetKeyDown(KeyCode.Space))
@@ -135,6 +135,10 @@ public class Interface : MonoBehaviour {
             {
                 engine.Absorb(Direction.Right);
             }
+            else if ((Input.GetKeyUp(KeyCode.Q)))
+            {
+                engine.SwitchAction();
+            }
         }
     }
     private bool isEmpty(Vector2 dir)
@@ -174,7 +178,7 @@ public class Interface : MonoBehaviour {
                 {
                     if (unit.obj.GetComponent<Door>().direction == Toolkit.VectorToDirection(dir))
                     {
-                        unit.obj.GetComponent<Door>().NextScene();
+                        unit.obj.GetComponent<Door>().Next();
                     }
                 }
             }

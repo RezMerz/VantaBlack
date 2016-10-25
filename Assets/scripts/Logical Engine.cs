@@ -89,14 +89,29 @@ public class LogicalEngine {
                     database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<DoorOpener>());
             }
             else
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<MovingContainer>());
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
 
         }
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Switch"));
         foreach (GameObject g in Gobjects)
-            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Switch>());
+        {
+            
+            MovingSwitch t1 = g.GetComponent<MovingSwitch>();
+            if(t1 == null)
+            {
+                DoorSwitch t2 = g.GetComponent<DoorSwitch>();
+                if(t2 == null)
+                {
+
+                }
+                else
+                    database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(t2);
+            }
+            else
+                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(t1);
+        }
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Player"));
@@ -188,6 +203,11 @@ public class LogicalEngine {
         database.turn = snapshot.turn;
         Refresh();
         
+    }
+
+    public void SwitchAction()
+    {
+        action.SwitchActionPressed();
     }
 
     public void Refresh()
