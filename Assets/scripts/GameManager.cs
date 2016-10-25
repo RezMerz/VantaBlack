@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            mangaer = this;
+            //mangaer = this;
         }
         DontDestroyOnLoad(this.gameObject);
     }
