@@ -11,6 +11,7 @@ public class Box : Unit {
         codeNumber = Code;
         Code++;
         movable = true;
+        CanBeMoved = true;
 	}
 	
 	// Update is called once per frame

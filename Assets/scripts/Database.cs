@@ -63,6 +63,7 @@ public class Pipe : Unit
     {
         isOpen = true;
         movable = false;
+        layer = 2;
     }
     public override bool CanMove(UnitType unittype)
     {

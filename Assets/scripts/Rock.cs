@@ -11,6 +11,7 @@ public class Rock : Unit {
         codeNumber = Code;
         Code++;
         movable = true;
+        layer = 1;
     }
     public override bool CanMove(UnitType unittype)
     {

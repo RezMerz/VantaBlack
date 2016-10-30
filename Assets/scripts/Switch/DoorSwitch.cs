@@ -7,11 +7,7 @@ public class DoorSwitch : Switch {
     bool isOn;
     // Use this for initialization
     void Start () {
-        unitType = UnitType.Switch;
-        obj = this.gameObject;
-        position = gameObject.transform.position;
-        codeNumber = Code;
-        Code++;
+        base.Start();
         isOn = false;
     }
 	
@@ -23,9 +19,14 @@ public class DoorSwitch : Switch {
     public override bool Run() {
         if (isOn && singlestate)
             return false;
-        door.GetComponent<Door>().OpenClose();
-        isOn = true;
-        return true;
+        Door d = Toolkit.GetDoor(door);
+        if (d != null)
+        {
+            d.OpenClose();
+            isOn = true;
+            return true;
+        }
+        return false;
     }
 
 }

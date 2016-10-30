@@ -139,6 +139,61 @@ public sealed class Toolkit{
         return true;
     }
 
+    public static bool IsDoorOnTheway(Vector2 position, Direction dir)
+    {
+        if (dir == Direction.Right)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Door)
+                {
+                    if (((Door)u).direction == Direction.Right)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        else if (dir == Direction.Left)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Door)
+                {
+                    if (((Door)u).direction == Direction.Left)
+                        return false;
+                }
+            }
+            return true;
+        }
+        else if (dir == Direction.Up)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Door)
+                {
+                    if (((Door)u).direction == Direction.Up)
+                        return false;
+                }
+            }
+            return true;
+        }
+        else if (dir == Direction.Down)
+        {
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Door)
+                {
+                    if (((Door)u).direction == Direction.Down)
+                        return false;
+                }
+            }
+            return true;
+        }
+        return true;
+    }
+
     public static Direction ReverseDirection(Direction d)
     {
         switch (d)
@@ -149,6 +204,17 @@ public sealed class Toolkit{
             case Direction.Right: return Direction.Left;
             default: return Direction.Up;
         }
+    }
+
+    public static Door GetDoor(GameObject door)
+    {
+        InternalDoor d1 = door.GetComponent<InternalDoor>();
+        if (d1 != null)
+            return d1;
+        ExternalDoor d2 = door.GetComponent<ExternalDoor>();
+        if (d2 != null)
+            return d2;
+        return null;
     }
 }
 

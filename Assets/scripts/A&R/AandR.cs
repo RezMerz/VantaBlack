@@ -115,8 +115,19 @@ public class AandR {
                     Swap(c2);
                 }
             }
+            
         }
-
+        if (!((Container)unit).IsEmpty() && ((Container)unit).Unlockable)
+        {
+            foreach (AbilityType t in ((Container)unit).UnlockerAbilities)
+            {
+                if (((Container)unit).ability.abilitytype == t)
+                {
+                    ((Container)unit).CanBeMoved = true;
+                    break;
+                }
+            }
+        }
     }
 
     public void Drain()

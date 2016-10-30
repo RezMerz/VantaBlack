@@ -77,8 +77,8 @@ public class Action{
         {
             if (u.unitType == UnitType.Switch)
             {
-                SwitchAction(u);
-                return;
+                Wall.print("dafuq");
+                SwitchAction(u); 
             }
         }
     }

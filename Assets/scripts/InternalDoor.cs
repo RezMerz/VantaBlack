@@ -20,6 +20,8 @@ public class InternalDoor : Door {
             sprite = null;
         }
         movable = false;
+        if (open)
+            obj.GetComponent<SpriteRenderer>().sprite = null;
     }
 
     // Update is called once per frame

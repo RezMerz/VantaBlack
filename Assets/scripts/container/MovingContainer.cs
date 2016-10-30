@@ -12,12 +12,8 @@ public class MovingContainer : Container{
 
     void Start()
     {
-        unitType = UnitType.Container;
-        obj = this.gameObject;
-        position = gameObject.transform.position;
-        codeNumber = Code;
-        Code++;
-        forward = true;
+        base.Start();
+        forward = false;
     }
 
     public override void Run()

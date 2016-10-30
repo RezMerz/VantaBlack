@@ -45,6 +45,8 @@ public class Move{
         for(int i =0; i< database.units[(int)temp.x, (int)temp.y].Count; i++)
         {
             Unit u = database.units[(int)temp.x, (int)temp.y][i];
+            if (u.layer == 2)
+                continue;
             if (u.unitType == UnitType.Wall)
                 continue;
             if (u.movable)
@@ -74,6 +76,7 @@ public class Move{
 
     public int MoveObjects(Unit unit, Direction d, int distance)
     {
+        
         int counter = 0;
         for (int i = 0; i < distance; i++){
             if (MoveObjects(unit, d))

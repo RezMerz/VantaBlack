@@ -15,7 +15,10 @@ public class Block : Unit {
         codeNumber = Code;
         Code++;
         movable = true;
+        layer = 1;
     }
+
+
 
 	// Update is called once per frame
 	void Update () {

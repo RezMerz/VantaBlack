@@ -12,11 +12,7 @@ public class MovingSwitch : Switch {
 
     void Start()
     {
-        unitType = UnitType.Switch;
-        obj = this.gameObject;
-        position = gameObject.transform.position;
-        codeNumber = Code;
-        Code++;
+        base.Start();
         isOn = false;
         moved = distance;
     }

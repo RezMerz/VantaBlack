@@ -7,11 +7,8 @@ public class DoorOpener : Container {
     // Use this for initialization
     void Start()
     {
-        unitType = UnitType.Container;
-        obj = this.gameObject;
-        position = gameObject.transform.position;
-        codeNumber = Code;
-        Code++;
+        base.Start();
+        
     }
 
     // Update is called once per frame
