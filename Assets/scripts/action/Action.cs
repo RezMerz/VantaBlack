@@ -69,6 +69,46 @@ public class Action{
     {
         database.timeLaps.Add(new TimeLaps(player.ability.function, database.player));
     }
+
+    public void SwitchActionPressed()
+    {
+        
+        foreach (Unit u in database.units[(int)player.transform.position.x, (int)player.transform.position.y])
+        {
+            if (u.unitType == UnitType.Switch)
+            {
+                Wall.print("dafuq");
+                SwitchAction(u); 
+            }
+        }
+    }
+
+    private void SwitchAction(Unit sw)
+    {
+        MovingSwitch t1 = null;
+        DoorSwitch t2 = null;
+        try
+        {
+             t1 = (MovingSwitch)sw;
+        }catch { }
+
+        if (t1 == null)
+        {
+            try
+            {
+                t2 = (DoorSwitch)sw;
+            }   catch { }
+            if(t2 == null)
+            {
+
+            }
+            else
+                t2.Run();
+        }
+        else
+            t1.Run();
+
+    }
     private void ChangeDirection()
     {
         switch (player.move_direction[0])

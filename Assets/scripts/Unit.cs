@@ -10,6 +10,9 @@ public abstract class Unit : MonoBehaviour {
 
     public static int Code = 0;
 
+    public bool CanBeMoved;
+
+    public int layer { get; set; }
 
     public  abstract bool CanMove(UnitType unittype);
    

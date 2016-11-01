@@ -22,7 +22,7 @@ public class Interface : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        engine.Gengine._gravity();
+        //engine.Gengine._gravity();
         if (database.state == State.Idle)
         {
             if (!Input.GetKeyDown(KeyCode.Space))
@@ -135,12 +135,17 @@ public class Interface : MonoBehaviour {
             {
                 engine.Absorb(Direction.Right);
             }
+            else if ((Input.GetKeyUp(KeyCode.Q)))
+            {
+                engine.SwitchAction();
+            }
         }
     }
     private bool isEmpty(Vector2 dir)
     {
         try {
-            CheckDoor(dir);
+            if (! CheckDoor(dir))
+                return false;
             int x1 = (int)Mathf.Ceil(player.transform.position.x) + (int)dir.x;
             int y1 = (int)Mathf.Ceil(player.transform.position.y) + (int)dir.y;
             if(!Toolkit.IsWallOnTheWay(player.transform.position, Toolkit.VectorToDirection(dir)))
@@ -150,9 +155,20 @@ public class Interface : MonoBehaviour {
             foreach (Unit unit in Database.database.units[x1, y1])
             {
                 if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock)
+                {
+                    if (unit.CanBeMoved)
+                    {
+                        if (engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) == 1)
+                            return true;
+                    }
                     return false;
+                }
+                if(unit.unitType == UnitType.Box)
+                {
+                    if (engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) == 1)
+                            return true;
+                }
                 
-
             }
             return true;
         }
@@ -162,23 +178,36 @@ public class Interface : MonoBehaviour {
         }
     }
 
-    private void CheckDoor(Vector2 dir)
+    private bool CheckDoor(Vector2 dir)
     {
+
         int x1 = (int)player.transform.position.x;
         int y1 = (int)player.transform.position.y;
         foreach(Unit unit in database.units[x1, y1])
         {
             if(unit.unitType == UnitType.Door)
             {
-                if (((Door)unit).open)
+                InternalDoor d1 = unit.GetComponent<InternalDoor>();
+                if(d1 != null)
                 {
-                    if (unit.obj.GetComponent<Door>().direction == Toolkit.VectorToDirection(dir))
+                    return true;
+                    if (d1.open && d1.direction == Toolkit.VectorToDirection(dir))
+                        return true;
+                    else
+                        return false;
+                }
+                ExternalDoor d2 = unit.GetComponent<ExternalDoor>();
+                if (d2 != null)
+                {
+                    if (d2.open && d2.direction == Toolkit.VectorToDirection(dir))
                     {
-                        unit.obj.GetComponent<Door>().NextScene();
+                        unit.obj.GetComponent<Door>().Next();
                     }
+                    else return false;
                 }
             }
         }
+        return true;
     }
     public bool WallDetector(Unit unit, Direction dir)
     {

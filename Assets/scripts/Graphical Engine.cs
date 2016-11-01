@@ -14,7 +14,7 @@ public class GraphicalEngine {
     public GraphicalEngine()
     {
         database = Database.database;
-        ui = GameObject.Find("Canvas").GetComponent<UI>();
+        //ui = GameObject.Find("Canvas").GetComponent<UI>();
     }
 
 	// Use this for initialization
@@ -88,7 +88,7 @@ public class GraphicalEngine {
     public void _right_light()
     {
         Wall.print("right light");
-        ui._right_light();
+        //ui._right_light();
     }
 
     public void _gravity()

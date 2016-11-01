@@ -11,6 +11,7 @@ public class Box : Unit {
         codeNumber = Code;
         Code++;
         movable = true;
+        CanBeMoved = true;
 	}
 	
 	// Update is called once per frame
@@ -21,6 +22,7 @@ public class Box : Unit {
     {
         if (unittype == UnitType.Box)
             return true;
-        return false;
+        else 
+            return false;
     }
 }

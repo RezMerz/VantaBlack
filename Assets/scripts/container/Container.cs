@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Container : Unit{
     public int numberofStates, state;
     public Ability ability;
+    public bool Unlockable;
+    public List<AbilityType> UnlockerAbilities;
     LogicalEngine engine;
     // Use this for initialization
 
-    void Start()
+    public void Start()
     {
         unitType = UnitType.Container;
         obj = this.gameObject;
@@ -15,6 +17,7 @@ public class Container : Unit{
         codeNumber = Code;
         Code++;
         movable = true;
+        layer = 1;
     }
 
     public virtual void Run() { }

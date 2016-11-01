@@ -14,6 +14,7 @@ public class Wall : Unit {
         codeNumber = Code;
         Code++;
         movable = false;
+        layer = 1;
     }
 	
 	// Update is called once per frame
