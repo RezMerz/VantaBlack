@@ -11,6 +11,7 @@ public class GraphicalEngine {
     private float velocity = 5;
     private float fall_distance;
     private Vector2 player_pos;
+    private float lean_offset = 0.2f;
     public GraphicalEngine()
     {
         database = Database.database;
@@ -75,6 +76,15 @@ public class GraphicalEngine {
         database.player.transform.Rotate(new Vector3(0, 0, 10));
     }
 
+    public void _lean_top()
+    {
+        database.player.transform.position = database.player.transform.position + new Vector3(0, lean_offset, 0);
+    }
+
+    public void _lean_top_undo()
+    {
+        database.player.transform.position = database.player.transform.position + new Vector3(0, -lean_offset, 0);
+    }
     public void _lean_left()
     {
         database.player.transform.Rotate(new Vector3(0, 0, 10));

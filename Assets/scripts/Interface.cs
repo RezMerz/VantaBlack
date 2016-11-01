@@ -63,10 +63,7 @@ public class Interface : MonoBehaviour {
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    if (isEmpty(new Vector2(0, 1)))
-                    {
-                        engine.move(Direction.Up);
-                    }
+                    engine.move(Direction.Up);
                 }
 
                 /// if released it should undo the lean
