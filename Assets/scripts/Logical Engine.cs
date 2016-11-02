@@ -132,7 +132,6 @@ public class LogicalEngine {
                 {
                     if (d2.direction == Direction.Down)
                     {
-                        Wall.print(g.transform.position);
                         database.units[(int)g.transform.position.x, (int)g.transform.position.y + 1].Add(d2);
                     }
                     else if (d2.direction == Direction.Left)
@@ -270,6 +269,36 @@ public class LogicalEngine {
         }
 
         return null;
+    }
+
+    public void ApplyGravity()
+    {
+        int counter = 0;
+        Vector2 pos1 = player.transform.position;
+        Vector2 pos2;
+        switch (database.gravity_direction)
+        {
+            case Direction.Up: pos2 = new Vector2(0, 1); break;
+            case Direction.Down: pos2 = new Vector2(0, -1); break;
+            case Direction.Right: pos2 = new Vector2(1, 0); break;
+            case Direction.Left: pos2 = new Vector2(-1, 0); break;
+            default: pos2 = new Vector2(0, 0); break;
+        }
+        while (true)
+        {
+            if (Toolkit.IsEmptySpace(Toolkit.VectorSum(pos1, pos2), database.gravity_direction))
+            {
+                counter++;
+                pos1 = Toolkit.VectorSum(pos1, pos2);
+            }
+            else
+                break;
+        }
+        database.units[(int)player.transform.position.x, (int)player.transform.position.y].Remove(player);
+        for(int i=0; i< counter; i++)
+            Gengine._move(database.gravity_direction);
+        player.position = database.player.transform.position;
+        database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
     }
 }
 

@@ -63,7 +63,6 @@ public class AandR {
 
     private void DoContainer(Unit unit)
     {
-        Wall.print("hello");
         MovingContainer c1 = ((Container)unit).GetComponent<MovingContainer>();
         DoorOpener c2 = ((Container)unit).GetComponent<DoorOpener>();
         if(c1 != null)

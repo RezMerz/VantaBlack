@@ -216,5 +216,18 @@ public sealed class Toolkit{
             return d2;
         return null;
     }
+
+    public static bool IsEmptySpace(Vector2 position,  Direction d)
+    {
+        if (IsDoorOnTheway(position, d))
+            return false;
+        foreach(Unit u in Database.database.units[(int)position.x, (int)position.y])
+        {
+            if (u.unitType == UnitType.Wall || u.unitType == UnitType.Door)
+                continue;
+            return false;
+        }
+        return true;
+    }
 }
 

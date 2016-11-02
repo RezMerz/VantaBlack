@@ -18,8 +18,10 @@ public class MovingContainer : Container{
 
     public override void Run()
     {
-        if(forward)
+        if (forward)
+        {
             moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], distance);
+        }
         else
             moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[state]), distance);
     }

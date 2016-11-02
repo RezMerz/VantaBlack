@@ -33,6 +33,7 @@ public class Interface : MonoBehaviour {
                     {
                         engine.Gengine._right_light();
                         engine.move(Direction.Right);
+                        engine.ApplyGravity();
                     }
                     else
                     {
@@ -47,6 +48,7 @@ public class Interface : MonoBehaviour {
                     if (isEmpty(new Vector2(-1, 0)))
                     {
                         engine.move(Direction.Left);
+                        engine.ApplyGravity();
                     }
                     else
                     {
@@ -59,11 +61,13 @@ public class Interface : MonoBehaviour {
                     if (isEmpty(new Vector2(0, -1)))
                     {
                         engine.move(Direction.Down);
+                        engine.ApplyGravity();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     engine.move(Direction.Up);
+                    engine.ApplyGravity();
                 }
 
                 /// if released it should undo the lean
@@ -89,52 +93,64 @@ public class Interface : MonoBehaviour {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     engine.Act(Direction.Right);
+                    engine.ApplyGravity();
                 }
                 else if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     engine.Act(Direction.Left);
+                    engine.ApplyGravity();
                 }
                 else if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     engine.Act(Direction.Down);
+                    engine.ApplyGravity();
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     engine.Act(Direction.Up);
+                    engine.ApplyGravity();
                 }
                 else
                 {
                     engine.Act();
+                    engine.ApplyGravity();
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.A))
             {
                 engine.Absorb();
+                engine.ApplyGravity();
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
                 engine.Undo();
+                engine.ApplyGravity();
             }
             else if (Input.GetKeyUp(KeyCode.I))
             {
                 engine.Absorb(Direction.Up);
+                engine.ApplyGravity();
             }
             else if (Input.GetKeyUp(KeyCode.J))
             {
                 engine.Absorb(Direction.Left);
+                engine.ApplyGravity();
             }
             else if (Input.GetKeyUp(KeyCode.K))
             {
                 engine.Absorb(Direction.Down);
+                engine.ApplyGravity();
             }
             else if (Input.GetKeyUp(KeyCode.L))
             {
                 engine.Absorb(Direction.Right);
+                engine.ApplyGravity();
             }
             else if ((Input.GetKeyUp(KeyCode.Q)))
             {
                 engine.SwitchAction();
+                engine.ApplyGravity();
             }
         }
     }

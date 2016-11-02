@@ -23,9 +23,11 @@ public class Move{
     
     public void move(Direction dir)
     {
+        database.units[(int)player.transform.position.x, (int)player.transform.position.y].Remove(player);
         Gengine._move(dir);
         player.position = database.player.transform.position;
-        
+        database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
+
         //engine.NextTurn();
     }
 
@@ -51,6 +53,7 @@ public class Move{
                 continue;
             if (u.movable)
             {
+                Wall.print(u.unitType);
                 if (unit.CanMove(u.unitType))
                 {
                     if (!MoveObjects(u, d))
@@ -76,7 +79,6 @@ public class Move{
 
     public int MoveObjects(Unit unit, Direction d, int distance)
     {
-        
         int counter = 0;
         for (int i = 0; i < distance; i++){
             if (MoveObjects(unit, d))

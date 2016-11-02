@@ -22,7 +22,6 @@ public class Box : Unit {
     {
         if (unittype == UnitType.Box)
             return true;
-        else 
-            return false;
+        return false;
     }
 }
