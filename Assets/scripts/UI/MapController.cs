@@ -7,7 +7,7 @@ public class MapController : MonoBehaviour {
     private GameObject[] rooms;
     void Awake()
     {
-        panel = GameObject.Find("MapPanel");
+        panel = gameObject.transform.GetChild(0).gameObject;
         panel.SetActive(false);
         is_showing = false;
         rooms = new GameObject[panel.transform.childCount];
@@ -46,6 +46,8 @@ public class MapController : MonoBehaviour {
                 room.SetActive(true);
             else
                 room.SetActive(false);
+            if (Database.database.player.GetComponent<Player>().current_scene == room.name)
+                room.GetComponent<SpriteRenderer>().color = Color.red;
             i++;
         }
     }
