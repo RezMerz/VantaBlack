@@ -284,6 +284,8 @@ public class LogicalEngine {
             case Direction.Left: pos2 = new Vector2(-1, 0); break;
             default: pos2 = new Vector2(0, 0); break;
         }
+        if (Toolkit.IsWallOnTheWay(pos1, database.gravity_direction))
+            return;
         while (true)
         {
             if (Toolkit.IsEmptySpace(Toolkit.VectorSum(pos1, pos2), database.gravity_direction))

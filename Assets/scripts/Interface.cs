@@ -66,8 +66,11 @@ public class Interface : MonoBehaviour {
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    engine.move(Direction.Up);
-                    engine.ApplyGravity();
+                    if (isEmpty(new Vector2(0, 1)))
+                    {
+                        engine.move(Direction.Up);
+                        engine.ApplyGravity();
+                    }
                 }
 
                 /// if released it should undo the lean
@@ -161,7 +164,7 @@ public class Interface : MonoBehaviour {
                 return false;
             int x1 = (int)Mathf.Ceil(player.transform.position.x) + (int)dir.x;
             int y1 = (int)Mathf.Ceil(player.transform.position.y) + (int)dir.y;
-            if(!Toolkit.IsWallOnTheWay(player.transform.position, Toolkit.VectorToDirection(dir)))
+            if(Toolkit.IsWallOnTheWay(player.transform.position, Toolkit.VectorToDirection(dir)))
             {
                 return false;
             }
@@ -169,11 +172,6 @@ public class Interface : MonoBehaviour {
             {
                 if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock)
                 {
-                    if (unit.CanBeMoved)
-                    {
-                        if (engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) == 1)
-                            return true;
-                    }
                     return false;
                 }
                 if(unit.unitType == UnitType.Box)

@@ -34,8 +34,10 @@ public class Move{
     private bool MoveObjects(Unit unit, Direction d)
     {
         Vector2 temp;
-        if (! Toolkit.IsWallOnTheWay(unit.transform.position, d))
-            return false;
+        
+        if(unit.unitType != UnitType.Wall)
+            if (Toolkit.IsWallOnTheWay(unit.transform.position, d))
+                return false;
         switch (d)
         {
             case Direction.Down: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, -1)); break;
@@ -72,6 +74,24 @@ public class Move{
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
         GraphicalEngine.MoveObject(unit.obj, temp);
         database.units[(int)temp.x, (int)temp.y].Add(unit);
+        if (unit.unitType == UnitType.Wall)
+        {
+            switch (((Door)unit).direction)
+            {
+                case Direction.Right: database.units[(int)unit.transform.position.x + 1, (int)unit.transform.position.y].Remove(unit.gameObject.GetComponents<Wall>()[1]);
+                    database.units[(int)temp.x + 1, (int)temp.y].Add(unit.gameObject.GetComponents<Wall>()[1]);
+                    break;
+                case Direction.Left: database.units[(int)unit.transform.position.x - 1, (int)unit.transform.position.y].Remove(unit.gameObject.GetComponents<Wall>()[0]);
+                    database.units[(int)temp.x - 1, (int)temp.y].Add(unit.gameObject.GetComponents<Wall>()[0]);
+                    break;
+                case Direction.Up: database.units[(int)unit.transform.position.x, (int)unit.transform.position.y + 1].Remove(unit.gameObject.GetComponents<Wall>()[1]);
+                    database.units[(int)temp.x, (int)temp.y + 1].Add(unit.gameObject.GetComponents<Wall>()[1]);
+                    break;
+                case Direction.Down: database.units[(int)unit.transform.position.x, (int)unit.transform.position.y - 1].Remove(unit.gameObject.GetComponents<Wall>()[0]);
+                    database.units[(int)temp.x, (int)temp.y - 1].Add(unit.gameObject.GetComponents<Wall>()[0]);
+                    break;
+            }
+        }
         return true;
 
     }

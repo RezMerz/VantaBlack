@@ -93,12 +93,10 @@ public sealed class Toolkit{
                 if(u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Right)
-                    {
-                        return false;
-                    }
+                        return true;
                 }
             }
-            return true;
+            return false;
         }
         else if (dir == Direction.Left)
         {
@@ -107,10 +105,10 @@ public sealed class Toolkit{
                 if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Left)
-                        return false;
+                        return true;
                 }
             }
-            return true;
+            return false;
         }
         else if (dir == Direction.Up)
         {
@@ -119,10 +117,10 @@ public sealed class Toolkit{
                 if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Up)
-                        return false;
+                        return true;
                 }
             }
-            return true;
+            return false;
         }
         else if (dir == Direction.Down)
         {
@@ -131,12 +129,12 @@ public sealed class Toolkit{
                 if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Down)
-                        return false;
+                        return true;
                 }
             }
-            return true;
+            return false;
         }
-        return true;
+        return false;
     }
 
     public static bool IsDoorOnTheway(Vector2 position, Direction dir)
@@ -151,9 +149,10 @@ public sealed class Toolkit{
                     {
                         return false;
                     }
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
         else if (dir == Direction.Left)
         {
@@ -164,8 +163,9 @@ public sealed class Toolkit{
                     if (((Door)u).direction == Direction.Left)
                         return false;
                 }
+                return true;
             }
-            return true;
+            return false;
         }
         else if (dir == Direction.Up)
         {
@@ -176,8 +176,9 @@ public sealed class Toolkit{
                     if (((Door)u).direction == Direction.Up)
                         return false;
                 }
+                return true;
             }
-            return true;
+            return false;
         }
         else if (dir == Direction.Down)
         {
@@ -187,11 +188,12 @@ public sealed class Toolkit{
                 {
                     if (((Door)u).direction == Direction.Down)
                         return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
-        return true;
+        return false;
     }
 
     public static Direction ReverseDirection(Direction d)
@@ -219,13 +221,13 @@ public sealed class Toolkit{
 
     public static bool IsEmptySpace(Vector2 position,  Direction d)
     {
-        if (IsDoorOnTheway(position, d))
+        if (IsDoorOnTheway(position, d) || IsWallOnTheWay(position, d))
             return false;
-        foreach(Unit u in Database.database.units[(int)position.x, (int)position.y])
+        Wall.print(position);
+        foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
         {
-            if (u.unitType == UnitType.Wall || u.unitType == UnitType.Door)
+            if (u.unitType == UnitType.Wall || u.unitType == UnitType.Door || u.unitType == UnitType.Switch || u.unitType == UnitType.Pipe)
                 continue;
-            return false;
         }
         return true;
     }
