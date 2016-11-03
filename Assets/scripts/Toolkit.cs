@@ -221,15 +221,45 @@ public sealed class Toolkit{
 
     public static bool IsEmptySpace(Vector2 position,  Direction d)
     {
-        if (IsDoorOnTheway(position, d) || IsWallOnTheWay(position, d))
-            return false;
-        Wall.print(position);
-        foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
-        {
-            if (u.unitType == UnitType.Wall || u.unitType == UnitType.Door || u.unitType == UnitType.Switch || u.unitType == UnitType.Pipe)
-                continue;
+        try {
+            /*foreach(Unit u in Database.database.units[1,1])
+            {
+                Wall.print(u.unitType);
+            }*/
+            Vector2 temp = DirectiontoVector(ReverseDirection(d));
+            if (IsWallOnTheWay(VectorSum(position, temp), d))
+                return false;
+            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            {
+                if (u.unitType == UnitType.Wall || u.unitType == UnitType.Switch || u.unitType == UnitType.Pipe)
+                    continue;
+                else if (u.unitType == UnitType.Door)
+                {
+                    if (((Door)u).direction == d && ((Door)u).open)
+                        ((Door)u).Next();
+                    else if (((Door)u).direction == d && !((Door)u).open)
+                        return false;
+                }
+                else return false;
+            }
+            return true;
         }
-        return true;
+        catch
+        {
+            return false;
+        }
+    }
+
+    public static Vector2 DirectiontoVector(Direction d)
+    {
+        switch (d)
+        {
+            case Direction.Right: return new Vector2(1, 0);
+            case Direction.Left: return new Vector2(-1, 0);
+            case Direction.Down: return new Vector2(0, -1);
+            case Direction.Up: return new Vector2(0, 1);
+            default: return new Vector2(0, 0);
+        }
     }
 }
 

@@ -35,6 +35,7 @@ public class Interface : MonoBehaviour {
                         engine.Gengine._right_light();
                         engine.move(Direction.Right);
                         engine.ApplyGravity();
+                        engine.CheckBlockSwitch();
                     }
                     else
                     {
@@ -51,6 +52,7 @@ public class Interface : MonoBehaviour {
                     {
                         engine.move(Direction.Left);
                         engine.ApplyGravity();
+                        engine.CheckBlockSwitch();
                     }
                     else
                     {
@@ -65,6 +67,7 @@ public class Interface : MonoBehaviour {
                     {
                         engine.move(Direction.Down);
                         engine.ApplyGravity();
+                        engine.CheckBlockSwitch();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -108,7 +111,8 @@ public class Interface : MonoBehaviour {
             else if (Input.GetKeyDown(KeyCode.Space))
             {        
                     engine.Act();
-                    engine.ApplyGravity();   
+                    engine.ApplyGravity();
+                    engine.CheckBlockSwitch();
             }
 
             if (Input.GetKeyDown(KeyCode.A))
@@ -116,16 +120,19 @@ public class Interface : MonoBehaviour {
                 if(!_lean_absorb())
                     engine.Absorb();
                 engine.ApplyGravity();
+                engine.CheckBlockSwitch();
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
                 engine.Undo();
                 engine.ApplyGravity();
+                engine.CheckBlockSwitch();
             }
             else if ((Input.GetKeyUp(KeyCode.Q)))
             {
                 engine.SwitchAction();
                 engine.ApplyGravity();
+                engine.CheckBlockSwitch();
             }
             else if (Input.GetKeyDown(KeyCode.M))
             {

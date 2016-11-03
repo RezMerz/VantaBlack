@@ -149,6 +149,11 @@ public class LogicalEngine {
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Box>());
         Gobjects.Clear();
 
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("BlockSwitch"));
+        foreach (GameObject g in Gobjects)
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<BlockSwitch>());
+        Gobjects.Clear();
+
         /*for(int i=0; i< x; i++)
         {
             for(int j=0; j< y; j++)
@@ -284,8 +289,16 @@ public class LogicalEngine {
             case Direction.Left: pos2 = new Vector2(-1, 0); break;
             default: pos2 = new Vector2(0, 0); break;
         }
-        if (Toolkit.IsWallOnTheWay(pos1, database.gravity_direction))
-            return;
+        foreach (Unit u in Database.database.units[(int)player.transform.position.x, (int)player.transform.position.y])
+        {
+            if (u.unitType == UnitType.Door)
+            {
+                if (((Door)u).direction == database.gravity_direction && ((Door)u).open)
+                    ((Door)u).Next();
+                else if (((Door)u).direction == database.gravity_direction && !((Door)u).open)
+                    return;
+            }
+        }
         while (true)
         {
             if (Toolkit.IsEmptySpace(Toolkit.VectorSum(pos1, pos2), database.gravity_direction))
@@ -301,6 +314,18 @@ public class LogicalEngine {
             Gengine._move(database.gravity_direction);
         player.position = database.player.transform.position;
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
+    }
+
+    public void CheckBlockSwitch()
+    {
+        Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
+        foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
+        {
+            if(u.unitType == UnitType.BlockSwitch && !((BlockSwitch)u).isManual)
+            {
+                action.BlockSwitchAction(((BlockSwitch)u));
+            }
+        }
     }
 }
 

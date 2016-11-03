@@ -72,12 +72,23 @@ public class Action{
 
     public void SwitchActionPressed()
     {
-        
         foreach (Unit u in database.units[(int)player.transform.position.x, (int)player.transform.position.y])
         {
             if (u.unitType == UnitType.Switch)
             {
                 SwitchAction(u); 
+            }
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
+            {
+                BlockSwitchAction((BlockSwitch)u);
+            }
+        }
+        Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
+        foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
+        {
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
+            {
+                BlockSwitchAction(((BlockSwitch)u));
             }
         }
     }
@@ -107,6 +118,14 @@ public class Action{
         else
             t1.Run();
 
+    }
+
+    public void BlockSwitchAction(BlockSwitch block)
+    {
+        if(block.ability.abilitytype == AbilityType.Direction)
+        {
+            ChangeDirection();
+        }
     }
     private void ChangeDirection()
     {

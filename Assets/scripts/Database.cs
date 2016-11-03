@@ -74,7 +74,7 @@ public class Pipe : Unit
 
 public enum UnitType
 {
-    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock, Door
+    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock, Door, BlockSwitch
 }
 
 public enum State
