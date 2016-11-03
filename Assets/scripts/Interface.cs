@@ -9,6 +9,7 @@ public class Interface : MonoBehaviour {
     Database database;
     public Direction Gravity_Directin;
     private float rotate;
+    private Direction lean;
 	// Use this for initialization
 	void Start () {
         Database.database.player = player;
@@ -39,6 +40,7 @@ public class Interface : MonoBehaviour {
                     {
                         engine.Gengine._lean_right();
                         rotate = -10;
+                        lean = Direction.Right;
                     }
 
                 }
@@ -54,6 +56,7 @@ public class Interface : MonoBehaviour {
                     {
                         engine.Gengine._lean_left();
                         rotate = 10;
+                        lean = Direction.Left;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -66,13 +69,24 @@ public class Interface : MonoBehaviour {
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    if (isEmpty(new Vector2(0, 1)))
+                    engine.Gengine._lean_top();
+                    lean = Direction.Up;
+                    rotate = 10;
+                   /* if (isEmpty(new Vector2(0, 1)))
                     {
                         engine.move(Direction.Up);
                         engine.ApplyGravity();
-                    }
+                    } */
                 }
 
+                else if (Input.GetKeyUp(KeyCode.UpArrow))
+                {
+                    if (rotate != 0)
+                    {
+                        engine.Gengine._lean_top_undo();
+                        rotate = 0;
+                    }
+                }
                 /// if released it should undo the lean
                 else if (Input.GetKeyUp(KeyCode.RightArrow))
                 {
@@ -95,6 +109,7 @@ public class Interface : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
+                    print("right space");
                     engine.Act(Direction.Right);
                     engine.ApplyGravity();
                 }
@@ -122,7 +137,8 @@ public class Interface : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                engine.Absorb();
+                if(!_lean_absorb())
+                    engine.Absorb();
                 engine.ApplyGravity();
             }
             else if (Input.GetKeyUp(KeyCode.R))
@@ -155,7 +171,21 @@ public class Interface : MonoBehaviour {
                 engine.SwitchAction();
                 engine.ApplyGravity();
             }
+            else if (Input.GetKeyDown(KeyCode.M))
+            {
+                GameObject.Find("Map").GetComponent<MapController>()._click();
+            }
         }
+    }
+
+    private bool _lean_absorb()
+    {
+        if(rotate!=0)
+        {
+            engine.Absorb(lean);
+            return true;
+        }
+        return false;
     }
     private bool isEmpty(Vector2 dir)
     {
