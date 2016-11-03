@@ -12,6 +12,7 @@ public class Database {
     /// ///////////////////////
     public GameObject player;
     public readonly int numberOfSnapshot = 5;
+    public int snapShotCount;
     public Direction gravity_direction;
     public List<Unit>[,] units;
     public long turn;

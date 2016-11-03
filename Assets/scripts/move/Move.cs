@@ -109,6 +109,7 @@ public class Move{
                     break;
             }
         }
+        unit.position = unit.gameObject.transform.position;
         return true;
 
     }
@@ -150,6 +151,7 @@ public class Move{
                 case Direction.Left: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(i, 0)))) Gengine._jump(i - 1); break;
             }
         }
+        player.position = player.gameObject.transform.position;
         engine.NextTurn();
     }
 

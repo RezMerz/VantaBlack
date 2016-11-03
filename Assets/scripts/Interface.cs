@@ -34,8 +34,7 @@ public class Interface : MonoBehaviour {
                     {
                         engine.Gengine._right_light();
                         engine.move(Direction.Right);
-                        engine.ApplyGravity();
-                        engine.CheckBlockSwitch();
+                        engine.EndTurn();
                     }
                     else
                     {
@@ -51,8 +50,7 @@ public class Interface : MonoBehaviour {
                     if (isEmpty(new Vector2(-1, 0)))
                     {
                         engine.move(Direction.Left);
-                        engine.ApplyGravity();
-                        engine.CheckBlockSwitch();
+                        engine.EndTurn();
                     }
                     else
                     {
@@ -66,8 +64,7 @@ public class Interface : MonoBehaviour {
                     if (isEmpty(new Vector2(0, -1)))
                     {
                         engine.move(Direction.Down);
-                        engine.ApplyGravity();
-                        engine.CheckBlockSwitch();
+                        engine.EndTurn();
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -111,28 +108,23 @@ public class Interface : MonoBehaviour {
             else if (Input.GetKeyDown(KeyCode.Space))
             {        
                     engine.Act();
-                    engine.ApplyGravity();
-                    engine.CheckBlockSwitch();
+                    engine.EndTurn();
             }
 
             if (Input.GetKeyDown(KeyCode.A))
             {
                 if(!_lean_absorb())
                     engine.Absorb();
-                engine.ApplyGravity();
-                engine.CheckBlockSwitch();
+                engine.EndTurn();
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
                 engine.Undo();
-                engine.ApplyGravity();
-                engine.CheckBlockSwitch();
             }
             else if ((Input.GetKeyUp(KeyCode.Q)))
             {
                 engine.SwitchAction();
-                engine.ApplyGravity();
-                engine.CheckBlockSwitch();
+                engine.EndTurn();
             }
             else if (Input.GetKeyDown(KeyCode.M))
             {
