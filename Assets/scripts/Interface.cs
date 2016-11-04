@@ -46,9 +46,12 @@ public class Interface : MonoBehaviour {
                     }
                     else
                     {
-                        engine.Gengine._lean_right();
-                        rotate = -10;
-                        lean = Direction.Right;
+                      foreach( Direction dir in Database.database.player.GetComponent<Player>().move_direction)
+                            if ( dir == Direction.Right) {
+                            engine.Gengine._lean_right();
+                            rotate = -10;
+                            lean = Direction.Right;
+                        }
                     }
 
                 }
@@ -62,9 +65,13 @@ public class Interface : MonoBehaviour {
                     }
                     else
                     {
-                        engine.Gengine._lean_left();
-                        rotate = 10;
-                        lean = Direction.Left;
+                        foreach (Direction dir in Database.database.player.GetComponent<Player>().move_direction)
+                            if (dir == Direction.Left)
+                            {
+                                engine.Gengine._lean_left();
+                                rotate = 10;
+                                lean = Direction.Left;
+                            }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -131,7 +138,8 @@ public class Interface : MonoBehaviour {
             }
             else if ((Input.GetKeyUp(KeyCode.Q)))
             {
-                engine.SwitchAction();
+                if(!_lean_action())
+                    engine.SwitchAction();
                 engine.EndTurn();
             }
             else if (Input.GetKeyDown(KeyCode.M))
@@ -157,6 +165,15 @@ public class Interface : MonoBehaviour {
         }
     }
 
+    private bool _lean_action()
+    {
+        if(rotate!=0)
+        {
+            //engine.SwitchAction(lean);
+            return true;
+        }
+        return false;
+    }
     private void Set_Camera(Vector3 pos)
     {
         
