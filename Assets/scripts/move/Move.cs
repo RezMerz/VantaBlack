@@ -55,7 +55,6 @@ public class Move{
                 continue;
             if (u.movable)
             {
-                Wall.print(u.unitType);
                 if (unit.CanMove(u.unitType))
                 {
                     if (!MoveObjects(u, d))
@@ -72,26 +71,45 @@ public class Move{
             }
         }
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
+        if (unit.unitType == UnitType.Wall)
+        {
+            switch (((Wall)unit).direction)
+            {
+                case Direction.Right:
+                    database.units[(int)unit.transform.position.x + 1, (int)unit.transform.position.y].Remove(unit.gameObject.GetComponents<Wall>()[1]);
+                    break;
+                case Direction.Left:
+                    database.units[(int)unit.transform.position.x - 1, (int)unit.transform.position.y].Remove(unit.gameObject.GetComponents<Wall>()[0]);
+                    break;
+                case Direction.Up:
+                    database.units[(int)unit.transform.position.x, (int)unit.transform.position.y + 1].Remove(unit.gameObject.GetComponents<Wall>()[1]);
+                    break;
+                case Direction.Down:
+                    database.units[(int)unit.transform.position.x, (int)unit.transform.position.y - 1].Remove(unit.gameObject.GetComponents<Wall>()[0]);
+                    break;
+            }
+        }
         GraphicalEngine.MoveObject(unit.obj, temp);
         database.units[(int)temp.x, (int)temp.y].Add(unit);
         if (unit.unitType == UnitType.Wall)
         {
-            switch (((Door)unit).direction)
+            switch (((Wall)unit).direction)
             {
-                case Direction.Right: database.units[(int)unit.transform.position.x + 1, (int)unit.transform.position.y].Remove(unit.gameObject.GetComponents<Wall>()[1]);
+                case Direction.Right:
                     database.units[(int)temp.x + 1, (int)temp.y].Add(unit.gameObject.GetComponents<Wall>()[1]);
                     break;
-                case Direction.Left: database.units[(int)unit.transform.position.x - 1, (int)unit.transform.position.y].Remove(unit.gameObject.GetComponents<Wall>()[0]);
+                case Direction.Left:
                     database.units[(int)temp.x - 1, (int)temp.y].Add(unit.gameObject.GetComponents<Wall>()[0]);
                     break;
-                case Direction.Up: database.units[(int)unit.transform.position.x, (int)unit.transform.position.y + 1].Remove(unit.gameObject.GetComponents<Wall>()[1]);
+                case Direction.Up:
                     database.units[(int)temp.x, (int)temp.y + 1].Add(unit.gameObject.GetComponents<Wall>()[1]);
                     break;
-                case Direction.Down: database.units[(int)unit.transform.position.x, (int)unit.transform.position.y - 1].Remove(unit.gameObject.GetComponents<Wall>()[0]);
+                case Direction.Down:
                     database.units[(int)temp.x, (int)temp.y - 1].Add(unit.gameObject.GetComponents<Wall>()[0]);
                     break;
             }
         }
+        unit.position = unit.gameObject.transform.position;
         return true;
 
     }
@@ -133,6 +151,7 @@ public class Move{
                 case Direction.Left: if (!CheckJump(Toolkit.VectorSum(player.position, new Vector2(i, 0)))) Gengine._jump(i - 1); break;
             }
         }
+        player.position = player.gameObject.transform.position;
         engine.NextTurn();
     }
 

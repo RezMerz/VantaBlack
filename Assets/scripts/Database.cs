@@ -12,6 +12,7 @@ public class Database {
     /// ///////////////////////
     public GameObject player;
     public readonly int numberOfSnapshot = 5;
+    public int snapShotCount;
     public Direction gravity_direction;
     public List<Unit>[,] units;
     public long turn;
@@ -74,7 +75,7 @@ public class Pipe : Unit
 
 public enum UnitType
 {
-    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock, Door
+    Block, Pipe, Box, Magnet, Switch, Wall, Container, Player, Rock, Door, BlockSwitch
 }
 
 public enum State

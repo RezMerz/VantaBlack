@@ -47,7 +47,7 @@ public class AandR {
             case Direction.Right: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(1, 0))); break;
             case Direction.Left: unit = GetBlockandContainer(Toolkit.VectorSum(player.transform.position, new Vector2(-1, 0))); break;
         }
-        Wall.print(unit);
+
         if (unit != null)
         {
             if (unit.unitType == UnitType.Block)

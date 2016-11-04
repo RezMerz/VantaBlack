@@ -11,16 +11,22 @@ public class SnapshotManager {
 
     public void takesnapshot()
     {
-        Database.database.snapshots.RemoveAt(0);
+        if(Database.database.snapShotCount == Database.database.numberOfSnapshot)
+            Database.database.snapshots.RemoveAt(0);
         Database.database.snapshots.Add(new Snapshot((List<Unit>[,])Database.database.units.Clone()));
-
+        Database.database.snapShotCount++;
     }
 
     public Snapshot Revese()
     {
-        Snapshot snapshot = Database.database.snapshots[Database.database.snapshots.Count - 1];
-        Database.database.snapshots.RemoveAt(Database.database.snapshots.Count - 1);
-        return snapshot;
+        if (Database.database.snapShotCount != 0)
+        {
+            Snapshot snapshot = Database.database.snapshots[Database.database.snapShotCount - 1];
+            Database.database.snapshots.RemoveAt(Database.database.snapShotCount - 1);
+            Database.database.snapShotCount--;
+            return snapshot;
+        }
+        return null;
     }
 }
 

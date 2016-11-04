@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class LogicalEngine {
+public class LogicalEngine
+{
     public Database database;
     public Player player;
     public GraphicalEngine Gengine;
@@ -12,9 +13,10 @@ public class LogicalEngine {
     Action action;
     AandR AR;
     Map map;
-    
+
     SnapshotManager spManager;
-    public LogicalEngine (int x, int y) {
+    public LogicalEngine(int x, int y)
+    {
         database = Database.database;
         player = database.player.GetComponent<Player>();
         Gengine = new GraphicalEngine();
@@ -28,12 +30,12 @@ public class LogicalEngine {
         action = new Action(this);
         map = new Map(this);
         AR = new AandR(this);
-	}
+    }
     void init()
     {
-        for(int i=0; i< x; i++)
+        for (int i = 0; i < x; i++)
         {
-            for(int j=0; j< y; j++)
+            for (int j = 0; j < y; j++)
             {
                 database.units[i, j] = new List<Unit>();
             }
@@ -41,16 +43,16 @@ public class LogicalEngine {
 
         List<GameObject> Gobjects = new List<GameObject>();
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Wall"));
-        
+
         foreach (GameObject g in Gobjects)
         {
             Wall[] wall = g.GetComponents<Wall>();
-            
+
             if (wall[0].direction == Direction.Right)
             {
                 database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(wall[0]);
                 database.units[(int)g.transform.position.x + 1, (int)g.transform.position.y].Add(wall[1]);
-                
+
             }
             else
             {
@@ -62,7 +64,7 @@ public class LogicalEngine {
         }
         Gobjects.Clear();
 
-        
+
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Block"));
         foreach (GameObject g in Gobjects)
         {
@@ -85,7 +87,7 @@ public class LogicalEngine {
             if (temp == null)
             {
                 temp = g.GetComponent<DoorOpener>();
-                if(temp != null)
+                if (temp != null)
                     database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<DoorOpener>());
             }
             else
@@ -97,7 +99,7 @@ public class LogicalEngine {
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Switch"));
         foreach (GameObject g in Gobjects)
         {
-            
+
             MovingSwitch[] t1 = g.GetComponents<MovingSwitch>();
             DoorSwitch[] t2 = g.GetComponents<DoorSwitch>();
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t2);
@@ -111,7 +113,7 @@ public class LogicalEngine {
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Rock"));
-        
+
         foreach (GameObject g in Gobjects)
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Rock>());
         Gobjects.Clear();
@@ -123,12 +125,12 @@ public class LogicalEngine {
             if (d1 != null)
             {
                 database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(d1);
-                
+
             }
             else
             {
                 ExternalDoor d2 = g.GetComponent<ExternalDoor>();
-                if(d2 != null)
+                if (d2 != null)
                 {
                     if (d2.direction == Direction.Down)
                     {
@@ -139,7 +141,7 @@ public class LogicalEngine {
                     else
                         database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(d2);
                 }
-                
+
             }
         }
         Gobjects.Clear();
@@ -147,6 +149,11 @@ public class LogicalEngine {
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Box"));
         foreach (GameObject g in Gobjects)
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Box>());
+        Gobjects.Clear();
+
+        Gobjects.AddRange(GameObject.FindGameObjectsWithTag("BlockSwitch"));
+        foreach (GameObject g in Gobjects)
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<BlockSwitch>());
         Gobjects.Clear();
 
         /*for(int i=0; i< x; i++)
@@ -166,7 +173,7 @@ public class LogicalEngine {
         database.state = State.Idle;
     }
 
-    
+
 
     /// <summary>
     /// action for dir, jump, rope
@@ -175,7 +182,7 @@ public class LogicalEngine {
     public void Act()
     {
         action.Act();
-    }  
+    }
     /// action for blink, gravity
     /// </summary>
     /// <param name="direction"></param>
@@ -187,15 +194,15 @@ public class LogicalEngine {
     public void move(Direction direction)
     {
         bool flag = false;
-        foreach(Direction d in player.move_direction)
+        foreach (Direction d in player.move_direction)
         {
-            if(d == direction)
+            if (d == direction)
             {
                 flag = true;
-                break;  
+                break;
             }
         }
-        if(flag)
+        if (flag)
             moveObject.move(direction);
     }
     public void Absorb()
@@ -210,8 +217,8 @@ public class LogicalEngine {
 
     public void NextTurn()
     {
-        spManager.takesnapshot();
-        
+        //spManager.takesnapshot();
+
         database.turn++;
     }
 
@@ -222,7 +229,7 @@ public class LogicalEngine {
         database.units = snapshot.units;
         database.turn = snapshot.turn;
         Refresh();
-        
+
     }
 
     public void SwitchAction()
@@ -243,7 +250,7 @@ public class LogicalEngine {
 
     private void CheckTimeLaps()
     {
-        foreach(TimeLaps t in database.timeLaps)
+        foreach (TimeLaps t in database.timeLaps)
         {
             t.time++;
             if (t.time == t.lifetime)
@@ -255,12 +262,12 @@ public class LogicalEngine {
     }
 
     public Unit GetUnit(GameObject gameobject)
-    {   
-        for (int i=0; i<x; i++)
+    {
+        for (int i = 0; i < x; i++)
         {
-            for(int j=0; j<y; j++)
+            for (int j = 0; j < y; j++)
             {
-                foreach(Unit u in database.units[i, j])
+                foreach (Unit u in database.units[i, j])
                 {
                     if (u.gameObject == gameobject)
                         return u;
@@ -271,7 +278,15 @@ public class LogicalEngine {
         return null;
     }
 
-    public void ApplyGravity()
+    public void EndTurn()
+    {
+        ApplyGravity();
+        CheckBlockSwitch();
+        spManager.takesnapshot();
+        Wall.print(database.snapShotCount);
+    }
+
+    private void ApplyGravity()
     {
         int counter = 0;
         Vector2 pos1 = player.transform.position;
@@ -284,8 +299,16 @@ public class LogicalEngine {
             case Direction.Left: pos2 = new Vector2(-1, 0); break;
             default: pos2 = new Vector2(0, 0); break;
         }
-        if (Toolkit.IsWallOnTheWay(pos1, database.gravity_direction))
-            return;
+        foreach (Unit u in Database.database.units[(int)player.transform.position.x, (int)player.transform.position.y])
+        {
+            if (u.unitType == UnitType.Door)
+            {
+                if (((Door)u).direction == database.gravity_direction && ((Door)u).open)
+                    ((Door)u).Next();
+                else if (((Door)u).direction == database.gravity_direction && !((Door)u).open)
+                    return;
+            }
+        }
         while (true)
         {
             if (Toolkit.IsEmptySpace(Toolkit.VectorSum(pos1, pos2), database.gravity_direction))
@@ -297,11 +320,24 @@ public class LogicalEngine {
                 break;
         }
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Remove(player);
-        for(int i=0; i< counter; i++)
+        for (int i = 0; i < counter; i++)
             Gengine._move(database.gravity_direction);
         player.position = database.player.transform.position;
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
     }
-}
 
+    public void CheckBlockSwitch()
+    {
+        Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
+        foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
+        {
+            if (u.unitType == UnitType.BlockSwitch && !((BlockSwitch)u).isManual)
+            {
+                action.BlockSwitchAction(((BlockSwitch)u));
+            }
+        }
+    }
+
+
+}
 
