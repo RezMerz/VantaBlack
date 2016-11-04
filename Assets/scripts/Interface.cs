@@ -10,6 +10,7 @@ public class Interface : MonoBehaviour {
     public Direction Gravity_Directin;
     private float rotate;
     private Direction lean;
+    private float camera_speed = 0.05f;
 	// Use this for initialization
 	void Start () {
         Database.database.player = player;
@@ -130,9 +131,33 @@ public class Interface : MonoBehaviour {
             {
                 GameObject.Find("Map").GetComponent<MapController>()._click();
             }
+            else if(Input.GetKey(KeyCode.L))
+            {
+                Set_Camera(new Vector2(camera_speed, 0));
+            }
+            else if (Input.GetKey(KeyCode.J))
+            {
+                Set_Camera(new Vector2(-camera_speed, 0));
+            }
+            else if (Input.GetKey(KeyCode.I))
+            {
+                Set_Camera(new Vector2(0, camera_speed));
+            }
+            else if (Input.GetKey(KeyCode.K))
+            {
+                Set_Camera(new Vector2(0, -camera_speed));
+            }
         }
     }
 
+    private void Set_Camera(Vector3 pos)
+    {
+        
+         pos = Toolkit.VectorSum(Camera.main.transform.position, pos);
+         pos.z = -10;
+         Camera.main.transform.position = pos;
+
+    }
     private bool _lean_absorb()
     {
         if(rotate!=0)
