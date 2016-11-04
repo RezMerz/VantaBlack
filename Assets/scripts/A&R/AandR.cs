@@ -160,9 +160,12 @@ public class AandR {
         container.ability = player.ability;
         player.ability = null;
         container.state++;
-        if (((MovingContainer)container) != null)
-            ((MovingContainer)container).forward = true;
-        container.Run();
+        try {
+            if (((MovingContainer)container) != null)
+                ((MovingContainer)container).forward = true;
+        }
+        catch { }
+        engine.action.RunContainer(container);
     }
 
     private void Swap(Container container)
@@ -199,7 +202,7 @@ public class AandR {
             if (((MovingContainer)container) != null)
                 ((MovingContainer)container).forward = false;
         }
-        container.Run();
+        engine.action.RunContainer(container);
 
     }
     private void _absorb(Block block)

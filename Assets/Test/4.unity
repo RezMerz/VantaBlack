@@ -149,7 +149,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4.1563606
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -213,7 +213,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 455824, guid: df552aeef4809dd40a8efb5c38063aef, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 176074, guid: df552aeef4809dd40a8efb5c38063aef, type: 2}
       propertyPath: m_TagString
@@ -321,6 +321,7 @@ MonoBehaviour:
   x: 10
   y: 10
   Gravity_Directin: 3
+  checkPointPositions: []
 --- !u!4 &1006537387
 Transform:
   m_ObjectHideFlags: 0
@@ -371,7 +372,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 448956, guid: 1ab53c68c3e526a46b2edcfbad75fcfd, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 104654, guid: 1ab53c68c3e526a46b2edcfbad75fcfd, type: 2}
       propertyPath: m_Name
