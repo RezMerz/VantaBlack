@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public static class SaveLoad  {
-    public static void SaveScene(int scene)
+    public static void _SaveScene(int scene)
     {
         string name = (string)scene.ToString();
         BinaryFormatter bf = new BinaryFormatter();
@@ -14,7 +14,7 @@ public static class SaveLoad  {
         file.Close();
     }
 
-    public static void SaveMap(MapMenu map)
+    public static void _SaveMap(MapMenu map)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(Application.dataPath + "/Saves/map.ktk", FileMode.OpenOrCreate);
@@ -22,7 +22,7 @@ public static class SaveLoad  {
         file.Close();
     }
 
-    public static MapMenu LoadMap()
+    public static MapMenu _LoadMap()
     {
         BinaryFormatter bf = new BinaryFormatter();
         if (File.Exists(Application.dataPath + "/Saves/map.ktk"))
@@ -38,4 +38,42 @@ public static class SaveLoad  {
             return null;
         }
     }
+
+
+    public static Player _LoadPlayer()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File_Open_Null("saves/Player.ktk");
+        Player player = null;
+        if (file != null)
+        {
+            player = (Player)bf.Deserialize(file);
+            file.Close();
+        }
+       
+        return player;
+    }
+    public static void _SavePlayer(Player player)
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File_Create_Open("/saves/Player.ktk");
+        bf.Serialize(file, player);
+        file.Close();
+    }
+    private static FileStream File_Open_Null(string path)
+    {
+        if (File.Exists(Application.dataPath + path))
+        {
+            FileStream file = File.Open(Application.dataPath + path, FileMode.Open);
+            return file;
+        }
+        else
+            return null;
+    }
+    private static FileStream File_Create_Open(string path)
+    {
+        FileStream file = File.Open(Application.dataPath + path, FileMode.OpenOrCreate);
+        return file;
+    }
+
 }

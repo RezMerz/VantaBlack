@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     }
     private void set_map()
     {
-        map = SaveLoad.LoadMap();
+        map = SaveLoad._LoadMap();
         if (map == null)
         {
             map = new MapMenu(10);
