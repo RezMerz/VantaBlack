@@ -62,7 +62,7 @@ GameObject:
   - 114: {fileID: 11433476}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Unit
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,10 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7817c16a6411944899c825e7767f14b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <position>k__BackingField: {x: 0, y: 0}
-  <unitType>k__BackingField: 0
-  <obj>k__BackingField: {fileID: 0}
-  <movable>k__BackingField: 0
+  CanBeMoved: 0
   ability: {fileID: 0}
   move_direction: 
 --- !u!212 &21209700

@@ -160,8 +160,11 @@ public class AandR {
         container.ability = player.ability;
         player.ability = null;
         container.state++;
-        if (((MovingContainer)container) != null)
-            ((MovingContainer)container).forward = true;
+        try {
+            if (((MovingContainer)container) != null)
+                ((MovingContainer)container).forward = true;
+        }
+        catch { }
         container.Run();
     }
 

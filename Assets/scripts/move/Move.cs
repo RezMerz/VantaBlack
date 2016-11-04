@@ -152,6 +152,7 @@ public class Move{
             }
         }
         player.position = player.gameObject.transform.position;
+        engine.CheckPointCheck();
         engine.NextTurn();
     }
 

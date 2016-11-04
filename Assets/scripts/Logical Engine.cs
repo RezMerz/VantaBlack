@@ -203,7 +203,10 @@ public class LogicalEngine
             }
         }
         if (flag)
+        {
             moveObject.move(direction);
+            CheckPointCheck();
+        }
     }
     public void Absorb()
     {
@@ -245,7 +248,10 @@ public class LogicalEngine
 
     public int MoveObjects(Unit unit, Direction d, int distance)
     {
-        return moveObject.MoveObjects(unit, d, distance);
+        int i = moveObject.MoveObjects(unit, d, distance);
+        if(unit.unitType == UnitType.Player && i != 0)
+            moveObject.MoveObjects(unit, d, distance);
+        return i;
     }
 
     private void CheckTimeLaps()
@@ -328,16 +334,29 @@ public class LogicalEngine
 
     public void CheckBlockSwitch()
     {
-        Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
-        foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
+        try
         {
-            if (u.unitType == UnitType.BlockSwitch && !((BlockSwitch)u).isManual)
+            Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
+            foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
             {
-                action.BlockSwitchAction(((BlockSwitch)u));
+                if (u.unitType == UnitType.BlockSwitch && !((BlockSwitch)u).isManual)
+                {
+                    action.BlockSwitchAction(((BlockSwitch)u));
+                }
+            }
+        }
+        catch { }
+    }
+
+    public void CheckPointCheck()
+    {
+        return;
+        for (int i = 0; i < database.checkPointPositions.Length; i++)
+        {
+            if (database.checkPointPositions[i, 0] == (int)player.transform.position.x && database.checkPointPositions[i, 1] == (int)player.transform.position.y) {
+
             }
         }
     }
-
-
 }
 

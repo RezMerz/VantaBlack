@@ -18,6 +18,7 @@ public class Database {
     public long turn;
     public List<TimeLaps> timeLaps;
     public State state;
+    public int[,] checkPointPositions;
     public int Ysize { get; private set; }
     public int Xsize { get; private set; }
 

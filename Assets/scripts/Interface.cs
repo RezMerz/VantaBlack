@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Interface : MonoBehaviour {
     public GameObject player;
@@ -8,6 +8,7 @@ public class Interface : MonoBehaviour {
     public int x, y;
     Database database;
     public Direction Gravity_Directin;
+    public List<Vector2> checkPointPositions;
     private float rotate;
     private Direction lean;
 	// Use this for initialization
@@ -18,6 +19,12 @@ public class Interface : MonoBehaviour {
         database.state = State.Busy;
         engine = new LogicalEngine(x, y);
         staticengine = engine;
+        database.checkPointPositions = new int[checkPointPositions.Count,2];
+        for(int i =0; i<checkPointPositions.Count; i++)
+        {
+            database.checkPointPositions[i, 0] = (int)checkPointPositions[i].x;
+            database.checkPointPositions[i, 1] = (int)checkPointPositions[i].y;
+        }
         engine.run();
     }
 	
