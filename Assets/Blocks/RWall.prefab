@@ -13,7 +13,7 @@ GameObject:
   - 114: {fileID: 11446162}
   m_Layer: 0
   m_Name: RWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 154516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.09, y: -0.04, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,10 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d246444aaac4a2489c3aaef4862dfeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <position>k__BackingField: {x: 0, y: 0}
-  <unitType>k__BackingField: 0
-  <obj>k__BackingField: {fileID: 0}
-  <movable>k__BackingField: 0
+  CanBeMoved: 0
   direction: 0
   magnetic: 0
 --- !u!114 &11446162
@@ -59,10 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d246444aaac4a2489c3aaef4862dfeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <position>k__BackingField: {x: 0, y: 0}
-  <unitType>k__BackingField: 0
-  <obj>k__BackingField: {fileID: 0}
-  <movable>k__BackingField: 0
+  CanBeMoved: 0
   direction: 1
   magnetic: 0
 --- !u!212 &21276784
@@ -91,7 +85,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 93730adcf6f08b04d902533e00ae7686, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b6ac4f04551c1d244ae36b3fa4eb0921, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
