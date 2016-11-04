@@ -88,9 +88,10 @@ public sealed class Toolkit{
     {
         if(dir == Direction.Right)
         {
-            foreach(Unit u in Database.database.units[(int)position.x, (int)position.y])
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
             {
-                if(u.unitType == UnitType.Wall)
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
+                if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Right)
                         return true;
@@ -100,8 +101,9 @@ public sealed class Toolkit{
         }
         else if (dir == Direction.Left)
         {
-            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
             {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
                 if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Left)
@@ -112,8 +114,9 @@ public sealed class Toolkit{
         }
         else if (dir == Direction.Up)
         {
-            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
             {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
                 if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Up)
@@ -124,8 +127,9 @@ public sealed class Toolkit{
         }
         else if (dir == Direction.Down)
         {
-            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
             {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
                 if (u.unitType == UnitType.Wall)
                 {
                     if (((Wall)u).direction == Direction.Down)
@@ -229,8 +233,9 @@ public sealed class Toolkit{
             Vector2 temp = DirectiontoVector(ReverseDirection(d));
             if (IsWallOnTheWay(VectorSum(position, temp), d))
                 return false;
-            foreach (Unit u in Database.database.units[(int)position.x, (int)position.y])
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
             {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
                 if (u.unitType == UnitType.Wall || u.unitType == UnitType.Switch || u.unitType == UnitType.Pipe)
                     continue;
                 else if (u.unitType == UnitType.Door)

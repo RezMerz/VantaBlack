@@ -165,7 +165,7 @@ public class AandR {
                 ((MovingContainer)container).forward = true;
         }
         catch { }
-        container.Run();
+        engine.action.RunContainer(container);
     }
 
     private void Swap(Container container)
@@ -202,7 +202,7 @@ public class AandR {
             if (((MovingContainer)container) != null)
                 ((MovingContainer)container).forward = false;
         }
-        container.Run();
+        engine.action.RunContainer(container);
 
     }
     private void _absorb(Block block)

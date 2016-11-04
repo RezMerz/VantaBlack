@@ -72,8 +72,9 @@ public class Action{
 
     public void SwitchActionPressed()
     {
-        foreach (Unit u in database.units[(int)player.transform.position.x, (int)player.transform.position.y])
+        for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
+            Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
             if (u.unitType == UnitType.Switch)
             {
                 SwitchAction(u); 
@@ -164,5 +165,15 @@ public class Action{
                 return false;
         }
         return true;
+    }
+
+    public void RunContainer(Container container)
+    {
+        MovingContainer[] mv = container.gameObject.GetComponents<MovingContainer>();
+        for (int i = 0; i < mv.Length; i++)
+            mv[i].Run();
+        DoorOpener[] dooropener = container.gameObject.GetComponents<DoorOpener>();
+        for (int i = 0; i < dooropener.Length; i++)
+            dooropener[i].Run();
     }
 }

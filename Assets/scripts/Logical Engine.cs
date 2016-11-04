@@ -10,7 +10,7 @@ public class LogicalEngine
     public GraphicalEngine Gengine;
     public Move moveObject;
     int x, y;
-    Action action;
+    public Action action;
     AandR AR;
     Map map;
 
@@ -292,7 +292,7 @@ public class LogicalEngine
         Wall.print(database.snapShotCount);
     }
 
-    private void ApplyGravity()
+    public void ApplyGravity()
     {
         int counter = 0;
         Vector2 pos1 = player.transform.position;
@@ -305,8 +305,9 @@ public class LogicalEngine
             case Direction.Left: pos2 = new Vector2(-1, 0); break;
             default: pos2 = new Vector2(0, 0); break;
         }
-        foreach (Unit u in Database.database.units[(int)player.transform.position.x, (int)player.transform.position.y])
+        for(int i=0; i< database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
+            Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
             if (u.unitType == UnitType.Door)
             {
                 if (((Door)u).direction == database.gravity_direction && ((Door)u).open)

@@ -57,6 +57,7 @@ public class Move{
             {
                 if (unit.CanMove(u.unitType))
                 {
+                    Wall.print("fuck");
                     if (!MoveObjects(u, d))
                         return false;
                 }
@@ -120,7 +121,12 @@ public class Move{
         int counter = 0;
         for (int i = 0; i < distance; i++){
             if (MoveObjects(unit, d))
+            {
+                lock(database.units){
+                    engine.ApplyGravity();
+                }
                 counter++;
+            }
         }
         return counter;
         
