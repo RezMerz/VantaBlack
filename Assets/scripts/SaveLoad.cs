@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public static class SaveLoad  {
-    public static void _SaveScene(int scene)
+    public static void _SaveScene(List<Unit>[,] units,string scene)
     {
         string name = (string)scene.ToString();
         BinaryFormatter bf = new BinaryFormatter();

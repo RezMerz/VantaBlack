@@ -11,6 +11,7 @@ public class MapController : MonoBehaviour {
         panel.SetActive(false);
         is_showing = false;
         rooms = new GameObject[panel.transform.childCount];
+        print(panel.transform.childCount);
         int i = 0;
         foreach(Transform child in panel.transform)
         {
@@ -42,6 +43,7 @@ public class MapController : MonoBehaviour {
         int i = 0;
         foreach(GameObject room in rooms)
         {
+            print(i);
             if (check_rooms[i].isVisible)
                 room.SetActive(true);
             else

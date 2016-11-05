@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour {
         map = SaveLoad._LoadMap();
         if (map == null)
         {
-            map = new MapMenu(10);
+            map = new MapMenu(36);
         }
         GameObject.Find("Map").GetComponent<MapController>()._update_rooms(map.rooms);
     }
