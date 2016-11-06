@@ -12,6 +12,7 @@ public class Interface : MonoBehaviour {
     private float rotate;
     private Direction lean;
     private float camera_speed = 0.05f;
+    public float rotate_value;
 	// Use this for initialization
 	void Start () {
         Database.database.player = player;
@@ -49,7 +50,7 @@ public class Interface : MonoBehaviour {
                       foreach( Direction dir in Database.database.player.GetComponent<Player>().move_direction)
                             if ( dir == Direction.Right) {
                             engine.Gengine._lean_right();
-                            rotate = -10;
+                            rotate = -rotate_value;
                             lean = Direction.Right;
                         }
                     }
@@ -69,7 +70,7 @@ public class Interface : MonoBehaviour {
                             if (dir == Direction.Left)
                             {
                                 engine.Gengine._lean_left();
-                                rotate = 10;
+                                rotate = rotate_value;
                                 lean = Direction.Left;
                             }
                     }
@@ -86,7 +87,7 @@ public class Interface : MonoBehaviour {
                 {
                     engine.Gengine._lean_top();
                     lean = Direction.Up;
-                    rotate = 10;
+                    rotate = rotate_value;
                    /* if (isEmpty(new Vector2(0, 1)))
                     {
                         engine.move(Direction.Up);

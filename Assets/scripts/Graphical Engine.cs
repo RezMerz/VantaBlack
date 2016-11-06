@@ -12,9 +12,13 @@ public class GraphicalEngine {
     private float fall_distance;
     private Vector2 player_pos;
     private float lean_offset = 0.2f;
+    public float rotate_value;
+    private float top_rotate;
     public GraphicalEngine()
     {
         database = Database.database;
+        rotate_value = 35;
+        top_rotate = 75;
         //ui = GameObject.Find("Canvas").GetComponent<UI>();
     }
 
@@ -67,32 +71,32 @@ public class GraphicalEngine {
 
     public void _lean_right()
     {
-        
-        database.player.transform.Rotate(new Vector3(0,0,-10));
+
+        database.player.transform.Rotate(new Vector3(0, 0, -rotate_value));
     }
 
     public void _lean_right_undo()
     {
-        database.player.transform.Rotate(new Vector3(0, 0, 10));
+        database.player.transform.Rotate(new Vector3(0, 0, rotate_value));
     }
 
     public void _lean_top()
     {
-        database.player.transform.position = database.player.transform.position + new Vector3(0, lean_offset, 0);
+        database.player.transform.Rotate(new Vector3(0, 0, top_rotate));
     }
 
     public void _lean_top_undo()
     {
-        database.player.transform.position = database.player.transform.position + new Vector3(0, -lean_offset, 0);
+        database.player.transform.Rotate(new Vector3(0, 0, -top_rotate));
     }
     public void _lean_left()
     {
-        database.player.transform.Rotate(new Vector3(0, 0, 10));
+        database.player.transform.Rotate(new Vector3(0, 0, rotate_value));
     }
 
     public void _lean_left_undo()
     {
-        database.player.transform.Rotate(new Vector3(0, 0, -10));
+        database.player.transform.Rotate(new Vector3(0, 0, -rotate_value));
     }
 
     public void _right_light()
