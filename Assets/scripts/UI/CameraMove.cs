@@ -9,11 +9,23 @@ public class CameraMove : MonoBehaviour {
     public int number;
     public float moveTime = 0.1f;
     private float inverseMoveTime;
-    
+    public float zoom;
+    public float zoomTime;
+    private float inverseZoomTime;
     void Start()
     {
+        inverseZoomTime = 1f / zoomTime;
         inverseMoveTime = 1f / moveTime;
         moving = 0;
+        if (zoom == 0)
+        {
+            zoom = Camera.main.orthographicSize;
+        }
+        if(x ==0 && y == 0)
+        {
+            x = Camera.main.transform.position.x;
+            y = Camera.main.transform.position.y;
+        }
     }
     private void _Set_camera()
     {
@@ -26,13 +38,24 @@ public class CameraMove : MonoBehaviour {
             is_moving = true;
             moving = number;
             StartCoroutine(Smooth_Move(new Vector3(x, y, -10)));
-            
+            StartCoroutine(Smooth_Zoom(zoom));
         }     
     }
 
 
 
-
+    protected IEnumerator Smooth_Zoom(float zoom)
+    {
+        float sqrRemainingDistance = Mathf.Abs( Camera.main.orthographicSize - zoom);
+        while(sqrRemainingDistance > 0.2)
+        {
+            sqrRemainingDistance = Mathf.Abs(Camera.main.orthographicSize - zoom);
+            float new_size = Mathf.MoveTowards(Camera.main.orthographicSize,zoom,Time.deltaTime * inverseZoomTime);
+            Camera.main.orthographicSize = new_size;
+            yield return null;
+        }
+        
+    }
 
     protected IEnumerator Smooth_Move(Vector3 end)
     {
