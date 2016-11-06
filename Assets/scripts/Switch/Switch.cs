@@ -7,6 +7,7 @@ public class Switch : Unit {
     public bool singlestate { get; set; }
     public bool isOn { get; set; }
 
+    public bool isAutomatic { get; set; }
     // Use this for initialization
     public void Start () {
         unitType = UnitType.Switch;
@@ -28,6 +29,7 @@ public class Switch : Unit {
         direction = sc.direction;
         singlestate = sc.singlestate;
         isOn = sc.isOn;
+        isAutomatic = sc.isAutomatic;
     }
 
     public override bool CanMove(UnitType unittype)

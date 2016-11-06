@@ -75,7 +75,8 @@ public class Action{
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
-            if (u.unitType == UnitType.Switch)
+            Wall.print(u.unitType);
+            if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic)
             {
                 SwitchAction(u); 
             }
@@ -96,10 +97,11 @@ public class Action{
 
     public void SwitchActionPressed(Direction d)
     {
+        Wall.print("asdfghasdfghjkl;sdf;'");
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
-            if (u.unitType == UnitType.Switch && d == ((Switch)u).direction)
+            if (u.unitType == UnitType.Switch && d == ((Switch)u).direction && !((Switch)u).isAutomatic)
             {
                 SwitchAction(u);
             }
@@ -201,5 +203,40 @@ public class Action{
         DoorOpener[] dooropener = container.gameObject.GetComponents<DoorOpener>();
         for (int i = 0; i < dooropener.Length; i++)
             dooropener[i].Run();
+    }
+
+    public void CheckAutomaticSwitch(Vector2 position)
+    {
+        int isempty = 0;
+        for (int i = 0; i < database.units[(int)position.x, (int)position.y].Count; i++)
+        {
+            Unit u = database.units[(int)position.x, (int)position.y][i];
+            if (u.unitType == UnitType.Block || u.unitType == UnitType.BlockSwitch || u.unitType == UnitType.Container || u.unitType == UnitType.Rock)
+                isempty = 1;
+            else if(u.unitType == UnitType.Player || u.unitType == UnitType.Box)
+            {
+                isempty = 2;
+            }
+        }
+        for (int i=0; i<database.units[(int)position.x, (int)position.y].Count; i++)
+        {
+            
+            Unit u = database.units[(int)position.x, (int)position.y][i];
+            Wall.print(u);
+            if (u.unitType == UnitType.Switch && ((Switch)u).isAutomatic)
+            {
+                if(isempty == 0 || isempty == 1)
+                {
+                    ((Switch)u).Run();
+                }
+                else
+                {
+                    if (database.gravity_direction == ((Switch)u).direction)
+                    {
+                        ((Switch)u).Run();
+                    }
+                }
+            }
+        }
     }
 }

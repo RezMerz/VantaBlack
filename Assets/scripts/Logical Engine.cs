@@ -33,6 +33,7 @@ public class LogicalEngine
     }
     void init()
     {
+        database.AutomaticSwitches = new List<Switch>();
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
@@ -118,6 +119,12 @@ public class LogicalEngine
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t2);
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t1);
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t3);
+            if (sc.isAutomatic)
+            {
+                database.AutomaticSwitches.AddRange(t1);
+                database.AutomaticSwitches.AddRange(t2);
+                database.AutomaticSwitches.AddRange(t3);
+            }
         }
         Gobjects.Clear();
 
@@ -305,8 +312,13 @@ public class LogicalEngine
 
     public void EndTurn()
     {
+        //CheckAutomaticSwitch();
         ApplyGravity();
         CheckBlockSwitch();
+        
+
+
+
         spManager.takesnapshot();
         //Wall.print(database.snapShotCount);
     }
@@ -367,7 +379,32 @@ public class LogicalEngine
         }
         catch { }
     }
+    public void CheckAutomaticSwitch()
+    {
+        for(int i=0; i<database.AutomaticSwitches.Count; i++)
+        {
+            Vector2 temp;
+            bool tempbool = true;
+            for(int j=0; j<database.units[(int)database.AutomaticSwitches[i].transform.position.x, (int)database.AutomaticSwitches[i].transform.position.y].Count; j++)
+            {
+                temp = database.AutomaticSwitches[i].transform.position;
+                if (database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Box || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Block || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.BlockSwitch || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Container || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Player || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Rock)
+                {
+                    if (!database.AutomaticSwitches[i].isOn)
+                    {
+                        database.AutomaticSwitches[i].Run();
+                        tempbool = false;
+                        break;
+                    }
+                }
+            }
+            if (tempbool && database.AutomaticSwitches[i].isOn)
+            {
+                database.AutomaticSwitches[i].Run();
+            }
+        }
 
+    }
     public void CheckPointCheck()
     {
         return;

@@ -24,8 +24,10 @@ public class Move{
     public void move(Direction dir)
     {
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Remove(player);
+        engine.action.CheckAutomaticSwitch(player.obj.transform.position);
         Gengine._move(dir);
         player.position = database.player.transform.position;
+        engine.action.CheckAutomaticSwitch(player.obj.transform.position);
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
 
         //engine.NextTurn();
@@ -90,6 +92,7 @@ public class Move{
                     break;
             }
         }
+        engine.action.CheckAutomaticSwitch(unit.obj.transform.position);
         GraphicalEngine.MoveObject(unit.obj, temp);
         database.units[(int)temp.x, (int)temp.y].Add(unit);
         if (unit.unitType == UnitType.Wall)
@@ -125,6 +128,7 @@ public class Move{
             }
         }
         unit.position = unit.gameObject.transform.position;
+        engine.action.CheckAutomaticSwitch(unit.obj.transform.position);
         return true;
 
     }
