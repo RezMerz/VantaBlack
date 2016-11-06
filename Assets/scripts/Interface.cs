@@ -170,7 +170,7 @@ public class Interface : MonoBehaviour {
     {
         if(rotate!=0)
         {
-            //engine.SwitchAction(lean);
+            engine.SwitchAction(lean);
             return true;
         }
         return false;

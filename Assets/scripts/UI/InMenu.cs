@@ -18,13 +18,11 @@ public class InMenu : MonoBehaviour {
         else
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
+
+
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            click();
-        }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {     
                 
@@ -66,7 +64,7 @@ public class InMenu : MonoBehaviour {
                     Quit();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (gameObject.transform.GetChild(0).gameObject.activeSelf)
             {
@@ -74,7 +72,11 @@ public class InMenu : MonoBehaviour {
                 {
                     Back_to_Menu();
                 }
+                else
+                    click();
             }
+            else 
+                click();
         }
 
 	}
@@ -88,7 +90,10 @@ public class InMenu : MonoBehaviour {
     {
         gameObject.transform.GetChild(1).gameObject.SetActive(true);
     }
+    public void Action_End()
+    {
 
+    }
     public void Back_to_Menu()
     {
         gameObject.transform.GetChild(1).gameObject.SetActive(false);

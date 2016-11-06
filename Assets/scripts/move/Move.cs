@@ -110,6 +110,20 @@ public class Move{
                     break;
             }
         }
+        else if (unit.unitType == UnitType.Rock)
+        {
+            for (int i = 0; i < ((Rock)unit).connectedUnits.Count; i++)
+            {
+                database.units[(int)((Rock)unit).connectedUnits[i].obj.transform.position.x, (int)((Rock)unit).connectedUnits[i].obj.transform.position.y].Remove((Switch)((Rock)unit).connectedUnits[i]);
+
+                Wall.print((Toolkit.DirectiontoVector(Toolkit.ReverseDirection(((Switch)((Rock)unit).connectedUnits[i]).direction))));
+                Vector2 temppos = Toolkit.VectorSum((Toolkit.DirectiontoVector(Toolkit.ReverseDirection(((Switch)((Rock)unit).connectedUnits[i]).direction))), unit.gameObject.transform.position);
+                database.units[(int)temppos.x, (int)temppos.y].Add((Switch)((Rock)unit).connectedUnits[i]);
+                Wall.print(temppos);
+                GraphicalEngine.MoveObject(((Rock)unit).connectedUnits[i].obj, temppos);
+                
+            }
+        }
         unit.position = unit.gameObject.transform.position;
         return true;
 
