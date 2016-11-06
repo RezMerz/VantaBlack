@@ -1,56 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &140262
+--- !u!1 &140608
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 476276}
-  - 212: {fileID: 21287374}
-  - 114: {fileID: 11441766}
+  - 4: {fileID: 401734}
+  - 212: {fileID: 21245256}
   m_Layer: 0
-  m_Name: Block
-  m_TagString: Block
+  m_Name: GameObject 1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &476276
+--- !u!4 &401734
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140262}
+  m_GameObject: {fileID: 140608}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.882228, y: 2.6937313, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11441766
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55753d95690013941b6fe9daef64d23e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CanBeMoved: 0
-  ability: {fileID: 0}
-  Pipedto: {fileID: 0}
-  Pipedfrom: {fileID: 0}
---- !u!212 &21287374
+--- !u!212 &21245256
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140262}
+  m_GameObject: {fileID: 140608}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -71,7 +55,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bd0699e818f3afd4eb1adfca21b875b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f916b553f2f56124b90571763f5f498b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,5 +68,5 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 140262}
+  m_RootGameObject: {fileID: 140608}
   m_IsPrefabParent: 1
