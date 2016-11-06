@@ -21,8 +21,6 @@ public class SwitchControler : Switch
     {
         MovingSwitch[] t1 = otherSwitch.GetComponents<MovingSwitch>();
         DoorSwitch[] t2 = otherSwitch.GetComponents<DoorSwitch>();
-        SwitchControler[] t3 = otherSwitch.GetComponents<SwitchControler>();
-
         for (int i = 0; i < t1.Length; i++)
         {
             t1[i].Run();
@@ -30,10 +28,6 @@ public class SwitchControler : Switch
         for (int i = 0; i < t2.Length; i++)
         {
             t2[i].Run();
-        }
-        for (int i = 0; i < t3.Length; i++)
-        {
-            t3[i].Run();
         }
         return true;
     }
