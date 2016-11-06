@@ -21,9 +21,13 @@ public class MovingSwitch : Switch {
             return false;
         if (isOn)
         {
-            
+            print(this);
             if (moved == distance)
+            {
+                print("dafuq");
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), Toolkit.ReverseDirection(directionOfMove), distance);
+                print(moved);
+            }
             else
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), Toolkit.ReverseDirection(directionOfMove), moved);
 
@@ -32,8 +36,11 @@ public class MovingSwitch : Switch {
         }
         else
         {
-            if(moved == distance)
+            if (moved == distance)
+            {
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), directionOfMove, distance);
+                print(moved);
+            }
             else
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), directionOfMove, moved);
 

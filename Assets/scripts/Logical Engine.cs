@@ -303,7 +303,7 @@ public class LogicalEngine
         ApplyGravity();
         CheckBlockSwitch();
         spManager.takesnapshot();
-        Wall.print(database.snapShotCount);
+        //Wall.print(database.snapShotCount);
     }
 
     public void ApplyGravity()

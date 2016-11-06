@@ -98,6 +98,7 @@ public class Action{
     {
         MovingSwitch t1 = null;
         DoorSwitch t2 = null;
+        SwitchControler t3 = null;
         try
         {
              t1 = (MovingSwitch)sw;
@@ -111,7 +112,17 @@ public class Action{
             }   catch { }
             if(t2 == null)
             {
+                try
+                {
+                    t3 = (SwitchControler)sw;
+                    if (t3 == null)
+                    {
 
+                    }
+                    else
+                        t3.Run();
+                }
+                catch { }
             }
             else
                 t2.Run();
