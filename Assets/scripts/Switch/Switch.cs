@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Switch : Unit {
 
-    public Direction direction;
-    public bool singlestate;
-    public bool isOn;
+    public Direction direction { get; set;}
+    public bool singlestate { get; set; }
+    public bool isOn { get; set; }
 
     // Use this for initialization
     public void Start () {

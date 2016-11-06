@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Rock : Unit {
 
-	void Start()
+    public List<Unit> connectedUnits;
+
+    void Start()
     {
         unitType = UnitType.Rock;
         obj = this.gameObject;

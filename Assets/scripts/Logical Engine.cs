@@ -254,6 +254,11 @@ public class LogicalEngine
         action.SwitchActionPressed();
     }
 
+    public void SwitchAction(Direction d)
+    {
+        action.SwitchActionPressed(d);
+    }
+
     public void Refresh()
     {
         Gengine.Refresh();

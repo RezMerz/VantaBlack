@@ -6,6 +6,7 @@ public class BlockSwitch : Unit {
 
     public bool isManual;
     public Ability ability;
+    public Direction direction;
     // Use this for initialization
     void Start () {
         unitType = UnitType.BlockSwitch;

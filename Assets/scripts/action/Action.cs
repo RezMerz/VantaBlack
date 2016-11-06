@@ -94,6 +94,21 @@ public class Action{
         }
     }
 
+    public void SwitchActionPressed(Direction d)
+    {
+        for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
+        {
+            Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
+            if (u.unitType == UnitType.Switch && d == ((Switch)u).direction)
+            {
+                SwitchAction(u);
+            }
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && d == ((BlockSwitch)u).direction)
+            {
+                BlockSwitchAction((BlockSwitch)u);
+            }
+        }
+    }
     private void SwitchAction(Unit sw)
     {
         MovingSwitch t1 = null;

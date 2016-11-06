@@ -18,6 +18,8 @@ public class AandR {
 
     public void Absorb(Direction dir)
     {
+        if (Toolkit.IsWallOnTheWay(player.transform.position, dir))
+            return;
         Unit unit = null;
         switch (dir)
         {
@@ -39,6 +41,8 @@ public class AandR {
     
     public void Absorb()
     {
+        if (Toolkit.IsWallOnTheWay(player.transform.position, database.gravity_direction))
+            return;
         Unit unit = null;
         switch (database.gravity_direction)
         {
