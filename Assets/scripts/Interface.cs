@@ -207,12 +207,15 @@ public class Interface : MonoBehaviour {
             {
                 if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock)
                 {
+                    if (unit.CanBeMoved && engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) != 0)
+                        return true;
                     return false;
                 }
                 if(unit.unitType == UnitType.Box)
                 {
-                    if (engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) == 1)
+                    if (engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) != 0)
                             return true;
+                    return false;
                 }
                 
             }

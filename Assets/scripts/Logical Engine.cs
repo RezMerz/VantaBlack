@@ -325,8 +325,25 @@ public class LogicalEngine
 
     public void ApplyGravity()
     {
+        ApplyGravity(player);
+        /*for(int i=0; i<database.units.Length; i++)
+        {
+            for(int j=0; j<database.units.GetLength(1); j++)
+            {
+                for(int k=0; k<database.units[i,j].Count; k++)
+                {
+                    Unit u = database.units[i, j][k];
+                    if (u.CanBeMoved)
+                        ApplyGravity(u);
+                }
+            }
+        }*/
+    }
+
+    private void ApplyGravity(Unit unit)
+    {
         int counter = 0;
-        Vector2 pos1 = player.transform.position;
+        Vector2 pos1 = unit.transform.position;
         Vector2 pos2;
         switch (database.gravity_direction)
         {
@@ -336,12 +353,12 @@ public class LogicalEngine
             case Direction.Left: pos2 = new Vector2(-1, 0); break;
             default: pos2 = new Vector2(0, 0); break;
         }
-        for(int i=0; i< database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
+        for (int i = 0; i < database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Count; i++)
         {
-            Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
+            Unit u = database.units[(int)unit.transform.position.x, (int)unit.transform.position.y][i];
             if (u.unitType == UnitType.Door)
             {
-                if (((Door)u).direction == database.gravity_direction && ((Door)u).open)
+                if (u.unitType == UnitType.Player && ((Door)u).direction == database.gravity_direction && ((Door)u).open)
                     ((Door)u).Next();
                 else if (((Door)u).direction == database.gravity_direction && !((Door)u).open)
                     return;
@@ -357,13 +374,12 @@ public class LogicalEngine
             else
                 break;
         }
-        database.units[(int)player.transform.position.x, (int)player.transform.position.y].Remove(player);
+        database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
         for (int i = 0; i < counter; i++)
             Gengine._move(database.gravity_direction);
-        player.position = database.player.transform.position;
-        database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
+        unit.position = unit.transform.position;
+        database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Add(unit);
     }
-
     public void CheckBlockSwitch()
     {
         try

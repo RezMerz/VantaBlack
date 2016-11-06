@@ -57,7 +57,7 @@ public class Move{
                 continue;
             if (u.movable)
             {
-                if (unit.CanMove(u.unitType))
+                if (unit.CanMove(u.unitType) || u.CanBeMoved)
                 {
                     Wall.print("fuck");
                     if (!MoveObjects(u, d))
