@@ -12,6 +12,7 @@ public class MapMenu {
         for(int i = 0; i < n; i++)
         {
             rooms[i] = new Room("R"+(i+1).ToString());
+            rooms[i].isVisible = true;
         }
     }
 

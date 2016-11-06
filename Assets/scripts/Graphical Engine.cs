@@ -97,7 +97,6 @@ public class GraphicalEngine {
 
     public void _right_light()
     {
-        Wall.print("right light");
         //ui._right_light();
     }
 
