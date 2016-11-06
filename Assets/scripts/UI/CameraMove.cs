@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class CameraMove : MonoBehaviour {
-    public int x;
-    public int y;
+    public float x;
+    public float y;
     private static int moving;
     private static bool is_moving;
     public int number;
