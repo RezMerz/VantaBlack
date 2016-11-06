@@ -4,11 +4,9 @@ using System.Collections;
 public class DoorSwitch : Switch {
 
     public GameObject door;
-    bool isOn;
     // Use this for initialization
     void Start () {
         base.Start();
-        isOn = false;
     }
 	
 	// Update is called once per frame
@@ -30,3 +28,5 @@ public class DoorSwitch : Switch {
     }
 
 }
+
+

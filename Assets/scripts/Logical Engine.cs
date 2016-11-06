@@ -99,11 +99,25 @@ public class LogicalEngine
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Switch"));
         foreach (GameObject g in Gobjects)
         {
-
+            SwitchConfig sc = g.GetComponent<SwitchConfig>();
             MovingSwitch[] t1 = g.GetComponents<MovingSwitch>();
             DoorSwitch[] t2 = g.GetComponents<DoorSwitch>();
+            SwitchControler[] t3 = g.GetComponents<SwitchControler>();
+            for(int i=0; i<t1.Length; i++)
+            {
+                t1[i].init(sc);
+            }
+            for(int i=0; i<t2.Length; i++)
+            {
+                t2[i].init(sc);
+            }
+            for (int i = 0; i < t3.Length; i++)
+            {
+                t3[i].init(sc);
+            }
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t2);
             database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t1);
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].AddRange(t3);
         }
         Gobjects.Clear();
 

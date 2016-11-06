@@ -5,6 +5,8 @@ public class Switch : Unit {
 
     public Direction direction;
     public bool singlestate;
+    public bool isOn;
+
     // Use this for initialization
     public void Start () {
         unitType = UnitType.Switch;
@@ -20,6 +22,14 @@ public class Switch : Unit {
 	void Update () {
 	
 	}
+
+    public void init(SwitchConfig sc)
+    {
+        direction = sc.direction;
+        singlestate = sc.singlestate;
+        isOn = sc.isOn;
+    }
+
     public override bool CanMove(UnitType unittype)
     {
        

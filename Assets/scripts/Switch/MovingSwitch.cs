@@ -5,15 +5,13 @@ public class MovingSwitch : Switch {
 
     int moved;
     public int distance;
-    bool isOn;
     
     public Direction directionOfMove;
     public GameObject unit;
-
     void Start()
     {
         base.Start();
-        isOn = false;
+        
         moved = distance;
     }
 
