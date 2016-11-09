@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Action{
     Player player;
@@ -72,23 +72,32 @@ public class Action{
 
     public void SwitchActionPressed()
     {
+        List<Unit> tlist = new List<Unit>();
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
-            Wall.print(u.unitType);
-            if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic)
+            if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic && ((Switch)u).direction == database.gravity_direction)
             {
+                tlist.Add(u);
                 SwitchAction(u); 
             }
-            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && ((BlockSwitch)u).direction == database.gravity_direction)
             {
                 BlockSwitchAction((BlockSwitch)u);
             }
         }
+        for(int i=0; i<tlist.Count; i++)
+        {
+            database.units[(int)tlist[i].obj.transform.position.x, (int)tlist[i].obj.transform.position.y].Remove(tlist[i]);
+        }
+        for (int i = tlist.Count - 1; i >= 0; i--)
+        {
+            database.units[(int)tlist[i].obj.transform.position.x, (int)tlist[i].obj.transform.position.y].Add(tlist[i]);
+        }
         Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
         foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
         {
-            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && ((BlockSwitch)u).direction == database.gravity_direction)
             {
                 BlockSwitchAction(((BlockSwitch)u));
             }
@@ -97,7 +106,6 @@ public class Action{
 
     public void SwitchActionPressed(Direction d)
     {
-        Wall.print("asdfghasdfghjkl;sdf;'");
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
@@ -222,7 +230,6 @@ public class Action{
         {
             
             Unit u = database.units[(int)position.x, (int)position.y][i];
-            Wall.print(u);
             if (u.unitType == UnitType.Switch && ((Switch)u).isAutomatic)
             {
                 if(isempty == 0 || isempty == 1)

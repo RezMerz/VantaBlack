@@ -9,6 +9,7 @@ public class LogicalEngine
     public Player player;
     public GraphicalEngine Gengine;
     public Move moveObject;
+    public AnimationControler animationControler;
     int x, y;
     public Action action;
     AandR AR;
