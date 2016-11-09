@@ -120,7 +120,7 @@ public class GraphicalEngine {
         }
     }
 
-    public bool _Move_Object(GameManager obj,Vector2 pos)
+    public bool _Move_Object(GameObject obj,Vector2 pos)
     {
         obj.transform.position = pos;
         return true;
