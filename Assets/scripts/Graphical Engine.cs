@@ -120,6 +120,10 @@ public class GraphicalEngine {
         }
     }
 
+    public bool _Move_Object(GameManager obj)
+    {
+        return true;
+    }
     private Vector2 _direction_to_vector(Direction dir)
     {
         if (dir == Direction.Down)
