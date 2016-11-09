@@ -10,8 +10,14 @@ public class MovingSwitch : Switch {
     public GameObject unit;
     void Start()
     {
-        base.Start();
-        
+        unitType = UnitType.Switch;
+        obj = this.gameObject;
+        position = gameObject.transform.position;
+        codeNumber = Code;
+        Code++;
+        movable = false;
+        layer = 2;
+
         moved = distance;
     }
 
@@ -36,7 +42,6 @@ public class MovingSwitch : Switch {
             if (moved == distance)
             {
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), directionOfMove, distance);
-                print(moved);
             }
             else
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), directionOfMove, moved);

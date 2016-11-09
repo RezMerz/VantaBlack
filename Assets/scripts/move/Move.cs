@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Threading;
 
 public class Move{
     /// <summary>
@@ -24,17 +25,26 @@ public class Move{
     public void move(Direction dir)
     {
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Remove(player);
+        for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
+        {
+            Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
+            if (u.unitType == UnitType.Switch && ((Switch)u).isAutomatic && ((Switch)u).isOn)
+                ((Switch)u).Run();
+        }
         engine.action.CheckAutomaticSwitch(player.obj.transform.position);
         Gengine._move(dir);
         player.position = database.player.transform.position;
-        engine.action.CheckAutomaticSwitch(player.obj.transform.position);
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
-
+        engine.action.CheckAutomaticSwitch(player.obj.transform.position);
+        
         //engine.NextTurn();
     }
+    class t{
 
+    }
     private bool MoveObjects(Unit unit, Direction d)
     {
+        Wall.print(unit);
         Vector2 temp;
         
         if(unit.unitType != UnitType.Wall)
@@ -51,15 +61,16 @@ public class Move{
         for(int i =0; i< database.units[(int)temp.x, (int)temp.y].Count; i++)
         {
             Unit u = database.units[(int)temp.x, (int)temp.y][i];
+            Wall.print(u.unitType);
             if (u.layer == 2)
                 continue;
             if (u.unitType == UnitType.Wall)
                 continue;
+            
             if (u.movable)
             {
                 if (unit.CanMove(u.unitType) || u.CanBeMoved)
                 {
-                    Wall.print("fuck");
                     if (!MoveObjects(u, d))
                         return false;
                 }
@@ -74,6 +85,12 @@ public class Move{
             }
         }
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
+        for(int i=0; i< database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Count; i++)
+        {
+            Unit u = database.units[(int)unit.transform.position.x, (int)unit.transform.position.y][i];
+            if (u.unitType == UnitType.Switch && ((Switch)u).isAutomatic && ((Switch)u).isOn)
+                ((Switch)u).Run();
+        }
         if (unit.unitType == UnitType.Wall)
         {
             switch (((Wall)unit).direction)
