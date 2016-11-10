@@ -195,8 +195,10 @@ public class Interface : MonoBehaviour {
     private bool isEmpty(Vector2 dir)
     {
         try {
-            if (! CheckDoor(dir))
+            if (!CheckDoor(dir))
+            {
                 return false;
+            }
             int x1 = (int)Mathf.Ceil(player.transform.position.x) + (int)dir.x;
             int y1 = (int)Mathf.Ceil(player.transform.position.y) + (int)dir.y;
             if(Toolkit.IsWallOnTheWay(player.transform.position, Toolkit.VectorToDirection(dir)))
@@ -237,6 +239,8 @@ public class Interface : MonoBehaviour {
         {
             if(unit.unitType == UnitType.Door)
             {
+                if (((Door)unit).direction != Toolkit.VectorToDirection(dir))
+                    continue;
                 InternalDoor d1 = unit.GetComponent<InternalDoor>();
                 if(d1 != null)
                 {

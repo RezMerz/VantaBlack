@@ -67,69 +67,25 @@ public class AandR {
 
     private void DoContainer(Unit unit)
     {
-        MovingContainer c1 = ((Container)unit).GetComponent<MovingContainer>();
-        DoorOpener c2 = ((Container)unit).GetComponent<DoorOpener>();
-        if(c1 != null)
+        Container container = (Container)unit;
+        if (container.IsEmpty())
         {
-            if (c1.IsEmpty())
-            {
-                Release(c1);
-            }
-            else if (c1.IsAvailable())
-            {
-                if (c1.state == 1)
-                {
-                    Swap(c1);
-                }
-                else
-                {
-                    Swap(c1);
-                }
-            }
-            else
-            {
-                if (c1.ability.abilitytype == AbilityType.Fuel)
-                {
-                    Swap(c1);
-                }
-            }
+            if(player.ability != null)
+                Release(container);
         }
-        else if (c2 != null)
+        else if (container.IsAvailable())
         {
-            if (c2.IsEmpty())
-            {
-                Release(c2);
-            }
-            else if (c2.IsAvailable())
-            {
-                if (c2.state == 1)
-                {
-                    Swap(c2);
-                }
-                else
-                {
-                    Swap(c2);
-                }
-            }
+            if (player.ability != null)
+                Swap(container);
             else
-            {
-                if (c2.ability.abilitytype == AbilityType.Fuel)
-                {
-                    Swap(c2);
-                }
-            }
-            
+                Absorb(container);
         }
-        if (!((Container)unit).IsEmpty() && ((Container)unit).Unlockable)
+        else
         {
-            foreach (AbilityType t in ((Container)unit).UnlockerAbilities)
-            {
-                if (((Container)unit).ability.abilitytype == t)
-                {
-                    ((Container)unit).CanBeMoved = true;
-                    break;
-                }
-            }
+            if (player.ability != null)
+                SafeSwap(container);
+            else
+                Absorb(container);
         }
     }
 
@@ -159,55 +115,69 @@ public class AandR {
 
     private void Release(Container container)
     {
-        if (player.ability == null)
-            return;
+        //Wall.print("releasing");
         container.ability = player.ability;
         player.ability = null;
         container.state++;
-        try {
-            if (((MovingContainer)container) != null)
-                ((MovingContainer)container).forward = true;
-        }
-        catch { }
+        container.forward = true;
         engine.action.RunContainer(container);
     }
 
     private void Swap(Container container)
     {
+        //Wall.print("swaping");
         Ability container_ability = container.ability;
-        try
-        {
-            container.ability = player.ability;
-        }
-        catch
-        {
-
-            container.ability = null;
-        }
-        
         player.ability = container_ability;
-        try {
-            if (container.ability.abilitytype == AbilityType.Fuel)
+        if(container.ability.abilitytype == AbilityType.Fuel)
+        {
+            if(container.state == 1)
             {
-                container.state++;
-                if (((MovingContainer)container) != null)
-                    ((MovingContainer)container).forward = true;
+                container.ability = null;
+                container.state = 0;
+                container.forward = false;
+                engine.action.RunContainer(container);
             }
             else
             {
                 container.state--;
-                if (((MovingContainer)container) != null)
-                    ((MovingContainer)container).forward = false;
+                container.forward = false;
+                engine.action.RunContainer(container);
             }
-        }
-        catch
-        { 
-            container.state--;
-            if (((MovingContainer)container) != null)
-                ((MovingContainer)container).forward = false;
-        }
-        engine.action.RunContainer(container);
 
+        }
+        else
+        {
+            Absorb(container);
+        }
+    }
+
+    private void Absorb(Container container)
+    {
+        //Wall.print("absorbing");
+        if (container.ability.abilitytype == AbilityType.Fuel)
+        {
+            player.ability = container.ability;
+            container.state--;
+            container.forward = false;
+            if (container.state == 0)
+                container.ability = null;
+            engine.action.RunContainer(container);
+        }
+        else
+        {
+            player.ability = container.ability;
+            container.state = 0;
+            container.forward = false;
+            engine.action.RunContainer(container);
+        }
+    }
+
+    private void SafeSwap(Container container)
+    {
+        //Wall.print("safe swapping");
+        Ability containerAbility = container.ability;
+        container.ability = player.ability;
+        player.ability = container.ability;
     }
     private void _absorb(Block block)
     {

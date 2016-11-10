@@ -2,41 +2,41 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MovingContainer : Container{
+public class MovingContainer : MonoBehaviour{
 
     public List<Direction> MoveDirections;
     public GameObject Unit;
     public int distance;
     int moved;
-    public bool forward { get; set; }
-
+    Container container;
     void Start()
     {
-        base.Start();
-        forward = false;
+        moved = distance;
+        container = gameObject.GetComponent<Container>();
     }
 
-    public override void Run()
+    public void Run()
     {
-        if (forward)
+        if (container.forward)
         {
-            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], distance);
+            if (moved == distance)
+                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], distance);
+            else
+                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], moved);
         }
         else
-            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[state]), distance);
+        {
+            if (moved == distance)
+                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), distance);
+            else
+                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
+        }
     }
     public void Run(int i)
     {
-        if (forward)
-            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[state], i);
+        if (container.forward)
+            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], i);
         else
-            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[state]), i);
+            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), i);
     }
-
-    public override void Check()
-    {
-        
-    }
-
-    
 }

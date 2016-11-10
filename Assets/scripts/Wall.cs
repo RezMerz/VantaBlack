@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Wall : Unit {
 
     public Direction direction;
     public bool magnetic;
+    public List<Unit> connectedUnits;
 
 	// Use this for initialization
 	void Start () {

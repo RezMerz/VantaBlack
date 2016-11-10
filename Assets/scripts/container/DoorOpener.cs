@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoorOpener : Container {
+public class DoorOpener : MonoBehaviour {
     public GameObject door;
 
     // Use this for initialization
     void Start()
     {
-        base.Start();
+        
         
     }
 
@@ -16,7 +16,7 @@ public class DoorOpener : Container {
 	
 	}
 
-    public override void Run()
+    public void Run()
     {
         door.GetComponent<Door>().OpenClose();
     }

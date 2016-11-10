@@ -205,12 +205,7 @@ public class Action{
 
     public void RunContainer(Container container)
     {
-        MovingContainer[] mv = container.gameObject.GetComponents<MovingContainer>();
-        for (int i = 0; i < mv.Length; i++)
-            mv[i].Run();
-        DoorOpener[] dooropener = container.gameObject.GetComponents<DoorOpener>();
-        for (int i = 0; i < dooropener.Length; i++)
-            dooropener[i].Run();
+        container.Run();
     }
 
     public void CheckAutomaticSwitch(Vector2 position)
