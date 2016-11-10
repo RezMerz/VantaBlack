@@ -7,6 +7,8 @@ public class Container : Unit{
     public bool Unlockable;
     public List<AbilityType> UnlockerAbilities;
     LogicalEngine engine;
+
+    public bool forward { get; set; }
     // Use this for initialization
 
     public void Start()
@@ -18,9 +20,23 @@ public class Container : Unit{
         Code++;
         movable = true;
         layer = 1;
+        forward = true;
     }
 
-    public virtual void Run() { }
+    public void Run()
+    {
+        Wall.print("running container");
+        MovingContainer[] mv = gameObject.GetComponents<MovingContainer>();
+        Wall.print(mv.Length);
+        for (int i = 0; i < mv.Length; i++)
+            mv[i].Run();
+        DoorOpener[] dooropener = gameObject.GetComponents<DoorOpener>();
+        for (int i = 0; i < dooropener.Length; i++)
+            dooropener[i].Run();
+        ContainerControler[] containerControler = gameObject.GetComponents<ContainerControler>();
+        for (int i = 0; i < containerControler.Length; i++)
+            containerControler[i].Run();
+    }
 
     public virtual void Check() { }
 
