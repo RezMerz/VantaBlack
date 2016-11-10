@@ -16,6 +16,8 @@ public class LogicalEngine
     Map map;
 
     SnapshotManager spManager;
+
+    public List<Unit> reserved;
     public LogicalEngine(int x, int y)
     {
         database = Database.database;
@@ -31,6 +33,8 @@ public class LogicalEngine
         action = new Action(this);
         map = new Map(this);
         AR = new AandR(this);
+
+        reserved = new List<Unit>();
     }
     void init()
     {
@@ -83,19 +87,7 @@ public class LogicalEngine
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Container"));
         foreach (GameObject g in Gobjects)
-        {
-            //Wall.print(g.GetComponent<MovingContainer>());
-            Container temp = g.GetComponent<MovingContainer>();
-            if (temp == null)
-            {
-                temp = g.GetComponent<DoorOpener>();
-                if (temp != null)
-                    database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<DoorOpener>());
-            }
-            else
-                database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(temp);
-
-        }
+            database.units[(int)g.transform.position.x, (int)g.transform.position.y].Add(g.GetComponent<Container>());
         Gobjects.Clear();
 
         Gobjects.AddRange(GameObject.FindGameObjectsWithTag("Switch"));

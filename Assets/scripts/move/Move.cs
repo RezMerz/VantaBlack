@@ -13,6 +13,7 @@ public class Move{
     LogicalEngine engine;
 
     
+    
     public Move(LogicalEngine engine)
     {
         this.Gengine = engine.Gengine;
@@ -32,21 +33,17 @@ public class Move{
                 ((Switch)u).Run();
         }
         engine.action.CheckAutomaticSwitch(player.obj.transform.position);
-        Gengine._move(dir);
+        Gengine._Move_Object(player.obj, Toolkit.VectorSum(player.transform.position, Toolkit.DirectiontoVector(dir)));
         player.position = database.player.transform.position;
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
         engine.action.CheckAutomaticSwitch(player.obj.transform.position);
         
         //engine.NextTurn();
     }
-    class t{
-
-    }
     private bool MoveObjects(Unit unit, Direction d)
     {
-        Wall.print(unit);
-        Vector2 temp;
         
+        Vector2 temp;
         if(unit.unitType != UnitType.Wall)
             if (Toolkit.IsWallOnTheWay(unit.transform.position, d))
                 return false;
@@ -58,21 +55,30 @@ public class Move{
             case Direction.Right: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(1, 0)); break;
             default: temp = new Vector2(0, 0); break;
         }
-        for(int i =0; i< database.units[(int)temp.x, (int)temp.y].Count; i++)
+        for (int i =0; i< database.units[(int)temp.x, (int)temp.y].Count; i++)
         {
             Unit u = database.units[(int)temp.x, (int)temp.y][i];
-            Wall.print(u.unitType);
             if (u.layer == 2)
                 continue;
             if (u.unitType == UnitType.Wall)
                 continue;
-            
+            if (u.unitType == UnitType.Switch)
+                continue;
+            if(u.unitType == UnitType.Door)
+            {
+                if (((Door)u).direction != d)
+                    continue;
+            }
             if (u.movable)
             {
                 if (unit.CanMove(u.unitType) || u.CanBeMoved)
                 {
                     if (!MoveObjects(u, d))
                         return false;
+                    else
+                    {
+                        Wall.print("hello");
+                    }
                 }
                 else
                 {
@@ -84,6 +90,7 @@ public class Move{
                 return false;
             }
         }
+        
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
         for(int i=0; i< database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Count; i++)
         {
@@ -114,6 +121,13 @@ public class Move{
         database.units[(int)temp.x, (int)temp.y].Add(unit);
         if (unit.unitType == UnitType.Wall)
         {
+            for (int i = 0; i < ((Wall)unit).connectedUnits.Count; i++)
+            {
+                database.units[(int)((Wall)unit).connectedUnits[i].obj.transform.position.x, (int)((Wall)unit).connectedUnits[i].obj.transform.position.y].Remove((Switch)((Wall)unit).connectedUnits[i]);
+                Vector2 temppos = Toolkit.VectorSum((Toolkit.DirectiontoVector(Toolkit.ReverseDirection(((Switch)((Wall)unit).connectedUnits[i]).direction))), unit.gameObject.transform.position);
+                database.units[(int)temppos.x, (int)temppos.y].Add((Switch)((Wall)unit).connectedUnits[i]);
+                GraphicalEngine.MoveObject(((Wall)unit).connectedUnits[i].obj, temppos);
+            }
             switch (((Wall)unit).direction)
             {
                 case Direction.Right:
@@ -134,14 +148,12 @@ public class Move{
         {
             for (int i = 0; i < ((Rock)unit).connectedUnits.Count; i++)
             {
-                database.units[(int)((Rock)unit).connectedUnits[i].obj.transform.position.x, (int)((Rock)unit).connectedUnits[i].obj.transform.position.y].Remove((Switch)((Rock)unit).connectedUnits[i]);
-
-                Wall.print((Toolkit.DirectiontoVector(Toolkit.ReverseDirection(((Switch)((Rock)unit).connectedUnits[i]).direction))));
+                Wall.print(i);
+                engine.reserved.Add(unit);
+                database.units[(int)((Rock)unit).connectedUnits[i].obj.transform.position.x, (int)((Rock)unit).connectedUnits[i].obj.transform.position.y].Remove(((Rock)unit).connectedUnits[i]);
                 Vector2 temppos = Toolkit.VectorSum((Toolkit.DirectiontoVector(Toolkit.ReverseDirection(((Switch)((Rock)unit).connectedUnits[i]).direction))), unit.gameObject.transform.position);
-                database.units[(int)temppos.x, (int)temppos.y].Add((Switch)((Rock)unit).connectedUnits[i]);
-                Wall.print(temppos);
                 GraphicalEngine.MoveObject(((Rock)unit).connectedUnits[i].obj, temppos);
-                
+                database.units[(int)temppos.x, (int)temppos.y].Add((Switch)((Rock)engine.reserved[i]).connectedUnits[i]);
             }
         }
         unit.position = unit.gameObject.transform.position;
