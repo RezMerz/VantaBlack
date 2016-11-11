@@ -79,11 +79,13 @@ public class Action{
             if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic && ((Switch)u).direction == database.gravity_direction)
             {
                 tlist.Add(u);
-                SwitchAction(u); 
+                SwitchAction(u);
+                return;
             }
             if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && ((BlockSwitch)u).direction == database.gravity_direction)
             {
                 BlockSwitchAction((BlockSwitch)u);
+                return;
             }
         }
         for(int i=0; i<tlist.Count; i++)
@@ -112,10 +114,18 @@ public class Action{
             if (u.unitType == UnitType.Switch && d == ((Switch)u).direction && !((Switch)u).isAutomatic)
             {
                 SwitchAction(u);
+                return;
             }
-            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && d == ((BlockSwitch)u).direction)
+        }
+        
+        Vector2 temp = Toolkit.VectorSum(Toolkit.DirectiontoVector(d), player.transform.position);
+        for (int i = 0; i < database.units[(int)temp.x, (int)temp.y].Count; i++)
+        {
+            Unit u = database.units[(int)temp.x, (int)temp.y][i];
+            if(u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
             {
                 BlockSwitchAction((BlockSwitch)u);
+                return;
             }
         }
     }
@@ -134,8 +144,9 @@ public class Action{
             try
             {
                 t2 = (DoorSwitch)sw;
-            }   catch { }
-            if(t2 == null)
+            }
+            catch { }
+            if (t2 == null)
             {
                 try
                 {
@@ -145,21 +156,28 @@ public class Action{
 
                     }
                     else
+                    {
                         t3.Run();
+                    }
                 }
                 catch { }
             }
             else
+            {
                 t2.Run();
+            }
         }
         else
+        {
             t1.Run();
+        }
 
     }
 
     public void BlockSwitchAction(BlockSwitch block)
     {
-        if(block.ability.abilitytype == AbilityType.Direction)
+        Wall.print(block.ability.abilitytype);
+        if (block.ability.abilitytype == AbilityType.Direction)
         {
             ChangeDirection();
         }

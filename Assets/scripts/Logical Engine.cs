@@ -219,6 +219,7 @@ public class LogicalEngine
         if (flag)
         {
             moveObject.move(direction);
+            ApplyGravity();
             CheckPointCheck();
         }
     }
@@ -251,6 +252,7 @@ public class LogicalEngine
 
     public void SwitchAction()
     {
+       
         action.SwitchActionPressed();
     }
 
@@ -268,8 +270,11 @@ public class LogicalEngine
     public int MoveObjects(Unit unit, Direction d, int distance)
     {
         int i = moveObject.MoveObjects(unit, d, distance);
-        if(unit.unitType == UnitType.Player && i != 0)
+        if (unit.unitType == UnitType.Player && i != 0)
+        {
+
             moveObject.MoveObjects(unit, d, distance);
+        }
         return i;
     }
 
@@ -306,7 +311,7 @@ public class LogicalEngine
     public void EndTurn()
     {
         //CheckAutomaticSwitch();
-        ApplyGravity();
+        //ApplyGravity();
         CheckBlockSwitch();
         
 
@@ -318,19 +323,22 @@ public class LogicalEngine
 
     public void ApplyGravity()
     {
-        ApplyGravity(player);
-        /*for(int i=0; i<database.units.Length; i++)
+        //ApplyGravity(player);
+        //return;
+        for(int i=0; i<database.units.GetLength(0); i++)
         {
             for(int j=0; j<database.units.GetLength(1); j++)
             {
                 for(int k=0; k<database.units[i,j].Count; k++)
                 {
-                    Unit u = database.units[i, j][k];
+                    Unit u = database.units[i,j][k];
                     if (u.CanBeMoved)
+                    {
                         ApplyGravity(u);
+                    }
                 }
             }
-        }*/
+        }
     }
 
     private void ApplyGravity(Unit unit)
@@ -369,7 +377,7 @@ public class LogicalEngine
         }
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
         for (int i = 0; i < counter; i++)
-            Gengine._move(database.gravity_direction);
+            Gengine._Move_Object(unit.obj, Toolkit.VectorSum(unit.transform.position, Toolkit.DirectiontoVector(database.gravity_direction)));
         unit.position = unit.transform.position;
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Add(unit);
     }
@@ -390,6 +398,7 @@ public class LogicalEngine
     }
     public void CheckAutomaticSwitch()
     {
+        Wall.print("s300");
         for(int i=0; i<database.AutomaticSwitches.Count; i++)
         {
             Vector2 temp;
@@ -409,6 +418,7 @@ public class LogicalEngine
             }
             if (tempbool && database.AutomaticSwitches[i].isOn)
             {
+                Wall.print("s7");
                 database.AutomaticSwitches[i].Run();
             }
         }

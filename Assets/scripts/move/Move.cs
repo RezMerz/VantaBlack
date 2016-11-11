@@ -37,16 +37,24 @@ public class Move{
         player.position = database.player.transform.position;
         database.units[(int)player.transform.position.x, (int)player.transform.position.y].Add(player);
         engine.action.CheckAutomaticSwitch(player.obj.transform.position);
+
         
-        //engine.NextTurn();
+        engine.NextTurn();
     }
     private bool MoveObjects(Unit unit, Direction d)
     {
-        
+       
         Vector2 temp;
-        if(unit.unitType != UnitType.Wall)
+        if (unit.unitType != UnitType.Wall)
+        {
             if (Toolkit.IsWallOnTheWay(unit.transform.position, d))
                 return false;
+        }
+        /*for(int i=0; i<database.units[20,5].Count; i++)
+        {
+            Wall.print(database.units[20,5][i]);
+        }*/
+        //Wall.print("-----------------------------------------");
         switch (d)
         {
             case Direction.Down: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(0, -1)); break;
@@ -55,6 +63,9 @@ public class Move{
             case Direction.Right: temp = Toolkit.VectorSum(unit.transform.position, new Vector2(1, 0)); break;
             default: temp = new Vector2(0, 0); break;
         }
+        Wall.print(d);
+        Wall.print(database.units[(int)temp.x, (int)temp.y].Count);
+        Wall.print(temp);
         for (int i =0; i< database.units[(int)temp.x, (int)temp.y].Count; i++)
         {
             Unit u = database.units[(int)temp.x, (int)temp.y][i];
@@ -69,26 +80,25 @@ public class Move{
                 if (((Door)u).direction != d)
                     continue;
             }
-            if (u.movable)
+            if (unit.CanMove(u.unitType) || u.CanBeMoved)
             {
-                if (unit.CanMove(u.unitType) || u.CanBeMoved)
-                {
-                    if (!MoveObjects(u, d))
-                        return false;
-                    else
-                    {
-                        Wall.print("hello");
-                    }
-                }
+                if (!MoveObjects(u, d))
+                    return false;
                 else
                 {
-                    return false;
+                    for (int j = 0; j < database.units[(int)temp.x, (int)temp.y].Count; j++)
+                        Wall.print(database.units[(int)temp.x, (int)temp.y][j].unitType);
+                    Wall.print(temp);
+                    Wall.print(database.units[(int)temp.x, (int)temp.y].Count);
+                    i = -1;
+                    continue;
                 }
             }
             else
             {
                 return false;
             }
+            
         }
         
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
@@ -148,7 +158,6 @@ public class Move{
         {
             for (int i = 0; i < ((Rock)unit).connectedUnits.Count; i++)
             {
-                Wall.print(i);
                 engine.reserved.Add(unit);
                 database.units[(int)((Rock)unit).connectedUnits[i].obj.transform.position.x, (int)((Rock)unit).connectedUnits[i].obj.transform.position.y].Remove(((Rock)unit).connectedUnits[i]);
                 Vector2 temppos = Toolkit.VectorSum((Toolkit.DirectiontoVector(Toolkit.ReverseDirection(((Switch)((Rock)unit).connectedUnits[i]).direction))), unit.gameObject.transform.position);
