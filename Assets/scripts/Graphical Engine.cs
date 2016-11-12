@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Threading;
+using System.Runtime.CompilerServices;
 public class GraphicalEngine {
 
     Database database;
@@ -52,8 +53,10 @@ public class GraphicalEngine {
         }
     }
 
-    public void _move(Direction dir)
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public  void _move(Direction dir)
     {
+        
         switch (dir)
         {
             case Direction.Down: Database.database.player.transform.position = Toolkit.VectorSum(Database.database.player.transform.position, new Vector2(0, -1)); break;
@@ -63,10 +66,18 @@ public class GraphicalEngine {
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static void MoveObject(GameObject obj, Vector2 position)
     {
         obj.transform.position = position;
 
+    }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public bool _Move_Object(GameObject obj, Vector2 pos)
+    {
+        obj.transform.position = pos;
+        return true;
     }
 
     public void _lean_right()
@@ -120,11 +131,7 @@ public class GraphicalEngine {
         }
     }
 
-    public bool _Move_Object(GameObject obj,Vector2 pos)
-    {
-        obj.transform.position = pos;
-        return true;
-    }
+    
     private Vector2 _direction_to_vector(Direction dir)
     {
         if (dir == Direction.Down)

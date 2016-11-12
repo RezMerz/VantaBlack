@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Container : Unit{
     public int numberofStates, state;
     public Ability ability;
+    public Ability _lastAbility { get; set; }
     public bool Unlockable;
     public List<AbilityType> UnlockerAbilities;
     LogicalEngine engine;
@@ -25,9 +26,7 @@ public class Container : Unit{
 
     public void Run()
     {
-        Wall.print("running container");
         MovingContainer[] mv = gameObject.GetComponents<MovingContainer>();
-        Wall.print(mv.Length);
         for (int i = 0; i < mv.Length; i++)
             mv[i].Run();
         DoorOpener[] dooropener = gameObject.GetComponents<DoorOpener>();
@@ -36,6 +35,9 @@ public class Container : Unit{
         ContainerControler[] containerControler = gameObject.GetComponents<ContainerControler>();
         for (int i = 0; i < containerControler.Length; i++)
             containerControler[i].Run();
+        MakeMovableContainer[] mkc = gameObject.GetComponents<MakeMovableContainer>();
+        for (int i = 0; i < mkc.Length; i++)
+            mkc[i].Run();
     }
 
     public virtual void Check() { }
