@@ -68,24 +68,48 @@ public class AandR {
     private void DoContainer(Unit unit)
     {
         Container container = (Container)unit;
+        try
+        {
+            if (container.ability == player.ability)
+            {
+                SafeSwap(container);
+                return;
+            }
+        }
+        catch { }
         if (container.IsEmpty())
         {
-            if(player.ability != null)
+            if (player.ability != null)
+            {
                 Release(container);
+                return;
+            }
         }
         else if (container.IsAvailable())
         {
             if (player.ability != null)
+            {
                 Swap(container);
+                return;
+            }
             else
+            {
                 Absorb(container);
+                return;
+            }
         }
         else
         {
             if (player.ability != null)
+            {
                 SafeSwap(container);
+                return;
+            }
             else
+            {
                 Absorb(container);
+                return;
+            }
         }
     }
 
@@ -115,9 +139,10 @@ public class AandR {
 
     private void Release(Container container)
     {
-        //Wall.print("releasing");
+        Wall.print("releasing");
         container.ability = player.ability;
         player.ability = null;
+        container._lastAbility = null;
         container.state++;
         container.forward = true;
         engine.action.RunContainer(container);
@@ -125,13 +150,15 @@ public class AandR {
 
     private void Swap(Container container)
     {
-        //Wall.print("swaping");
+        Wall.print("swaping");
         Ability container_ability = container.ability;
         player.ability = container_ability;
         if(container.ability.abilitytype == AbilityType.Fuel)
         {
             if(container.state == 1)
             {
+                Wall.print("c1");
+                container._lastAbility = container.ability;
                 container.ability = null;
                 container.state = 0;
                 container.forward = false;
@@ -139,6 +166,8 @@ public class AandR {
             }
             else
             {
+                Wall.print("c2");
+                container._lastAbility = null;
                 container.state--;
                 container.forward = false;
                 engine.action.RunContainer(container);
@@ -147,25 +176,33 @@ public class AandR {
         }
         else
         {
+            Wall.print("c3");
             Absorb(container);
         }
     }
 
     private void Absorb(Container container)
     {
-        //Wall.print("absorbing");
+        Wall.print("absorbing");
         if (container.ability.abilitytype == AbilityType.Fuel)
         {
             player.ability = container.ability;
             container.state--;
             container.forward = false;
             if (container.state == 0)
+            {
+                container._lastAbility = container.ability;
+                container.ability = null;
+            }
+            else
                 container.ability = null;
             engine.action.RunContainer(container);
         }
         else
         {
             player.ability = container.ability;
+            container._lastAbility = container.ability;
+            container.ability = null;
             container.state = 0;
             container.forward = false;
             engine.action.RunContainer(container);
@@ -174,10 +211,17 @@ public class AandR {
 
     private void SafeSwap(Container container)
     {
-        //Wall.print("safe swapping");
+        Wall.print("safe swapping");
+        bool flag = true;
+        if (player.ability == container.ability)
+            flag = false;
         Ability containerAbility = container.ability;
         container.ability = player.ability;
-        player.ability = container.ability;
+        player.ability = containerAbility;
+        container._lastAbility = containerAbility;
+        container.state = 0;
+        if(flag)
+            container.Run();
     }
     private void _absorb(Block block)
     {

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Switch : Unit {
 
@@ -8,6 +8,9 @@ public class Switch : Unit {
     public bool isOn { get; set; }
 
     public bool isAutomatic { get; set; }
+
+    
+
     // Use this for initialization
     public void Start () {
         unitType = UnitType.Switch;

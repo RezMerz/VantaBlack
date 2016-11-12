@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class MakeMovableContainer : MonoBehaviour {
 
     public Container container;
     public bool isReverse;
-	// Use this for initialization
-	void Start () {
+    public List<AbilityType> activatorAbility;
+    // Use this for initialization
+    void Start () {
         
         container = gameObject.GetComponent<Container>();
 	}
@@ -21,16 +22,49 @@ public class MakeMovableContainer : MonoBehaviour {
         if (isReverse)
         {
             if (container.IsEmpty())
-                container.CanBeMoved = true;
+            {
+                foreach (AbilityType ability in activatorAbility)
+                {
+                    if (ability == container._lastAbility.abilitytype)
+                    {
+                        container.CanBeMoved = true;
+                    }
+                }
+            }
             else
-                container.CanBeMoved = false;
+            {
+
+                foreach (AbilityType ability in activatorAbility)
+                {
+                    if (ability == container.ability.abilitytype)
+                    {
+                        container.CanBeMoved = false;
+                    }
+                }
+            }
         }
         else
         {
             if (container.IsEmpty())
-                container.CanBeMoved = false;
+            {
+                foreach (AbilityType ability in activatorAbility)
+                {
+                    if (ability == container._lastAbility.abilitytype)
+                    {
+                        container.CanBeMoved = false;
+                    }
+                }
+            }
             else
-                container.CanBeMoved = true;
+            {
+                foreach (AbilityType ability in activatorAbility)
+                {
+                    if (ability == container.ability.abilitytype)
+                    {
+                        container.CanBeMoved = true;
+                    }
+                }
+            }
         }
     }
 }

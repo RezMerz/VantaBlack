@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Container : Unit{
     public int numberofStates, state;
     public Ability ability;
+    public Ability _lastAbility { get; set; }
     public bool Unlockable;
     public List<AbilityType> UnlockerAbilities;
     LogicalEngine engine;
