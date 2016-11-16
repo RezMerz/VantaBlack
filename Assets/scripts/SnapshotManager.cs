@@ -13,7 +13,7 @@ public class SnapshotManager {
     {
         if(Database.database.snapShotCount == Database.database.numberOfSnapshot)
             Database.database.snapshots.RemoveAt(0);
-        Database.database.snapshots.Add(new Snapshot((List<Unit>[,])Database.database.units.Clone()));
+        Database.database.snapshots.Add(new Snapshot((List<Unit>[,])Database.database.units));
         Database.database.snapShotCount++;
     }
 
@@ -37,8 +37,14 @@ public class Snapshot
     
     public Snapshot(List<Unit>[,] units)
     {
-
-        this.units = units;
+        for (int i = 0; i < Database.database.units.GetLength(0); i++)
+        {
+            for (int j = 0; j < Database.database.units.GetLength(1); j++)
+            {
+                units[i, j] = new List<Unit>();
+                units[i, j].AddRange(Database.database.units[i, j]);
+            }
+        }
         turn = Database.database.turn;
         //this.player = player;
     }

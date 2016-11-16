@@ -32,14 +32,19 @@ public class CameraMove : MonoBehaviour {
         Camera.main.transform.position = new Vector3(x, y, -10);
     }
 
-    public void OnCollisionStay2D(Collision2D col){
+    public void OnTriggerEnter2D(Collider2D col)
+    {
         if(!is_moving)
         if (moving!=number) {
             is_moving = true;
             moving = number;
+            Vector2 new_pos;
+            new_pos = new Vector3(x+1, y-5, -10);
+            GameObject.Find("Map").transform.position = new_pos;
             StartCoroutine(Smooth_Move(new Vector3(x, y, -10)));
             StartCoroutine(Smooth_Zoom(zoom));
-        }     
+        }
+             
     }
 
 
