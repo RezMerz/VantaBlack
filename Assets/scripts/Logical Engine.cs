@@ -235,19 +235,51 @@ public class LogicalEngine
 
     public void NextTurn()
     {
-        //spManager.takesnapshot();
-
+        /*spManager.takesnapshot();
+        for(int i=0; i < database.snapSshots[database.snapShotCount-1].units.GetLength(0); i++)
+        {
+            for(int j=0; j< database.snapshots[database.snapShotCount - 1].units.GetLength(1); j++)
+            {
+                for(int k=0; k< database.snapshots[database.snapShotCount - 1].units[i,j].Count; k++)
+                {
+                    if(database.snapshots[database.snapShotCount - 1].units[i,j][k].unitType == UnitType.Player)
+                        Wall.print(database.snapshots[database.snapShotCount - 1].units[i, j][k].transform.position);
+                }
+            }
+        }*/
         database.turn++;
     }
 
     public void Undo()
     {
+        Wall.print("undoing");
         database.state = State.Busy;
         Snapshot snapshot = spManager.Revese();
-        database.units = snapshot.units;
+        for (int i = 0; i < database.snapshots[database.snapShotCount - 1].units.GetLength(0); i++)
+        {
+            for (int j = 0; j < database.snapshots[database.snapShotCount - 1].units.GetLength(1); j++)
+            {
+                database.units[i, j] = new List<Unit>();
+                //for(int k=0; k< database.snapshots[database.snapShotCount - 1].units[i,j].Count; i++)
+                //{
+                    database.units[i, j].AddRange(database.snapshots[database.snapShotCount - 1].units[i, j]);
+                //}
+            }
+        }
+        for (int i = 0; i < database.snapshots[database.snapShotCount - 1].units.GetLength(0); i++)
+        {
+            for (int j = 0; j < database.snapshots[database.snapShotCount - 1].units.GetLength(1); j++)
+            {
+                for (int k = 0; k < database.snapshots[database.snapShotCount - 1].units[i, j].Count; k++)
+                {
+                    if (database.snapshots[database.snapShotCount - 1].units[i, j][k].unitType == UnitType.Player)
+                        Wall.print(database.snapshots[database.snapShotCount - 1].units[i, j][k].transform.position);
+                }
+            }
+        }
+        //database.units = snapshot.units;
         database.turn = snapshot.turn;
-        Refresh();
-
+        //Refresh();
     }
 
     public void SwitchAction()
@@ -317,7 +349,7 @@ public class LogicalEngine
 
 
 
-        spManager.takesnapshot();
+        //spManager.takesnapshot();
         //Wall.print(database.snapShotCount);
     }
 
