@@ -9,7 +9,7 @@ public class Switch : Unit {
 
     public bool isAutomatic { get; set; }
 
-    
+    public bool disabled;
 
     // Use this for initialization
     public void Start () {
@@ -33,6 +33,7 @@ public class Switch : Unit {
         singlestate = sc.singlestate;
         isOn = sc.isOn;
         isAutomatic = sc.isAutomatic;
+        disabled = sc.disabled;
     }
 
     public override bool CanMove(UnitType unittype)
