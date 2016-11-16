@@ -7,6 +7,7 @@ public class Player : Unit {
     public Ability ability;
     public List<Direction> move_direction;
     public string current_scene;
+    public string current_room;
 	// Use this for initialization
 	void Start () {
         unitType = UnitType.Player;
