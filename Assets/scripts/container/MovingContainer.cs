@@ -20,9 +20,8 @@ public class MovingContainer : MonoBehaviour{
     {
         foreach (AbilityType ability in activatorAbility)
         {
-            if ((container._lastAbility != null && ability == container._lastAbility.abilitytype) || (container.ability != null && ability == container.ability.abilitytype))
+            if(container.ability == null)
             {
-                Wall.print("akhe namusan?");
                 if (container.forward)
                 {
                     if (moved == distance)
@@ -37,6 +36,25 @@ public class MovingContainer : MonoBehaviour{
                     else
                         moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
                 }
+                return;
+            }
+            if ((container._lastAbility != null && ability == container._lastAbility.abilitytype) || (container.ability != null && ability == container.ability.abilitytype))
+            {
+                if (container.forward)
+                {
+                    if (moved == distance)
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], distance);
+                    else
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], moved);
+                }
+                else
+                {
+                    if (moved == distance)
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), distance);
+                    else
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
+                }
+                return;
             }
         }
     }

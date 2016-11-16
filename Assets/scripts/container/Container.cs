@@ -44,10 +44,15 @@ public class Container : Unit{
 
     public bool IsAvailable()
     {
-        if (state == numberofStates - 1)
-            return false;
-
-        return true;
+        if (ability == null)
+            return true;
+        if (ability.abilitytype == AbilityType.Fuel)
+        {
+            if (state == numberofStates - 1)
+                return false;
+            return true;
+        }
+        return false;
     }
 
     public bool IsEmpty()
