@@ -152,4 +152,25 @@ public class GraphicalEngine {
         fall_pos = pos;
         player_pos = database.player.transform.position;
     }
+
+    public void _Player_Change_Ability(Ability ability)
+    {
+        
+    }
+
+    public void _Player_Change_Direction(Direction dir)
+    {
+
+    }
+
+    public void _Container_Change_Sprite(Unit unit,int fill,Ability ability)
+    {
+
+    }
+
+    public void _Block_Change_Sprite(Unit unit, Ability ability)
+    {
+
+    }
+
 }
