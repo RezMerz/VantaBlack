@@ -155,22 +155,47 @@ public class GraphicalEngine {
 
     public void _Player_Change_Ability(Ability ability)
     {
-        
+        string path = @"player\";
+            switch (ability.abilitytype)
+            {
+                case AbilityType.Fuel: path += "player-green"; break;
+                case AbilityType.Direction: path += "player-red"; break;
+            }      
+        database.player.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load(path, typeof(Sprite));
     }
 
     public void _Player_Change_Direction(Direction dir)
     {
-
+        float rot = 0;
+        switch (dir)
+        {
+            case Direction.Left: rot = 180; break;
+            case Direction.Right: rot = 0; break;
+        }
+        Database.database.player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rot));
     }
 
     public void _Container_Change_Sprite(Unit unit,int fill,Ability ability)
     {
-
+        string path = @"block\";
+        switch (ability.abilitytype)
+        {
+            case AbilityType.Fuel: path += "green-light-middle"; break;
+            case AbilityType.Direction: path += "red-light-middle"; break;
+        }
+        unit.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load(path, typeof(Sprite));
     }
 
     public void _Block_Change_Sprite(Unit unit, Ability ability)
     {
+        string path = @"blocks\";
+        switch (ability.abilitytype)
+        {
+            case AbilityType.Fuel: path += "block-green"; break;
+            case AbilityType.Direction: path += "block-red"; break;
+        }
 
+        unit.gameObject.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load(path,typeof(Sprite));
     }
 
 }
