@@ -7,4 +7,5 @@ public class SwitchConfig : MonoBehaviour{
     public bool singlestate;
     public bool isOn;
     public bool isAutomatic;
+    public bool disabled;
 }

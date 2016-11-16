@@ -76,7 +76,7 @@ public class Action{
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
-            if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic && ((Switch)u).direction == database.gravity_direction)
+            if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic && ((Switch)u).direction == database.gravity_direction && !((Switch)u).disabled)
             {
                 tlist.Add(u);
                 SwitchAction(u);
@@ -112,7 +112,7 @@ public class Action{
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
-            if (u.unitType == UnitType.Switch && d == ((Switch)u).direction && !((Switch)u).isAutomatic)
+            if (u.unitType == UnitType.Switch && d == ((Switch)u).direction && !((Switch)u).isAutomatic && !((Switch)u).disabled)
             {
                 tlist.Add(u);
                 SwitchAction(u);
