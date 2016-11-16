@@ -79,11 +79,13 @@ public class Action{
             if (u.unitType == UnitType.Switch && !((Switch)u).isAutomatic && ((Switch)u).direction == database.gravity_direction)
             {
                 tlist.Add(u);
-                SwitchAction(u); 
+                SwitchAction(u);
+                return;
             }
-            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && ((BlockSwitch)u).direction == database.gravity_direction)
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
             {
                 BlockSwitchAction((BlockSwitch)u);
+                return;
             }
         }
         for(int i=0; i<tlist.Count; i++)
@@ -97,7 +99,7 @@ public class Action{
         Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
         foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
         {
-            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && ((BlockSwitch)u).direction == database.gravity_direction)
+            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
             {
                 BlockSwitchAction(((BlockSwitch)u));
             }
@@ -106,16 +108,33 @@ public class Action{
 
     public void SwitchActionPressed(Direction d)
     {
+        List<Unit> tlist = new List<Unit>();
         for (int i = 0; i < database.units[(int)player.transform.position.x, (int)player.transform.position.y].Count; i++)
         {
             Unit u = database.units[(int)player.transform.position.x, (int)player.transform.position.y][i];
             if (u.unitType == UnitType.Switch && d == ((Switch)u).direction && !((Switch)u).isAutomatic)
             {
+                tlist.Add(u);
                 SwitchAction(u);
+                return;
             }
-            if (u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual && d == ((BlockSwitch)u).direction)
+        }
+        for (int i = 0; i < tlist.Count; i++)
+        {
+            database.units[(int)tlist[i].obj.transform.position.x, (int)tlist[i].obj.transform.position.y].Remove(tlist[i]);
+        }
+        for (int i = tlist.Count - 1; i >= 0; i--)
+        {
+            database.units[(int)tlist[i].obj.transform.position.x, (int)tlist[i].obj.transform.position.y].Add(tlist[i]);
+        }
+        Vector2 temp = Toolkit.VectorSum(Toolkit.DirectiontoVector(d), player.transform.position);
+        for (int i = 0; i < database.units[(int)temp.x, (int)temp.y].Count; i++)
+        {
+            Unit u = database.units[(int)temp.x, (int)temp.y][i];
+            if(u.unitType == UnitType.BlockSwitch && ((BlockSwitch)u).isManual)
             {
                 BlockSwitchAction((BlockSwitch)u);
+                return;
             }
         }
     }
@@ -134,8 +153,9 @@ public class Action{
             try
             {
                 t2 = (DoorSwitch)sw;
-            }   catch { }
-            if(t2 == null)
+            }
+            catch { }
+            if (t2 == null)
             {
                 try
                 {
@@ -145,21 +165,27 @@ public class Action{
 
                     }
                     else
+                    {
                         t3.Run();
+                    }
                 }
                 catch { }
             }
             else
+            {
                 t2.Run();
+            }
         }
         else
+        {
             t1.Run();
+        }
 
     }
 
     public void BlockSwitchAction(BlockSwitch block)
     {
-        if(block.ability.abilitytype == AbilityType.Direction)
+        if (block.ability.abilitytype == AbilityType.Direction)
         {
             ChangeDirection();
         }

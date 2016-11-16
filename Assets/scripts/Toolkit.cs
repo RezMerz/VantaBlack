@@ -84,6 +84,63 @@ public sealed class Toolkit{
         }
     }
 
+    public static bool IsWallOnTherWay2(Vector2 position, Direction dir)
+    {
+        if (dir == Direction.Right)
+        {
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
+            {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Right)
+                        return true;
+                }
+            }
+            return false;
+        }
+        else if (dir == Direction.Left)
+        {
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
+            {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Left)
+                        return true;
+                }
+            }
+            return false;
+        }
+        else if (dir == Direction.Up)
+        {
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
+            {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Up)
+                        return true;
+                }
+            }
+            return false;
+        }
+        else if (dir == Direction.Down)
+        {
+            for (int i = 0; i < Database.database.units[(int)position.x, (int)position.y].Count; i++)
+            {
+                Unit u = Database.database.units[(int)position.x, (int)position.y][i];
+                if (u.unitType == UnitType.Wall)
+                {
+                    if (((Wall)u).direction == Direction.Down)
+                        return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
     public static bool IsWallOnTheWay(Vector2 position, Direction dir)
     {
         if(dir == Direction.Right)
@@ -245,7 +302,7 @@ public sealed class Toolkit{
                     else if (((Door)u).direction == d && !((Door)u).open)
                         return false;
                 }
-                else return false;
+                else { return false; }
             }
             return true;
         }

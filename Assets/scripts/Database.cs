@@ -27,6 +27,7 @@ public class Database {
     
     public List<Snapshot> snapshots;
 
+    public bool ACTIVE_RED, ACTIVE_BLUE, ACTIVE_GREEN, ACTIVE_PURPLE, ACTIVE_LIGHTBLUE;
 
 
     public void Setsize(int x, int y)

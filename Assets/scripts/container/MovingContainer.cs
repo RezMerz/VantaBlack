@@ -9,6 +9,7 @@ public class MovingContainer : MonoBehaviour{
     public int distance;
     int moved;
     Container container;
+    public List<AbilityType> activatorAbility;
     void Start()
     {
         moved = distance;
@@ -17,19 +18,26 @@ public class MovingContainer : MonoBehaviour{
 
     public void Run()
     {
-        if (container.forward)
+        foreach (AbilityType ability in activatorAbility)
         {
-            if (moved == distance)
-                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], distance);
-            else
-                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], moved);
-        }
-        else
-        {
-            if (moved == distance)
-                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), distance);
-            else
-                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
+            if ((container._lastAbility != null && ability == container._lastAbility.abilitytype) || (container.ability != null && ability == container.ability.abilitytype))
+            {
+                Wall.print("akhe namusan?");
+                if (container.forward)
+                {
+                    if (moved == distance)
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], distance);
+                    else
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], moved);
+                }
+                else
+                {
+                    if (moved == distance)
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), distance);
+                    else
+                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
+                }
+            }
         }
     }
     public void Run(int i)

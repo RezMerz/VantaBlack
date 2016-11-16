@@ -39,12 +39,7 @@ public class MovingSwitch : Switch {
         }
         else
         {
-            if (moved == distance)
-            {
                 moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), directionOfMove, distance);
-            }
-            else
-                moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(unit), directionOfMove, moved);
 
             isOn = true;
             return moved != 0;

@@ -141,7 +141,6 @@ public class Interface : MonoBehaviour {
             {
                 if(!_lean_action())
                     engine.SwitchAction();
-                engine.EndTurn();
             }
             else if (Input.GetKeyDown(KeyCode.M))
             {
@@ -207,12 +206,15 @@ public class Interface : MonoBehaviour {
             }
             foreach (Unit unit in Database.database.units[x1, y1])
             {
-                if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock)
+                if (unit.unitType == UnitType.Block || unit.unitType == UnitType.Container || unit.unitType == UnitType.Rock || unit.unitType == UnitType.BlockSwitch)
                 {
-                    
+
                     if (unit.CanBeMoved && engine.MoveObjects(unit, Toolkit.VectorToDirection(dir), 1) != 0)
+                    {
                         return true;
+                    }
                     return false;
+
                 }
                 if(unit.unitType == UnitType.Box)
                 {
