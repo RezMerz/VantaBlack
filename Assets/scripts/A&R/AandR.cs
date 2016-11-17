@@ -105,26 +105,26 @@ public class AandR {
             }
             else
             {
-                if(container.state == 1)
+                if(player.ability.abilitytype == AbilityType.Fuel)
                 {
-                    container._lastAbility = container.ability;
-                    Ability abil =  _absorb(container);
-                    container.state = 0;
-                    container.forward = false;
-                    engine.action.RunContainer(container);
-                    container.ability = abil;
-                    container._lastAbility = null;
-                    container.state = 1;
+                    container.state++;
                     container.forward = true;
+                    player.ability = null;
                     engine.action.RunContainer(container);
                     return;
                 }
                 else
                 {
-                    if (container.ability.abilitytype == player.ability.abilitytype)
+                    if (container.state == 1)
                     {
-                        container.state++;
-                        player.ability = null;
+                        container._lastAbility = container.ability;
+                        Ability abil = _absorb(container);
+                        container.state = 0;
+                        container.forward = false;
+                        engine.action.RunContainer(container);
+                        container.ability = abil;
+                        container.state = 1;
+                        container.forward = true;
                         engine.action.RunContainer(container);
                         return;
                     }
@@ -192,16 +192,16 @@ public class AandR {
     private Ability _absorb(Container container)
     {
         Ability abil = player.ability;
-        container.ability = null;
-        player.ability = abil;
+        player.ability = container.ability;
+        container.ability = null;       
         return abil;
     }
 
     private Ability _release(Container container)
     {
         Ability abil = container.ability;
+        container.ability = player.ability;
         player.ability = null;
-        container.ability = abil;
         return abil;
     }
 
