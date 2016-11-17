@@ -77,7 +77,6 @@ public class AandR {
             container.state = 1;
             container.forward = true;
             engine.action.RunContainer(container);
-            Wall.print("xdjnmk,");
             return;
         }
         else if (container.IsAvailable())

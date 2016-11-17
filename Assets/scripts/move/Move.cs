@@ -95,7 +95,14 @@ public class Move{
             }
             
         }
-        
+
+        Vector2 tmpvec = Toolkit.VectorSum(unit.obj.transform.position, Toolkit.DirectiontoVector(Toolkit.ReverseDirection(database.gravity_direction)));
+        for (int i = 0; i < database.units[(int)tmpvec.x, (int)tmpvec.y].Count; i++)
+        {
+            if (database.units[(int)tmpvec.x, (int)tmpvec.y][i].CanBeMoved)
+                MoveObjects(database.units[(int)tmpvec.x, (int)tmpvec.y][i], d);
+        }
+
         database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
         for(int i=0; i< database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Count; i++)
         {
