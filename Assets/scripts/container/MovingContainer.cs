@@ -70,15 +70,16 @@ public class MovingContainer : MonoBehaviour
         else
             moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), i);
     }
-    /*public override Unit Clone()
+
+    public MovingContainer Clone(Container con)
     {
-        Wall u = new Wall();
-        u.unitType = UnitType.Block;
-        u.obj = obj;
-        u.position = obj.transform.position;
-        u.movable = movable;
-        u.codeNumber = codeNumber;
-        u.CanBeMoved = CanBeMoved;
-        u.layer = layer;
-    }*/
+        MovingContainer u = new MovingContainer();
+        u.MoveDirections = MoveDirections;
+        u.Unit = Unit;
+        u.distance = distance;
+        u.moved = moved;
+        u.container = con;
+        u.activatorAbility = activatorAbility;
+        return u;
+    }
 }
