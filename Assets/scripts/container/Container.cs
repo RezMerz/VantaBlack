@@ -10,6 +10,8 @@ public class Container : Unit{
     public bool forward { get; set; }
     // Use this for initialization
     int counter;
+
+    public List<MonoBehaviour> _saved_containers;
     public void Start()
     {
         unitType = UnitType.Container;
