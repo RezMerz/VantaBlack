@@ -853,6 +853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   otherSwitch: {fileID: 1045516517}
 --- !u!114 &187698046
 MonoBehaviour:
@@ -869,6 +870,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &193353322
 Prefab:
   m_ObjectHideFlags: 0
@@ -1205,6 +1207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 477886942}
@@ -1220,6 +1223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 1146632549}
@@ -1235,6 +1239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 3
   unit: {fileID: 32570206}
@@ -1253,6 +1258,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &288659788
 Prefab:
   m_ObjectHideFlags: 0
@@ -2082,6 +2088,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!114 &479295329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2094,6 +2101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 1492736223}
@@ -2109,6 +2117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 864570808}
@@ -2159,6 +2168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 4
   directionOfMove: 2
   unit: {fileID: 640750943}
@@ -2174,6 +2184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 4
   directionOfMove: 2
   unit: {fileID: 224686447}
@@ -2192,6 +2203,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &497916511
 Prefab:
   m_ObjectHideFlags: 0
@@ -2992,6 +3004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 0
   directionOfMove: 0
   unit: {fileID: 0}
@@ -3007,6 +3020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 0
   directionOfMove: 0
   unit: {fileID: 0}
@@ -3022,6 +3036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 0
   directionOfMove: 0
   unit: {fileID: 0}
@@ -3037,6 +3052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 3
   unit: {fileID: 778138194}
@@ -3052,6 +3068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 589597312}
@@ -3070,6 +3087,7 @@ MonoBehaviour:
   singlestate: 1
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &693850855
 Prefab:
   m_ObjectHideFlags: 0
@@ -3133,7 +3151,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 419036, guid: 171f58ae98860a1499ffe01c5fcd4013, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 419036, guid: 171f58ae98860a1499ffe01c5fcd4013, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3250,6 +3268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 1
   unit: {fileID: 0}
@@ -3268,6 +3287,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 1
+  disabled: 0
 --- !u!4 &740836747 stripped
 Transform:
   m_PrefabParentObject: {fileID: 409518, guid: 9a9ec9cbec594cb4b9056d7c30875cb0, type: 2}
@@ -3442,6 +3462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 589597312}
@@ -3457,6 +3478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 1790817149}
@@ -3472,6 +3494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 3
   unit: {fileID: 1100097066}
@@ -3490,6 +3513,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &778138192
 Prefab:
   m_ObjectHideFlags: 0
@@ -4181,6 +4205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 2
   unit: {fileID: 891771273}
@@ -4199,6 +4224,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &979698310
 Prefab:
   m_ObjectHideFlags: 0
@@ -4419,6 +4445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 3
   directionOfMove: 2
   unit: {fileID: 566085895}
@@ -4437,6 +4464,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1027928902
 Prefab:
   m_ObjectHideFlags: 0
@@ -4499,6 +4527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   unit: {fileID: 32570207}
 --- !u!114 &1027928906
 MonoBehaviour:
@@ -4512,6 +4541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 309017587}
@@ -4530,6 +4560,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1031154244
 Prefab:
   m_ObjectHideFlags: 0
@@ -4672,6 +4703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 0
   directionOfMove: 2
   unit: {fileID: 589597312}
@@ -4690,6 +4722,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1051660048
 Prefab:
   m_ObjectHideFlags: 0
@@ -5147,6 +5180,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 1
+  disabled: 0
 --- !u!114 &1127178396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5159,6 +5193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 1126904480}
@@ -5919,6 +5954,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!4 &1293973813
 Transform:
   m_ObjectHideFlags: 0
@@ -7206,6 +7242,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1604103437
 Prefab:
   m_ObjectHideFlags: 0
@@ -7492,6 +7529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 2
   unit: {fileID: 640750943}
@@ -7507,6 +7545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 2
   unit: {fileID: 224686447}
@@ -7525,6 +7564,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!212 &1688377605
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7876,6 +7916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   otherSwitch: {fileID: 1045516517}
 --- !u!114 &1814107228
 MonoBehaviour:
@@ -7892,6 +7933,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1836049495
 Prefab:
   m_ObjectHideFlags: 0
@@ -8069,6 +8111,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!114 &1885264932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8081,6 +8124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 3
   unit: {fileID: 32570206}
@@ -8096,6 +8140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 1146632549}
@@ -8111,6 +8156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 477886942}
@@ -8180,6 +8226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 2
   unit: {fileID: 589597312}
@@ -8198,6 +8245,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1896709573
 Prefab:
   m_ObjectHideFlags: 0
@@ -8474,6 +8522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 1
   directionOfMove: 0
   unit: {fileID: 32570206}
@@ -8492,6 +8541,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &1954750748
 Prefab:
   m_ObjectHideFlags: 0
@@ -8622,6 +8672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 2
   unit: {fileID: 640750943}
@@ -8637,6 +8688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanBeMoved: 0
+  disabled: 0
   distance: 2
   directionOfMove: 2
   unit: {fileID: 224686447}
@@ -8655,6 +8707,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!4 &1978166137 stripped
 Transform:
   m_PrefabParentObject: {fileID: 410810, guid: 68310484e9328e2419fc2f21ca63f891, type: 2}
@@ -9545,6 +9598,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!1001 &2138285389
 Prefab:
   m_ObjectHideFlags: 0
