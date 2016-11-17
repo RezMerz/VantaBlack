@@ -29,5 +29,21 @@ public class BlockSwitch : Unit {
             return true;
         return false;
     }
-}
+
+    public override Unit Clone()
+    {
+        BlockSwitch u = new BlockSwitch();
+        u.unitType = unitType;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+        u.isManual = isManual;
+        u.ability = ability;
+        u.direction = direction;
+        return u;
+    }
+    }
 

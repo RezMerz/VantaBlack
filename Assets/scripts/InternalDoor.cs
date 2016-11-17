@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InternalDoor : Door {
+public class InternalDoor : Door
+{
 
     // Use this for initialization
     void Start()
@@ -32,7 +33,7 @@ public class InternalDoor : Door {
 
     public override void Next()
     {
-        
+
     }
 
     public override void OpenDoor()
@@ -58,5 +59,18 @@ public class InternalDoor : Door {
     {
 
         return false;
+    }
+    public override Unit Clone()
+    {
+        Wall u = new Wall();
+        u.unitType = UnitType.Block;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+
+        return u;
     }
 }

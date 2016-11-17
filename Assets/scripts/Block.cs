@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public class Block : Unit {
+public class Block : Unit
+{
 
     public Ability ability;
     public Block Pipedto, Pipedfrom;
 
-    
+
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         unitType = UnitType.Block;
         obj = this.gameObject;
         position = gameObject.transform.position;
@@ -21,16 +24,17 @@ public class Block : Unit {
 
 
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void CheckPipe()
     {
         if (Pipedfrom == null)
             return;
-        if(ability == null && Pipedfrom.ability != null)
+        if (ability == null && Pipedfrom.ability != null)
         {
             Pomp();
             Pipedfrom.CheckPipe();
@@ -58,6 +62,22 @@ public class Block : Unit {
         if (unittype == UnitType.Box || unittype == UnitType.Player)
             return true;
         return false;
+    }
+
+    public override Unit Clone()
+    {
+        Block u = new Block();
+        u.unitType = unitType;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+        u.ability = ability;
+        u.Pipedfrom = Pipedfrom;
+        u.Pipedto = Pipedto;
+        return u;
     }
 }
 

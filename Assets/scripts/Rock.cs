@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Rock : Unit {
+public class Rock : Unit
+{
 
     public List<Unit> connectedUnits;
 
@@ -20,5 +21,19 @@ public class Rock : Unit {
         if (unittype == UnitType.Box || unittype == UnitType.Player)
             return true;
         return false;
+    }
+
+    public override Unit Clone()
+    {
+        Rock u = new Rock();
+        u.unitType = unitType;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+
+        return u;
     }
 }

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExternalDoor : Door {
+public class ExternalDoor : Door
+{
 
     public string sceneName;
     // Use this for initialization
@@ -26,9 +27,10 @@ public class ExternalDoor : Door {
     }
 
     // Update is called once per frame
-    void Update () {
-	
-	}
+    void Update()
+    {
+
+    }
 
     public override void Next()
     {
@@ -59,5 +61,19 @@ public class ExternalDoor : Door {
     {
 
         return false;
+    }
+
+    public override Unit Clone()
+    {
+        ExternalDoor u = new ExternalDoor();
+        u.unitType = UnitType.Block;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+        u.sceneName = sceneName;
+        return u;
     }
 }

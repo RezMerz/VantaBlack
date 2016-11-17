@@ -218,6 +218,7 @@ public class LogicalEngine
         }
         if (flag)
         {
+            //spManager.takesnapshot();
             moveObject.move(direction);
             ApplyGravity();
             CheckPointCheck();
@@ -255,31 +256,25 @@ public class LogicalEngine
         Wall.print("undoing");
         database.state = State.Busy;
         Snapshot snapshot = spManager.Revese();
-        for (int i = 0; i < database.snapshots[database.snapShotCount - 1].units.GetLength(0); i++)
+        /*Wall.print(snapshot.units);
+        for (int i = 0; i < snapshot.units.GetLength(0); i++)
         {
-            for (int j = 0; j < database.snapshots[database.snapShotCount - 1].units.GetLength(1); j++)
+            for (int j = 0; j < snapshot.units.GetLength(1); j++)
             {
-                database.units[i, j] = new List<Unit>();
-                //for(int k=0; k< database.snapshots[database.snapShotCount - 1].units[i,j].Count; i++)
-                //{
-                    database.units[i, j].AddRange(database.snapshots[database.snapShotCount - 1].units[i, j]);
-                //}
-            }
-        }
-        for (int i = 0; i < database.snapshots[database.snapShotCount - 1].units.GetLength(0); i++)
-        {
-            for (int j = 0; j < database.snapshots[database.snapShotCount - 1].units.GetLength(1); j++)
-            {
-                for (int k = 0; k < database.snapshots[database.snapShotCount - 1].units[i, j].Count; k++)
+                for (int k = 0; k < snapshot.units[i, j].Count; k++)
                 {
-                    if (database.snapshots[database.snapShotCount - 1].units[i, j][k].unitType == UnitType.Player)
-                        Wall.print(database.snapshots[database.snapShotCount - 1].units[i, j][k].transform.position);
+                    if (snapshot.units[i, j][k].unitType == UnitType.Player)
+                        Wall.print(database.snapshots[database.snapShotCount - 1].units[i, j][k].position);
                 }
             }
+        }*/
+        try
+        {
+            database.units = snapshot.units;
+            database.turn = snapshot.turn;
+            Refresh();
         }
-        //database.units = snapshot.units;
-        database.turn = snapshot.turn;
-        //Refresh();
+        catch { }
     }
 
     public void SwitchAction()
@@ -376,7 +371,7 @@ public class LogicalEngine
     private void ApplyGravity(Unit unit)
     {
         int counter = 0;
-        Vector2 pos1 = unit.transform.position;
+        Vector2 pos1 = unit.obj.transform.position;
         Vector2 pos2;
         switch (database.gravity_direction)
         {
@@ -386,9 +381,9 @@ public class LogicalEngine
             case Direction.Left: pos2 = new Vector2(-1, 0); break;
             default: pos2 = new Vector2(0, 0); break;
         }
-        for (int i = 0; i < database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Count; i++)
+        for (int i = 0; i < database.units[(int)unit.obj.transform.position.x, (int)unit.obj.transform.position.y].Count; i++)
         {
-            Unit u = database.units[(int)unit.transform.position.x, (int)unit.transform.position.y][i];
+            Unit u = database.units[(int)unit.obj.transform.position.x, (int)unit.obj.transform.position.y][i];
             if (u.unitType == UnitType.Door)
             {
                 if (u.unitType == UnitType.Player && ((Door)u).direction == database.gravity_direction && ((Door)u).open)
@@ -407,18 +402,18 @@ public class LogicalEngine
             else
                 break;
         }
-        database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Remove(unit);
+        database.units[(int)unit.obj.transform.position.x, (int)unit.obj.transform.position.y].Remove(unit);
         for (int i = 0; i < counter; i++)
-            Gengine._Move_Object(unit.obj, Toolkit.VectorSum(unit.transform.position, Toolkit.DirectiontoVector(database.gravity_direction)));
-        unit.position = unit.transform.position;
-        database.units[(int)unit.transform.position.x, (int)unit.transform.position.y].Add(unit);
+            Gengine._Move_Object(unit.obj, Toolkit.VectorSum(unit.obj.transform.position, Toolkit.DirectiontoVector(database.gravity_direction)));
+        unit.position = unit.obj.transform.position;
+        database.units[(int)unit.obj.transform.position.x, (int)unit.obj.transform.position.y].Add(unit);
     }
     public void CheckBlockSwitch()
     {
         try
         {
             Vector2 temp = Toolkit.DirectiontoVector(database.gravity_direction);
-            foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.transform.position).x, (int)Toolkit.VectorSum(temp, player.transform.position).y])
+            foreach (Unit u in database.units[(int)Toolkit.VectorSum(temp, player.obj.transform.position).x, (int)Toolkit.VectorSum(temp, player.obj.transform.position).y])
             {
                 if (u.unitType == UnitType.BlockSwitch && !((BlockSwitch)u).isManual)
                 {
@@ -435,9 +430,9 @@ public class LogicalEngine
         {
             Vector2 temp;
             bool tempbool = true;
-            for(int j=0; j<database.units[(int)database.AutomaticSwitches[i].transform.position.x, (int)database.AutomaticSwitches[i].transform.position.y].Count; j++)
+            for(int j=0; j<database.units[(int)database.AutomaticSwitches[i].obj.transform.position.x, (int)database.AutomaticSwitches[i].obj.transform.position.y].Count; j++)
             {
-                temp = database.AutomaticSwitches[i].transform.position;
+                temp = database.AutomaticSwitches[i].obj.transform.position;
                 if (database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Box || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Block || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.BlockSwitch || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Container || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Player || database.units[(int)temp.x, (int)temp.y][j].unitType == UnitType.Rock)
                 {
                     if (!database.AutomaticSwitches[i].isOn)
@@ -461,7 +456,7 @@ public class LogicalEngine
         return;
         for (int i = 0; i < database.checkPointPositions.Length; i++)
         {
-            if (database.checkPointPositions[i, 0] == (int)player.transform.position.x && database.checkPointPositions[i, 1] == (int)player.transform.position.y) {
+            if (database.checkPointPositions[i, 0] == (int)player.obj.transform.position.x && database.checkPointPositions[i, 1] == (int)player.obj.transform.position.y) {
 
             }
         }
