@@ -83,8 +83,6 @@ public class Move{
                     return false;
                 else
                 {
-                    /*for (int j = 0; j < database.units[(int)temp.x, (int)temp.y].Count; j++)
-                        Wall.print(database.units[(int)temp.x, (int)temp.y][j].unitType);*/
                     i = -1;
                     continue;
                 }

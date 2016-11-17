@@ -72,6 +72,7 @@ public class AandR {
         {
             if (player.ability == null)
                 return;
+            container._lastAbility = null;
             container.ability = player.ability;
             player.ability = null;
             container.state = 1;
@@ -85,6 +86,7 @@ public class AandR {
             {
                 if (container.state == 1)
                 {
+                    container._lastAbility = container.ability;
                     _absorb(container);
                     container.state = 0;
                     container.forward = false;
@@ -93,6 +95,7 @@ public class AandR {
                 }
                 else
                 {
+                    container._lastAbility = null;
                     player.ability = container.ability;
                     container.forward = false;
                     container.state--;
@@ -104,11 +107,13 @@ public class AandR {
             {
                 if(container.state == 1)
                 {
+                    container._lastAbility = container.ability;
                     Ability abil =  _absorb(container);
                     container.state = 0;
                     container.forward = false;
                     engine.action.RunContainer(container);
                     container.ability = abil;
+                    container._lastAbility = null;
                     container.state = 1;
                     container.forward = true;
                     engine.action.RunContainer(container);
@@ -135,6 +140,7 @@ public class AandR {
                 if(container.state == 1)
                 {
                     player.ability = container.ability;
+                    container._lastAbility = container.ability;
                     container.ability = null;
                     container.state = 0;
                     container.forward = false;
@@ -143,6 +149,7 @@ public class AandR {
                 }
                 else
                 {
+                    container._lastAbility = null;
                     player.ability = container.ability;
                     container.state--;
                     container.forward = false;

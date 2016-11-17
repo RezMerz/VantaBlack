@@ -5,8 +5,6 @@ public class Container : Unit{
     public int numberofStates, state;
     public Ability ability;
     public Ability _lastAbility { get; set; }
-    public bool Unlockable;
-    public List<AbilityType> UnlockerAbilities;
     LogicalEngine engine;
 
     public bool forward { get; set; }
@@ -94,7 +92,6 @@ public class Container : Unit{
         u.state = state;
         u._lastAbility = _lastAbility;
         u.ability = ability;
-        u.Unlockable = Unlockable;
         return u;
     }
 }

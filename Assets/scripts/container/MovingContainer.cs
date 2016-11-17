@@ -23,21 +23,25 @@ public class MovingContainer : MonoBehaviour
         {
             if (container.ability == null)
             {
-                if (container.forward)
+                if (container._lastAbility.abilitytype == ability)
                 {
-                    if (moved == distance)
-                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], distance);
+                    if (container.forward)
+                    {
+                        if (moved == distance)
+                            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], distance);
+                        else
+                            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], moved);
+                    }
                     else
-                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), MoveDirections[container.state], moved);
+                    {
+                        if (moved == distance)
+                            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), distance);
+                        else
+                            moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
+                    }
+
+                    return;
                 }
-                else
-                {
-                    if (moved == distance)
-                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), distance);
-                    else
-                        moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), moved);
-                }
-                return;
             }
             if ((container._lastAbility != null && ability == container._lastAbility.abilitytype) || (container.ability != null && ability == container.ability.abilitytype))
             {
