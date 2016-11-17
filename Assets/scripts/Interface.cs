@@ -122,7 +122,7 @@ public class Interface : MonoBehaviour {
             }
          
             else if (Input.GetKeyDown(KeyCode.Space))
-            {        
+            {
                     engine.Act();
                     engine.EndTurn();
             }
