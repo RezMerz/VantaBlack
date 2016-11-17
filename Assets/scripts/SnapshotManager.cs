@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class SnapshotManager {
+public class SnapshotManager{
 
     public SnapshotManager()
     {
@@ -11,9 +11,22 @@ public class SnapshotManager {
 
     public void takesnapshot()
     {
-        if(Database.database.snapShotCount == Database.database.numberOfSnapshot)
-            Database.database.snapshots.RemoveAt(0);
-        Database.database.snapshots.Add(new Snapshot((List<Unit>[,])Database.database.units));
+        Snapshot snp = new Snapshot(Database.database.units);
+        List<Unit>[,] units = new List<Unit>[Database.database.units.GetLength(0), Database.database.units.GetLength(1)];
+        for (int i = 0; i < Database.database.units.GetLength(0); i++)
+        {
+            for (int j = 0; j < Database.database.units.GetLength(1); j++)
+            {
+                units[i, j] = new List<Unit>();
+                for (int k = 0; k < Database.database.units[i, j].Count; k++)
+                {
+                    units[i, j].Add(Database.database.units[i, j][k].Clone());
+                }
+            }
+        }
+        snp.units = units;
+        Database.database.snapshots.Add(snp);
+        Wall.print(snp.units);
         Database.database.snapShotCount++;
     }
 
@@ -37,15 +50,22 @@ public class Snapshot
     
     public Snapshot(List<Unit>[,] units)
     {
+        
+        units = new List<Unit>[Database.database.units.GetLength(0), Database.database.units.GetLength(1)];
         for (int i = 0; i < Database.database.units.GetLength(0); i++)
         {
             for (int j = 0; j < Database.database.units.GetLength(1); j++)
             {
                 units[i, j] = new List<Unit>();
-                units[i, j].AddRange(Database.database.units[i, j]);
+                for(int k=0; k< Database.database.units[i,j].Count; k++)
+                {
+                    units[i, j].Add(Database.database.units[i, j][k].Clone());
+                }
             }
         }
-        turn = Database.database.turn;
+        Wall.print(units);
+        turn = 0;
+        //turn = Database.database.turn;
         //this.player = player;
     }
 }

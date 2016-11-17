@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MovingContainer : MonoBehaviour{
+public class MovingContainer : MonoBehaviour
+{
 
     public List<Direction> MoveDirections;
     public GameObject Unit;
@@ -20,7 +21,7 @@ public class MovingContainer : MonoBehaviour{
     {
         foreach (AbilityType ability in activatorAbility)
         {
-            if(container.ability == null)
+            if (container.ability == null)
             {
                 if (container.forward)
                 {
@@ -65,4 +66,15 @@ public class MovingContainer : MonoBehaviour{
         else
             moved = Interface.GetEngine().MoveObjects(Interface.GetEngine().GetUnit(Unit), Toolkit.ReverseDirection(MoveDirections[container.state]), i);
     }
+    /*public override Unit Clone()
+    {
+        Wall u = new Wall();
+        u.unitType = UnitType.Block;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+    }*/
 }

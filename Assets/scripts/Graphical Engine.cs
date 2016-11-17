@@ -28,7 +28,16 @@ public class GraphicalEngine {
 
     public void Refresh()
     {
-
+        for(int i=0; i<database.units.GetLength(0); i++)
+        {
+            for(int j=0; j < database.units.GetLength(1); j++)
+            {
+                for(int k=0; k<database.units[i,j].Count; k++)
+                {
+                    database.units[i, j][k].obj.transform.position = database.units[i, j][k].position;
+                }
+            }
+        }
     }
 
     public void _blink(Direction dir)
@@ -183,7 +192,7 @@ public class GraphicalEngine {
             case AbilityType.Fuel: path += "green-light-middle"; break;
             case AbilityType.Direction: path += "red-light-middle"; break;
         }
-        unit.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load(path, typeof(Sprite));
+        unit.obj.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load(path, typeof(Sprite));
     }
 
     public void _Block_Change_Sprite(Unit unit, Ability ability)

@@ -15,5 +15,6 @@ public abstract class Unit : MonoBehaviour {
     public int layer { get; set; }
 
     public  abstract bool CanMove(UnitType unittype);
-   
+
+    public abstract Unit Clone();
 }

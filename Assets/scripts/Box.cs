@@ -24,4 +24,18 @@ public class Box : Unit {
             return true;
         return false;
     }
+
+    public override Unit Clone()
+    {
+        Box u = new Box();
+        u.unitType = UnitType.Block;
+        u.obj = obj;
+        u.position = transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+
+        return u;
+    }
 }

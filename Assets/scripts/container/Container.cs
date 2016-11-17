@@ -11,7 +11,7 @@ public class Container : Unit{
 
     public bool forward { get; set; }
     // Use this for initialization
-
+    int counter;
     public void Start()
     {
         unitType = UnitType.Container;
@@ -22,20 +22,31 @@ public class Container : Unit{
         movable = true;
         layer = 1;
         forward = true;
+        counter = 0;
     }
 
     public void Run()
     {
-        MovingContainer[] mv = gameObject.GetComponents<MovingContainer>();
-        for (int i = 0; i < mv.Length; i++)
-            mv[i].Run();
-        DoorOpener[] dooropener = gameObject.GetComponents<DoorOpener>();
+        MovingContainer[] mv = obj.GetComponents<MovingContainer>();
+        if (counter == 0)
+        {
+            for (; counter < mv.Length; counter++)
+                mv[counter].Run();
+            counter--;
+        }
+        else
+        {
+            for (; counter >= 0; counter--)
+                mv[counter].Run();
+            counter++;
+        }
+        DoorOpener[] dooropener = obj.GetComponents<DoorOpener>();
         for (int i = 0; i < dooropener.Length; i++)
             dooropener[i].Run();
-        ContainerControler[] containerControler = gameObject.GetComponents<ContainerControler>();
+        ContainerControler[] containerControler = obj.GetComponents<ContainerControler>();
         for (int i = 0; i < containerControler.Length; i++)
             containerControler[i].Run();
-        MakeMovableContainer[] mkc = gameObject.GetComponents<MakeMovableContainer>();
+        MakeMovableContainer[] mkc = obj.GetComponents<MakeMovableContainer>();
         for (int i = 0; i < mkc.Length; i++)
             mkc[i].Run();
     }
@@ -67,5 +78,23 @@ public class Container : Unit{
         if (unittype == UnitType.Box || unittype == UnitType.Player)
             return true;
         return false;
+    }
+
+    public override Unit Clone()
+    {
+        Container u = new Container();
+        u.unitType = UnitType.Block;
+        u.obj = obj;
+        u.position = obj.transform.position;
+        u.movable = movable;
+        u.codeNumber = codeNumber;
+        u.CanBeMoved = CanBeMoved;
+        u.layer = layer;
+        u.numberofStates = numberofStates;
+        u.state = state;
+        u._lastAbility = _lastAbility;
+        u.ability = ability;
+        u.Unlockable = Unlockable;
+        return u;
     }
 }
