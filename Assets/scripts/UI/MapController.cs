@@ -64,8 +64,7 @@ public class MapController : MonoBehaviour {
         {
             if (room.name == Database.database.player.GetComponent<Player>().current_room)
             {
-                room.GetComponent<SpriteRenderer>().color = Color.red;
-                
+                room.GetComponent<UnityEngine.UI.Image>().color = Color.red; 
             }
         }
     }
