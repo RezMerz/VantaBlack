@@ -45,7 +45,7 @@ public class DoorOpener : MonoBehaviour {
     {
         DoorOpener u = new DoorOpener();
         u.door = door;
-        u.activatorAbility = activatorAbility;]
+        //u.activatorAbility = activatorAbility;]
         u.container = con;
         return u;
     }
