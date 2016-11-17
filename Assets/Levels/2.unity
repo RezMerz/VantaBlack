@@ -696,6 +696,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!1 &155882984
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +865,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!1 &177732611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1586,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!114 &302447202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3435,6 +3438,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!114 &585634327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8536,6 +8540,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!1001 &1452978178
 Prefab:
   m_ObjectHideFlags: 0
@@ -8666,6 +8671,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!114 &1457097269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8910,6 +8916,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!1 &1513747720
 GameObject:
   m_ObjectHideFlags: 0
@@ -11830,7 +11837,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 11433476, guid: 171f58ae98860a1499ffe01c5fcd4013, type: 2}
       propertyPath: move_direction.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 419036, guid: 171f58ae98860a1499ffe01c5fcd4013, type: 2}
       propertyPath: m_LocalPosition.x
@@ -11977,6 +11984,7 @@ MonoBehaviour:
   numberofStates: 2
   state: 0
   ability: {fileID: 0}
+  _saved_containers: []
 --- !u!114 &2058542129
 MonoBehaviour:
   m_ObjectHideFlags: 0
