@@ -40,4 +40,13 @@ public class DoorOpener : MonoBehaviour {
             }
         }
     }
+
+    public DoorOpener Clone(Container con)
+    {
+        DoorOpener u = new DoorOpener();
+        u.door = door;
+        //u.activatorAbility = activatorAbility;]
+        u.container = con;
+        return u;
+    }
 }
