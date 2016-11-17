@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 416074}
   - 114: {fileID: 11446938}
   m_Layer: 0
-  m_Name: SwitchRight (3)
-  m_TagString: Untagged
+  m_Name: switch-down
+  m_TagString: Switch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,6 +74,7 @@ MonoBehaviour:
   singlestate: 0
   isOn: 0
   isAutomatic: 0
+  disabled: 0
 --- !u!212 &21286546
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -100,7 +101,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e588e281e8b1e78449fee5294a68759d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b461091b7c185f4da31f0267be56192, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
